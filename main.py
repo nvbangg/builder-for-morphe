@@ -1,7 +1,7 @@
-import shutil
-import sys
 import os
+import shutil
 import signal
+import sys
 from pathlib import Path
 
 from src.core.builder import run_build
@@ -21,8 +21,8 @@ _KNOWN_ERRORS = (NetworkError, PrebuiltsError, PatcherError, APKMirrorError, Arc
 def _load_dotenv(path: Path = Path(".env")) -> None:
     if not path.exists():
         return
-    for line in path.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
+    for raw in path.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
         if not line or line.startswith("#") or "=" not in line:
             continue
         key, _, value = line.partition("=")
@@ -66,13 +66,13 @@ def _clean() -> int:
         pr("Removed 'build.md'")
     return 0
 
-def main() -> None:
-    def _sigint_handler(sig: int, frame: object) -> None:
-        epr("Interrupted by user")
-        for tmp in TEMP_DIR.rglob("tmp.*"):
-            shutil.rmtree(tmp, ignore_errors=True)
-        os._exit(130)
+def _sigint_handler(sig: int, frame: object) -> None:
+    epr("Interrupted by user")
+    for tmp in TEMP_DIR.rglob("tmp.*"):
+        shutil.rmtree(tmp, ignore_errors=True)
+    os._exit(130)
 
+def main() -> None:
     signal.signal(signal.SIGINT, _sigint_handler)
 
     _load_dotenv()

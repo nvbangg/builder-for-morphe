@@ -1,5 +1,6 @@
 import os
 import sys
+from typing import Never
 
 IS_GITHUB: bool = os.getenv("GITHUB_ACTIONS") == "true"
 
@@ -22,6 +23,6 @@ def epr(msg: str) -> None:
 def wpr(msg: str) -> None:
     _log("33", "!", msg, "warning")
 
-def abort(msg: str) -> None:
+def abort(msg: str) -> Never:
     epr(f"ABORT: {msg}")
     raise BuildAbortError(msg)

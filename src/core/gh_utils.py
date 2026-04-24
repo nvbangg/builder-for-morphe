@@ -3,7 +3,7 @@ import re
 from pathlib import Path
 
 from src.core.config import load_toml, parse_config, parse_app_entries
-from src.core.logger import abort
+from src.core.logger import abort, epr
 
 _RE_CLI_START = re.compile(r"^>.*CLI:")
 _RE_CHANGELOG_END = re.compile(r"^\[.*Changelog\]")
@@ -69,7 +69,6 @@ def combine_logs(logs_dir: Path | str = "logs") -> None:
                     collected.append(line)
 
         if capturing:
-            from src.core.logger import epr
             epr(f"Warning: unclosed CLI section in '{log}' - changelog end marker not found")
 
     if green_lines:

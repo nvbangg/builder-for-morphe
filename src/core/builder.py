@@ -1,3 +1,4 @@
+import base64
 import os
 import shutil
 import tempfile
@@ -186,30 +187,38 @@ def run_build(data: dict[str, object], config: Config, net: NetworkManager, targ
     build_mode = os.getenv("BUILD_MODE", "")
     prebuilts_cache: dict[tuple[str, str, str, str], Prebuilts] = {}
     futures: list = []
+    ks_path: Path | None = None
+    if ks_b64 := os.getenv("KEYSTORE_BASE64", ""):
+        ks_path = TEMP_DIR / "ks.keystore"
+        ks_path.write_bytes(base64.b64decode(ks_b64))
 
-    with ThreadPoolExecutor(max_workers=config.parallel_jobs) as pool:
-        for entry in entries:
-            if not entry.dl_from:
-                epr(f"No 'dlurl' option was set for '{entry.table}'")
-                continue
-
-            patches_ver = "dev" if build_mode == "dev" else entry.patches_version
-            cache_key = (entry.cli_source, entry.cli_version, entry.patches_source, patches_ver)
-
-            if cache_key not in prebuilts_cache:
-                try:
-                    prebuilts_cache[cache_key] = fetch_prebuilts(cli_src=entry.cli_source, cli_ver=entry.cli_version, patches_src=entry.patches_source, patches_ver=patches_ver, net=net)
-                except Exception as exc:
-                    epr(f"Could not get prebuilts for '{entry.table}': {exc}")
+    try:
+        with ThreadPoolExecutor(max_workers=config.parallel_jobs) as pool:
+            for entry in entries:
+                if not entry.dl_from:
+                    epr(f"No 'dlurl' option was set for '{entry.table}'")
                     continue
 
-            prebuilts = prebuilts_cache[cache_key]
-            patcher = PatcherCLI(prebuilts.cli_jar, prebuilts.patches_mpp, APKSIGNER)
-            arches = ("arm64-v8a", "arm-v7a") if entry.arch == "both" else (entry.arch,)
+                patches_ver = "dev" if build_mode == "dev" else entry.patches_version
+                cache_key = (entry.cli_source, entry.cli_version, entry.patches_source, patches_ver)
 
-            for arch in arches:
-                label = entry.table if entry.arch == "all" else f"{entry.table} ({arch})"
-                futures.append(pool.submit(_build_single, entry, arch, label, net, patcher))
+                if cache_key not in prebuilts_cache:
+                    try:
+                        prebuilts_cache[cache_key] = fetch_prebuilts(cli_src=entry.cli_source, cli_ver=entry.cli_version, patches_src=entry.patches_source, patches_ver=patches_ver, net=net)
+                    except Exception as exc:
+                        epr(f"Could not get prebuilts for '{entry.table}': {exc}")
+                        continue
+
+                prebuilts = prebuilts_cache[cache_key]
+                patcher = PatcherCLI(prebuilts.cli_jar, prebuilts.patches_mpp, APKSIGNER, ks_path=ks_path)
+                arches = ("arm64-v8a", "arm-v7a") if entry.arch == "both" else (entry.arch,)
+
+                for arch in arches:
+                    label = entry.table if entry.arch == "all" else f"{entry.table} ({arch})"
+                    futures.append(pool.submit(_build_single, entry, arch, label, net, patcher))
+    finally:
+        if ks_path:
+            ks_path.unlink(missing_ok=True)
 
     for tmp in TEMP_DIR.rglob("tmp.*"):
         shutil.rmtree(tmp, ignore_errors=True)

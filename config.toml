@@ -2,23 +2,23 @@ parallel-jobs = 1
 
 [YouTube]
 uptodown-dlurl = "https://youtube.en.uptodown.com/android"
-apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube"
 patcher-args = "-e 'Change header' -Ocustom=icons/YouTube/header -e 'Custom branding' -OcustomIcon=icons/YouTube/branding -OcustomName=Morphe"
 
 [Music]
 uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
-apkmirror-dlurl = "https://apkmirror.com/apk/google-inc/youtube-music"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube-music"
 patcher-args = "-e 'Change header' -Ocustom=icons/Music/header -e 'Custom branding' -OcustomIcon=icons/Music/branding -OcustomName='Morphe Music'"
 arch = "both"
 
 [Reddit]
 uptodown-dlurl = "https://reddit-official-app.en.uptodown.com/android"
-apkmirror-dlurl = "https://apkmirror.com/apk/redditinc/reddit"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/redditinc/reddit"
 patcher-args = "-e 'Custom branding name for Reddit' -OappName='Morphe Reddit'"
 
 [X]
 uptodown-dlurl = "https://twitter.en.uptodown.com/android"
-apkmirror-dlurl = "https://apkmirror.com/apk/x-corp/twitter"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter"
 patches-source = "crimera/piko"
 brand = "Piko"
 included-patches = "'Browse tweet object' 'Dynamic color'"
@@ -26,7 +26,7 @@ version = "11.81.0-release.0"
 
 [Twitter]
 uptodown-dlurl = "https://twitter.en.uptodown.com/android"
-apkmirror-dlurl = "https://apkmirror.com/apk/x-corp/twitter"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter"
 patches-source = "crimera/piko"
 brand = "Piko"
 included-patches = "'Bring back twitter' 'Browse tweet object' 'Dynamic color'"
@@ -34,7 +34,7 @@ version = "11.81.0-release.0"
 
 [Instagram]
 # uptodown-dlurl = "https://instagram.en.uptodown.com/android"
-# apkmirror-dlurl = "https://apkmirror.com/apk/instagram/instagram-instagram"
+# apkmirror-dlurl = "https://www.apkmirror.com/apk/instagram/instagram-instagram"
 archive-dlurl = "https://archive.org/download/uni-src/apks/com.instagram.android"
 patches-source = "crimera/piko"
 brand = "Piko"

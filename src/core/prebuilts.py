@@ -44,7 +44,7 @@ def fetch_prebuilts(cli_src: str, cli_ver: str, patches_src: str, patches_ver: s
 
     pr(f"Getting prebuilts ({patches_src.split('/')[0]})")
     specs: list[tuple[str, str, str, str, str]] = [
-        (cli_src,     "CLI",     cli_ver,     "cli",     "jar"),
+        (cli_src, "CLI", cli_ver, "cli", "jar"),
         (patches_src, "Patches", patches_ver, "patches", "mpp"),
     ]
 

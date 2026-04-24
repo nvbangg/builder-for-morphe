@@ -1,4 +1,3 @@
-import base64
 import os
 import re
 import shlex
@@ -51,10 +50,11 @@ def _parse_versions_output(output: str) -> list[str]:
     return [m.group(1).strip() for m in matches if m.group(2) == target and m.group(1).strip()]
 
 class PatcherCLI:
-    def __init__(self, cli_jar: Path, patches_mpp: Path, apksigner: Path, sig_file: Path = Path("sig.txt")) -> None:
+    def __init__(self, cli_jar: Path, patches_mpp: Path, apksigner: Path, ks_path: Path | None = None, sig_file: Path = Path("sig.txt")) -> None:
         self.cli_jar = cli_jar
         self.patches_mpp = patches_mpp
         self.apksigner = apksigner
+        self.ks_path = ks_path
         self._sig_content: str = sig_file.read_text(encoding="utf-8") if sig_file.exists() else ""
 
     def list_patches(self, pkg_name: str) -> str:
@@ -119,30 +119,21 @@ class PatcherCLI:
     def patch(self, stock_apk: Path, output_apk: Path, patch_args: list[str]) -> None:
         base_cmd = ["-jar", self.cli_jar, "patch", stock_apk, "--purge", "-o", output_apk, "-p", self.patches_mpp]
         ks_args: list[str] = []
-        ks_path: Path | None = None
 
-        if ks_b64 := os.getenv("KEYSTORE_BASE64", ""):
-            ks_path = TEMP_DIR / "ks.keystore"
-            ks_path.write_bytes(base64.b64decode(ks_b64))
+        if self.ks_path and (ks_pass := os.getenv("KEYSTORE_PASS", "")):
+            ks_args = [f"--keystore={self.ks_path}", f"--keystore-entry-password={ks_pass}", f"--keystore-password={ks_pass}", "--signer=krvstek", "--keystore-entry-alias=krvstek"]
+        elif Path("morphe.keystore").exists():
+            ks_args = ["--keystore=morphe.keystore"]
 
+        pr(" ".join(str(a) for a in ["java", *base_cmd, *ks_args, *patch_args]))
         try:
-            if ks_path and (ks_pass := os.getenv("KEYSTORE_PASS", "")):
-                ks_args = [f"--keystore={ks_path}", f"--keystore-entry-password={ks_pass}", f"--keystore-password={ks_pass}", "--signer=krvstek", "--keystore-entry-alias=krvstek"]
-            elif Path("morphe.keystore").exists():
-                ks_args = ["--keystore=morphe.keystore"]
+            _run_java(*base_cmd, *ks_args, *patch_args, capture=False)
+        except PatcherError:
+            output_apk.unlink(missing_ok=True)
+            raise PatcherError(f"Patching '{stock_apk.name}' failed")
 
-            pr(" ".join(str(a) for a in ["java", *base_cmd, *ks_args, *patch_args]))
-            try:
-                _run_java(*base_cmd, *ks_args, *patch_args, capture=False)
-            except PatcherError:
-                output_apk.unlink(missing_ok=True)
-                raise PatcherError(f"Patching '{stock_apk.name}' failed")
-
-            if not output_apk.exists():
-                raise PatcherError(f"Patching '{stock_apk.name}' failed - output not created")
-        finally:
-            if ks_path:
-                ks_path.unlink(missing_ok=True)
+        if not output_apk.exists():
+            raise PatcherError(f"Patching '{stock_apk.name}' failed - output not created")
 
     def check_signature(self, apk: Path, pkg_name: str) -> bool:
         if not self._sig_content or pkg_name not in self._sig_content:
