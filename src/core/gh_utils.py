@@ -10,7 +10,7 @@ _RE_CHANGELOG_END = re.compile(r"^\[.*Changelog\]")
 CONFIG_PATH: Path = Path("config.toml")
 
 
-def get_matrix(source: str = "morphe") -> None:
+def get_matrix(source: str) -> None:
     try:
         data: dict[str, object] = load_toml(CONFIG_PATH)
     except FileNotFoundError:
@@ -36,7 +36,7 @@ def get_matrix(source: str = "morphe") -> None:
 
     print(json.dumps({"include": include}, ensure_ascii=False))
 
-def combine_logs(logs_dir: Path | str = "logs") -> None:
+def combine_logs(logs_dir: Path | str) -> None:
     if not (logs := sorted(Path(logs_dir).rglob("build.md"))):
         return
 

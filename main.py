@@ -72,6 +72,11 @@ def _sigint_handler(sig: int, frame: object) -> None:
         shutil.rmtree(tmp, ignore_errors=True)
     os._exit(130)
 
+def _require_ci(cmd: str) -> None:
+    if os.getenv("GITHUB_ACTIONS") != "true":
+        epr(f"'{cmd}' is only available in GitHub Actions")
+        sys.exit(1)
+
 def main() -> None:
     signal.signal(signal.SIGINT, _sigint_handler)
 
@@ -81,26 +86,22 @@ def main() -> None:
         match argv:
             case []:
                 sys.exit(_build())
-            case ["get-matrix"]:
-                get_matrix()
-            case ["get-matrix", source]:
-                get_matrix(source=source)
+            case ["get-matrix", *source]:
+                _require_ci("get-matrix")
+                get_matrix(source[0] if source else "morphe")
             case ["clean"]:
                 sys.exit(_clean())
-            case ["combine-logs"]:
-                combine_logs()
-            case ["combine-logs", logs_dir]:
-                combine_logs(logs_dir=Path(logs_dir))
-            case [target]:
-                sys.exit(_build(target_app=target))
-            case [target, arch] if arch in VALID_ARCHES:
-                sys.exit(_build(target_app=target, arch_override=arch))
+            case ["combine-logs", *dir]:
+                _require_ci("combine-logs")
+                combine_logs(logs_dir=Path(dir[0] if dir else "logs"))
+            case [target, *rest] if not rest or rest[0] in VALID_ARCHES:
+                sys.exit(_build(target_app=target, arch_override=rest[0] if rest else None))
             case [_, arch]:
                 epr(f"Unknown arch '{arch}'. Valid: {', '.join(sorted(VALID_ARCHES))}")
                 sys.exit(1)
             case _:
                 epr(f"Unknown command: {' '.join(argv)}")
-                epr("Usage: main.py [target] [arch] | get-matrix [source] | clean | combine-logs [dir]")
+                epr("Usage: main.py [target] [arch] | clean")
                 sys.exit(1)
     except BuildAbortError:
         sys.exit(1)
