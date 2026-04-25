@@ -18,6 +18,14 @@ on:
         options:
           - morphe
           - piko
+  workflow_call:
+    inputs:
+      build_mode:
+        default: 'stable'
+        type: string
+      patch_source:
+        default: 'morphe'
+        type: string
 
 permissions:
   contents: read
@@ -89,7 +97,7 @@ jobs:
       - name: Upload APKs as artifact
         uses: actions/upload-artifact@v7
         with:
-          name: apks-${{ matrix.id }}${{ matrix.arch && format('-{0}', matrix.arch) || '' }}
+          name: apks-${{ inputs.patch_source }}-${{ matrix.id }}${{ matrix.arch && format('-{0}', matrix.arch) || '' }}
           path: ./build/*.apk
           if-no-files-found: warn
           retention-days: 1
@@ -97,7 +105,7 @@ jobs:
       - name: Upload build log as artifact
         uses: actions/upload-artifact@v7
         with:
-          name: log-${{ matrix.id }}${{ matrix.arch && format('-{0}', matrix.arch) || '' }}
+          name: log-${{ inputs.patch_source }}-${{ matrix.id }}${{ matrix.arch && format('-{0}', matrix.arch) || '' }}
           path: build.md
           if-no-files-found: warn
           retention-days: 1
@@ -128,7 +136,7 @@ jobs:
         id: check_artifacts
         continue-on-error: true
         run: |
-          if gh api "repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts" --jq '.artifacts[] | select(.name | startswith("apks-")) | .name' | grep -q .; then
+          if gh api "repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts" --jq '.artifacts[] | select(.name | startswith("apks-${{ inputs.patch_source }}-")) | .name' | grep -q .; then
             echo "has_artifacts=true" >> "$GITHUB_OUTPUT"
           else
             echo "has_artifacts=false" >> "$GITHUB_OUTPUT"
@@ -150,7 +158,7 @@ jobs:
         if: steps.check_artifacts.outputs.has_artifacts == 'true'
         uses: actions/download-artifact@v8
         with:
-          pattern: apks-*
+          pattern: apks-${{ inputs.patch_source }}-*
           path: all-apks
           merge-multiple: true
 
@@ -158,7 +166,7 @@ jobs:
         if: steps.check_artifacts.outputs.has_artifacts == 'true'
         uses: actions/download-artifact@v8
         with:
-          pattern: log-*
+          pattern: log-${{ inputs.patch_source }}-*
           path: logs
 
       - name: Combine logs

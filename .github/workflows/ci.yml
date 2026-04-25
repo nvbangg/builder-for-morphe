@@ -1,0 +1,56 @@
+name: CI
+on:
+  schedule:
+    - cron: '0 10 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check-versions:
+    runs-on: ubuntu-latest
+    outputs:
+      build_morphe: ${{ steps.compare.outputs.build_morphe }}
+      build_piko: ${{ steps.compare.outputs.build_piko }}
+    steps:
+      - name: Compare upstream and local release dates
+        id: compare
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for APP in morphe piko; do
+            case "${APP}" in
+              morphe) UPSTREAM_REPO="MorpheApp/morphe-patches" ;;
+              piko) UPSTREAM_REPO="crimera/piko" ;;
+            esac
+
+            UPSTREAM_DATE=$(gh api "repos/${UPSTREAM_REPO}/releases/latest" --jq '.published_at' 2>/dev/null || echo "null")
+            OUR_DATE=$(gh api "repos/${{ github.repository }}/releases" --jq "[.[] | select(.tag_name | endswith(\"-${APP}\"))] | first | .published_at // \"null\"" 2>/dev/null || echo "null")
+            BUILD=false
+            if [[ "${OUR_DATE}" == "null" || "${UPSTREAM_DATE}" > "${OUR_DATE}" ]]; then
+              BUILD=true
+            fi
+
+            echo "build_${APP}=${BUILD}" >> "$GITHUB_OUTPUT"
+          done
+
+  build-morphe:
+    name: build (Morphe)
+    needs: check-versions
+    if: needs.check-versions.outputs.build_morphe == 'true'
+    uses: ./.github/workflows/build.yml
+    with:
+      patch_source: 'morphe'
+      build_mode: 'stable'
+    secrets: inherit
+
+  build-piko:
+    name: build (Piko)
+    needs: check-versions
+    if: needs.check-versions.outputs.build_piko == 'true'
+    uses: ./.github/workflows/build.yml
+    with:
+      patch_source: 'piko'
+      build_mode: 'stable'
+    secrets: inherit
