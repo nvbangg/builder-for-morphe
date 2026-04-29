@@ -27,8 +27,9 @@ Here you can download and use applications selected for this repository, which a
 
 ## 📋 List of apps in this repository
 
-### [🧩 `Morphe`](https://github.com/MorpheApp/morphe-patches) [![Static Badge](https://img.shields.io/badge/All-Releases-4500FF?style=flat-square&logo=android&logoColor=%23FFFFFF)](https://github.com/krvstek/uni-apks/releases?q=-morphe&expanded=true)
 <details>
+<summary>🧩 <a href="https://github.com/MorpheApp/morphe-patches"><code>Morphe</code></a> • <a href="https://github.com/krvstek/uni-apks/releases?q=-morphe&expanded=true"><img src="https://img.shields.io/badge/All-Releases-4500FF?style=flat-square&logo=android&logoColor=%23FFFFFF" alt="Static Badge" align="absmiddle"></summary>
+<br>
 
 | 📦 Name | 💎 Obtainium |
 |:-------:|:------------:|
@@ -37,8 +38,9 @@ Here you can download and use applications selected for this repository, which a
 | [![Reddit](https://img.shields.io/badge/Reddit-FF4500?style=flat-square&logo=reddit&logoColor=%23FFFFFF)](https://play.google.com/store/apps/details?id=com.reddit.frontpage) | [![Obtainium](https://img.shields.io/badge/Import-Config-4500FF?style=flat-square&logo=obtainium&logoColor=%23FFFFFF)][reddit-morphe] |
 </details>
 
-### [🧩 `Piko`](https://github.com/crimera/piko) [![Static Badge](https://img.shields.io/badge/All-Releases-4500FF?style=flat-square&logo=android&logoColor=%23FFFFFF)](https://github.com/krvstek/uni-apks/releases?q=-piko&expanded=true)
 <details>
+<summary>🧩 <a href="https://github.com/crimera/piko"><code>Piko</code></a> • <a href="https://github.com/krvstek/uni-apks/releases?q=-piko&expanded=true"><img src="https://img.shields.io/badge/All-Releases-4500FF?style=flat-square&logo=android&logoColor=%23FFFFFF" alt="Static Badge" align="absmiddle"></summary>
+<br>
 
 | 📦 Name | 💎 Obtainium |
 |:-------:|:------------:|
