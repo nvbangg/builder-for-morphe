@@ -40,6 +40,7 @@ def _load_dotenv(path: Path = Path(".env")) -> None:
                 os.environ[key] = value.strip().strip('"\'')
 
 def _build(target_app: str | None = None, arch_override: str | None = None) -> int:
+    _require_java()
     try:
         data = load_toml(CONFIG_PATH)
     except FileNotFoundError:
@@ -98,7 +99,6 @@ def _require_java(min_version: int = 25) -> None:
 
 def main() -> None:
     signal.signal(signal.SIGINT, _sigint_handler)
-    _require_java()
     _load_dotenv()
 
     try:
