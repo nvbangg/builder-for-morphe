@@ -36,11 +36,9 @@ def _parse_patch_block(output: str, patch_name: str) -> list[str]:
     return []
 
 def _parse_versions_output(output: str) -> list[str]:
-    matches = re.findall(r"^(.*?)\s*\((\d+)\s+patch", output, re.MULTILINE)
-    if not matches:
-        return []
-    target = matches[0][1]
-    return [v.strip() for v, count in matches if count == target and v.strip()]
+    if match := re.search(r"Most common compatible versions:\n(.*?)(?:\n\n|\Z)", output, re.DOTALL):
+        return [re.sub(r"\s*\(.*?\)", "", v).strip() for v in match.group(1).splitlines() if v.strip()]
+    return []
 
 class PatcherCLI:
     def __init__(self, cli_jar: Path, patches_mpp: Path, apksigner: Path, ks_path: Path | None = None, sig_file: Path = Path("sig.txt")) -> None:
@@ -58,7 +56,7 @@ class PatcherCLI:
         return _run_java("-jar", self.cli_jar, "list-patches", "--patches", self.patches_mpp, "-f", pkg_name, "-v", "-p")
 
     def list_versions(self, pkg_name: str) -> str:
-        return _run_java("-jar", self.cli_jar, "list-versions", self.patches_mpp, "-f", pkg_name)
+        return _run_java("-jar", self.cli_jar, "list-versions", "--patches", self.patches_mpp, "-f", pkg_name)
 
     def get_last_supported_version(self, list_patches_output: str, pkg_name: str, included_patches: list[str]) -> str | None:
         if included_patches:
@@ -110,7 +108,8 @@ class PatcherCLI:
         return p_args
 
     def patch(self, stock_apk: Path, output_apk: Path, patch_args: list[str]) -> None:
-        base_cmd = ["-jar", self.cli_jar, "patch", stock_apk, "--purge", "-o", output_apk, "-p", self.patches_mpp]
+        tmp_files_dir = output_apk.parent / f"tmp-{output_apk.stem}"
+        base_cmd = ["-jar", self.cli_jar, "patch", stock_apk, "--purge", "-o", output_apk, "-p", self.patches_mpp, "-t", tmp_files_dir]
         ks_args: list[str] = []
 
         if self.ks_path and (ks_pass := os.getenv("KEYSTORE_PASS", "")):
