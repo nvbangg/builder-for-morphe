@@ -643,14 +643,14 @@ Patches: [binarymend/patches-1.3.1.mpp](https://github.com/binarymend/morphe-pat
 ### [WPS Office](https://play.google.com/store/apps/details?id=cn.wps.moffice_eng) - PDF, Word, Sheet, PPT
 
 <details>
-<summary id="WPS-Office">&emsp;<a href="https://github.com/nvbangg/builder-for-morphe/releases/download/63/wps-office-hoo-dles-v18.12.1-all.apk"><img src="https://img.shields.io/badge/WPS_Office-v18.12.1-gray?labelColor=C03426&logo=wpsoffice&logoColor=white"></a></summary>
+<summary id="WPS-Office">&emsp;<a href="https://github.com/nvbangg/builder-for-morphe/releases/download/65/wps-office-hoo-dles-v18.12.1-all.apk"><img src="https://img.shields.io/badge/WPS_Office-v18.12.1-gray?labelColor=C03426&logo=wpsoffice&logoColor=white"></a></summary>
 <br>
 
 - [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)](https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22cn.wps.moffice_eng%22%2C%22name%22%3A%22WPS%20Office%22%2C%22author%22%3A%22nvbangg%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2Fnvbangg%2Fbuilder-for-morphe%22%2C%22additionalSettings%22%3A%22%7B%5C%22apkFilterRegEx%5C%22%3A%5C%22wps-office%5C%22%7D%22%7D) 
 <blockquote>
 
-[Release 2026-05-02](https://github.com/nvbangg/builder-for-morphe/releases/tag/63)<br>
-Patches: [hoo-dles/patches-1.29.0.mpp](https://github.com/hoo-dles/morphe-patches/releases/tag/v1.29.0)
+[Release 2026-05-07](https://github.com/nvbangg/builder-for-morphe/releases/tag/65)<br>
+Patches: [hoo-dles/patches-1.30.0.mpp](https://github.com/hoo-dles/morphe-patches/releases/tag/v1.30.0)
 - Disable anti-tamper
 - Enable Pro
 </blockquote>
@@ -660,14 +660,14 @@ Patches: [hoo-dles/patches-1.29.0.mpp](https://github.com/hoo-dles/morphe-patche
 ### [Duolingo](https://play.google.com/store/apps/details?id=com.duolingo)
 
 <details>
-<summary id="Duolingo">&emsp;<a href="https://github.com/nvbangg/builder-for-morphe/releases/download/63/duolingo-hoo-dles-v6.74.4-all.apk"><img src="https://img.shields.io/badge/Duolingo-v6.74.4-gray?labelColor=4DC730&logo=Duolingo&logoColor=white"></a></summary>
+<summary id="Duolingo">&emsp;<a href="https://github.com/nvbangg/builder-for-morphe/releases/download/65/duolingo-hoo-dles-v6.74.4-all.apk"><img src="https://img.shields.io/badge/Duolingo-v6.74.4-gray?labelColor=4DC730&logo=Duolingo&logoColor=white"></a></summary>
 <br>
 
 - [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)](https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22com.duolingo%22%2C%22name%22%3A%22Duolingo%22%2C%22author%22%3A%22nvbangg%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2Fnvbangg%2Fbuilder-for-morphe%22%2C%22additionalSettings%22%3A%22%7B%5C%22apkFilterRegEx%5C%22%3A%5C%22duolingo%5C%22%7D%22%7D) 
 <blockquote>
 
-[Release 2026-05-02](https://github.com/nvbangg/builder-for-morphe/releases/tag/63)<br>
-Patches: [hoo-dles/patches-1.29.0.mpp](https://github.com/hoo-dles/morphe-patches/releases/tag/v1.29.0)
+[Release 2026-05-07](https://github.com/nvbangg/builder-for-morphe/releases/tag/65)<br>
+Patches: [hoo-dles/patches-1.30.0.mpp](https://github.com/hoo-dles/morphe-patches/releases/tag/v1.30.0)
 - Disable Login Integrity
 - Enable Premium
 </blockquote>
@@ -783,14 +783,14 @@ Patches: [Paresh-Maheshwari/patches-1.15.0.mpp](https://github.com/Paresh-Mahesh
 ### [Pandora](https://play.google.com/store/apps/details?id=com.pandora.android) - Music & Podcasts
 
 <details>
-<summary id="Pandora">&emsp;<a href="https://github.com/nvbangg/builder-for-morphe/releases/download/63/pandora-hoo-dles-v2602.1-all.apk"><img src="https://img.shields.io/badge/Pandora-v2602.1-gray?labelColor=3668FF&logo=Pandora&logoColor=white"></a></summary>
+<summary id="Pandora">&emsp;<a href="https://github.com/nvbangg/builder-for-morphe/releases/download/65/pandora-hoo-dles-v2602.1-all.apk"><img src="https://img.shields.io/badge/Pandora-v2602.1-gray?labelColor=3668FF&logo=Pandora&logoColor=white"></a></summary>
 <br>
 
 - [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)](https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22com.pandora.android%22%2C%22name%22%3A%22Pandora%22%2C%22author%22%3A%22nvbangg%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2Fnvbangg%2Fbuilder-for-morphe%22%2C%22additionalSettings%22%3A%22%7B%5C%22apkFilterRegEx%5C%22%3A%5C%22pandora%5C%22%7D%22%7D) 
 <blockquote>
 
-[Release 2026-05-02](https://github.com/nvbangg/builder-for-morphe/releases/tag/63)<br>
-Patches: [hoo-dles/patches-1.29.0.mpp](https://github.com/hoo-dles/morphe-patches/releases/tag/v1.29.0)
+[Release 2026-05-07](https://github.com/nvbangg/builder-for-morphe/releases/tag/65)<br>
+Patches: [hoo-dles/patches-1.30.0.mpp](https://github.com/hoo-dles/morphe-patches/releases/tag/v1.30.0)
 - Disable ads
 - Unlimited skips
 </blockquote>
@@ -953,14 +953,14 @@ Patches: [RookieEnough/patches-1.0.3.mpp](https://github.com/RookieEnough/De-ReV
 ### [MyFitnessPal](https://play.google.com/store/apps/details?id=com.myfitnesspal.android): Calorie Counter
 
 <details>
-<summary id="MyFitnessPal">&emsp;<a href="https://github.com/nvbangg/builder-for-morphe/releases/download/63/myfitnesspal-hoo-dles-v25.50.0-all.apk"><img src="https://img.shields.io/badge/MyFitnessPal-v25.50.0-gray?labelColor=0066EE&logo=MyFitnessPal&logoColor=white"></a></summary>
+<summary id="MyFitnessPal">&emsp;<a href="https://github.com/nvbangg/builder-for-morphe/releases/download/65/myfitnesspal-hoo-dles-v25.50.0-all.apk"><img src="https://img.shields.io/badge/MyFitnessPal-v25.50.0-gray?labelColor=0066EE&logo=MyFitnessPal&logoColor=white"></a></summary>
 <br>
 
 - [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)](https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22com.myfitnesspal.android%22%2C%22name%22%3A%22MyFitnessPal%22%2C%22author%22%3A%22nvbangg%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2Fnvbangg%2Fbuilder-for-morphe%22%2C%22additionalSettings%22%3A%22%7B%5C%22apkFilterRegEx%5C%22%3A%5C%22myfitnesspal%5C%22%7D%22%7D) 
 <blockquote>
 
-[Release 2026-05-02](https://github.com/nvbangg/builder-for-morphe/releases/tag/63)<br>
-Patches: [hoo-dles/patches-1.29.0.mpp](https://github.com/hoo-dles/morphe-patches/releases/tag/v1.29.0)
+[Release 2026-05-07](https://github.com/nvbangg/builder-for-morphe/releases/tag/65)<br>
+Patches: [hoo-dles/patches-1.30.0.mpp](https://github.com/hoo-dles/morphe-patches/releases/tag/v1.30.0)
 - Enable Premium+
 </blockquote>
 </details>
