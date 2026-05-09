@@ -18,6 +18,10 @@ on:
         options:
           - morphe
           - piko
+          - rookie-enough
+          - hoo-dles
+          - ample-revanced
+          - binarymend
   workflow_call:
     inputs:
       build_mode:
