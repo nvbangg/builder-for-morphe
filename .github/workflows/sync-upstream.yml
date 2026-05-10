@@ -1,0 +1,44 @@
+name: Sync Upstream
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 15 * * *"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          fetch-tags: false
+
+      - name: Check upstream
+        id: check
+        run: |
+          git remote add upstream https://github.com/j-hc/revanced-magisk-module
+          git fetch --no-tags upstream refs/heads/main:refs/remotes/upstream/main
+          git fetch --no-tags origin refs/heads/main:refs/remotes/origin/main
+
+          if [ "$(git rev-list --count origin/main..upstream/main)" -eq 0 ]; then
+            echo "::notice title=Sync Upstream::No upstream changes"
+            exit 0
+          fi
+
+          echo "HAS_CHANGES=true" >> "$GITHUB_OUTPUT"
+
+      - name: Sync upstream
+        if: steps.check.outputs.HAS_CHANGES == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+        
+          if ! git merge upstream/main --no-ff --no-commit; then
+            echo "::error title=Sync Upstream Failed::Unresolved conflicts detected from upstream"
+            exit 1
+          fi
+
+          git commit -m "Merge remote-tracking branch 'upstream/main'"
+          git push

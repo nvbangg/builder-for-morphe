@@ -5,7 +5,9 @@ CWD=$(pwd)
 TEMP_DIR="temp"
 BIN_DIR="bin"
 BUILD_DIR="build"
-DL_SRCS=("direct" "archive" "apkmirror" "uptodown")
+DL_SRCS=("direct" "github" "archive" "apkmirror" "uptodown")
+BUILD_JSON_FILE="build.json"
+PATCH_OUTPUT=""
 
 if [ "${GITHUB_TOKEN-}" ]; then GH_HEADER="Authorization: token ${GITHUB_TOKEN}"; else GH_HEADER=; fi
 NEXT_VER_CODE=${NEXT_VER_CODE:-$(date +'%Y%m%d')}
@@ -79,7 +81,10 @@ get_prebuilts() {
 		if [ "$ver" = "dev" ]; then
 			local resp
 			resp=$(gh_req "$rv_rel" -) || return 1
-			ver=$(jq -e -r '.[] | .tag_name' <<<"$resp" | get_highest_ver) || return 1
+			ver=$(jq -e -r 'map(select(.prerelease == true)) | .[0].tag_name' <<<"$resp") || return 1
+			if [ -z "$ver" ] || [ "$ver" = "null" ]; then
+				ver=$(jq -e -r '.[] | .tag_name' <<<"$resp" | get_highest_ver) || return 1
+			fi
 		fi
 		if [ "$ver" = "latest" ]; then
 			rv_rel+="/latest"
@@ -119,7 +124,9 @@ get_prebuilts() {
 			name=$(jq -r .name <<<"$asset")
 			file="${dir}/${name}"
 			gh_dl "$file" "$url" >&2 || return 1
+			if [ "$tag" = "Patches" ]; then
 			echo "$tag: $(cut -d/ -f1 <<<"$src")/${name}  " >>"${cl_dir}/changelog.md"
+			fi
 		else
 			grab_cl=false
 			name=$(basename "$file")
@@ -277,34 +284,22 @@ get_patch_last_supported_ver() {
 	if [ "$op" = "Any" ]; then return; fi
 	pcount=$(head -1 <<<"$op") pcount=${pcount#*(} pcount=${pcount% *}
 	if [ -z "$pcount" ]; then
-		abort "No patches found for '$pkg_name' in patches '$patches_jar'"
+		return
 	fi
 	grep -F "($pcount patch" <<<"$op" | sed 's/ (.* patch.*//' | get_highest_ver || return 1
 }
 
 patches_list_versions() {
-	local cli_jar=$1 patches_jar=$2 pkg_name=$3 op cmd
-	local cmd_base="java -jar '$cli_jar' list-versions"
-
-	# TODO: remove this later
-	local cli_name
-	cli_name=$(basename "$cli_jar")
-	if [ "${cli_name::8}" = revanced ]; then cmd_base+=" -b"; fi
-
-	cmd="${cmd_base} --patches='$patches_jar' -f '$pkg_name'"
-	if op=$(eval "$cmd" 2>&1); then
-		echo "$op"
-		return
+	local cli_jar=$1 patches_jar=$2 pkg_name=$3 op
+	if ! op=$(java -jar "$cli_jar" list-versions -p "$patches_jar" -f "$pkg_name" -b 2>&1); then
+		if ! op=$(java -jar "$cli_jar" list-versions --patches="$patches_jar" -f "$pkg_name" 2>&1); then
+			if ! op=$(java -jar "$cli_jar" list-versions "$patches_jar" -f "$pkg_name" 2>&1); then
+				epr "Could not list versions $cli_jar: '$op'"
+				return 1
+			fi
+		fi
 	fi
-
-	cmd="${cmd_base} '$patches_jar' -f '$pkg_name'"
-	if op=$(eval "$cmd" 2>&1); then
-		echo "$op"
-		return
-	fi
-
-	epr "Could not list versions $cli_jar: '$op'"
-	return 1
+	echo "$op"
 }
 patches_list() {
 	local cli_jar=$1 patches_jar=$2 pkg_name=$3 op
@@ -531,6 +526,33 @@ get_archive_resp() {
 get_archive_vers() { sed 's/^[^-]*-//;s/-\(all\|arm64-v8a\|arm-v7a\)\.apk//g' <<<"$__ARCHIVE_RESP__"; }
 get_archive_pkg_name() { echo "$__ARCHIVE_PKG_NAME__"; }
 
+# -------------------- github --------------------
+dl_github() {
+	local version=$2 output=$3 arch=$4
+	local path version=${version// /}
+	path=$(grep "${version#v}-${arch// /}" <<<"$__ARCHIVE_RESP__") || return 1
+	if [[ "$path" == *.apkm ]]; then
+		req "$__GITHUB_URL__/$path" "$output.apkm" || return 1
+		merge_splits "$output.apkm" "$output"
+	else
+		req "$__GITHUB_URL__/$path" "$output"
+	fi
+}
+get_github_resp() {
+	local repo tag resp
+	repo=$(cut -d/ -f4-5 <<<"$1")
+	tag=${1%/}
+	tag=${tag##*/}
+	resp=$(gh_req "https://api.github.com/repos/${repo}/releases/tags/${tag}" -) || return 1
+	__ARCHIVE_RESP__=$(jq -r '.assets[]? | select(.name | endswith(".apk") or endswith(".apkm")) | .name' <<<"$resp")
+	if [ -z "$__ARCHIVE_RESP__" ]; then return 1; fi
+	__ARCHIVE_PKG_NAME__=$(head -1 <<<"$__ARCHIVE_RESP__" | cut -d- -f1)
+	if [ -z "$__ARCHIVE_PKG_NAME__" ]; then return 1; fi
+	__GITHUB_URL__="https://github.com/${repo}/releases/download/${tag}"
+}
+get_github_vers() { get_archive_vers; }
+get_github_pkg_name() { get_archive_pkg_name; }
+
 # -------------------- direct --------------------
 dl_direct() {
 	local url=$1 version=${2// /-} output=$3 arch=$4 _dpi=$5
@@ -553,7 +575,10 @@ patch_apk() {
 
 	if [ "$OS" = Android ]; then cmd+=" --custom-aapt2-binary='${AAPT2}'"; fi
 	pr "$cmd"
-	if eval "$cmd"; then [ -f "$patched_apk" ]; else
+	PATCH_OUTPUT=$(eval "$cmd" 2>&1)
+	local ret=$?
+	echo "$PATCH_OUTPUT"
+	if [ $ret -eq 0 ]; then [ -f "$patched_apk" ]; else
 		rm "$patched_apk" 2>/dev/null || :
 		return 1
 	fi
@@ -569,6 +594,25 @@ check_sig() {
 	fi
 }
 
+write_build_info() {
+	local key=$1 arch=$2 ext=$3 name=$4 version=$5 patches=$6 changelog=$7
+	if [ "$ext" = ".apk" ] || [ "$mode_arg" = module ]; then
+		log "${key} (${arch}): ${version}"
+	fi
+	local arch_orig="${args[arch]// /}"
+	if [ "$arch_orig" != "auto" ]; then ext="${arch}${ext}"; arch=""; fi
+	jq --arg key "$key" \
+		--arg ext "$ext" \
+		--arg arch "$arch" \
+		--arg name "$name" \
+		--arg version "$version" \
+		--arg patches "$patches" \
+		--arg changelog "$changelog" \
+		--argjson applied "$(echo "$PATCH_OUTPUT" | grep -oP 'INFO: "\K[^"]+(?=" succeeded)' | jq -R -s -c 'split("\n") | map(select(length > 0))')" \
+		'if has($key) then .[$key].exts = (.[$key].exts + [$ext] | unique) else .[$key] = {exts: [$ext], name: $name, arch: $arch, version: $version, patches: $patches, changlog: $changelog, applied_patches: $applied} end' \
+		"$BUILD_JSON_FILE" > "${BUILD_JSON_FILE}.tmp" && mv "${BUILD_JSON_FILE}.tmp" "$BUILD_JSON_FILE"
+}
+
 build_rv() {
 	eval "declare -A args=${1#*=}"
 	local version="" pkg_name=""
@@ -580,6 +624,8 @@ build_rv() {
 	local dl_from=${args[dl_from]}
 	local arch=${args[arch]}
 	local arch_f="${arch// /}"
+	local arch_list=("$arch_f")
+	[ "$arch_f" = "auto" ] && arch_list=("all" "arm64-v8a" "arm-v7a")
 
 	local p_patcher_args=()
 	if [ "${args[excluded_patches]}" ]; then p_patcher_args+=("$(join_args "${args[excluded_patches]}" -d)"); fi
@@ -645,6 +691,8 @@ build_rv() {
 	pr "Choosing version '${version}' for ${table}"
 	local version_f=${version// /}
 	version_f=${version_f#v}
+	for arch in "${arch_list[@]}"; do
+		arch_f="${arch// /}"
 	local stock_apk="${TEMP_DIR}/${pkg_name}-${version_f}-${arch_f}.apk"
 	if [ ! -f "$stock_apk" ]; then
 		for dl_p in "${DL_SRCS[@]}"; do
@@ -657,15 +705,17 @@ build_rv() {
 				fi
 			fi
 			if ! dl_${dl_p} "${args[${dl_p}_dlurl]}" "$version" "$stock_apk" "$arch" "${args[dpi]}" "$get_latest_ver"; then
-				epr "ERROR: Could not download '${table}' from '${dl_p}' with version '${version}', arch '${arch}', dpi '${args[dpi]}'"
+				pr "ERROR: Could not download '${table}' from '${dl_p}' with version '${version}', arch '${arch}', dpi '${args[dpi]}'"
 				continue
 			fi
 			break
 		done
-		if [ ! -f "$stock_apk" ]; then
-			epr "Stock apk not found ($stock_apk)"
-			return 0
-		fi
+	fi
+	if [ -f "$stock_apk" ]; then break; fi
+	done
+	if [ ! -f "$stock_apk" ]; then
+		epr "ERROR: Could not download '${table}'"
+		return 0
 	fi
 
 	local sig_op
@@ -685,7 +735,6 @@ build_rv() {
 			return 0
 		fi
 	fi
-	log "${table}: ${version}"
 
 	local microg_patch
 	microg_patch=$(grep "^Name: " <<<"$list_patches" | grep -i "gmscore\|microg" || :) microg_patch=${microg_patch#*: }
@@ -697,6 +746,8 @@ build_rv() {
 	local patcher_args patched_apk build_mode
 	local rv_brand_f=${args[rv_brand],,}
 	rv_brand_f=${rv_brand_f// /-}
+	local patches_ref="${args[patches_ref]}"
+	local changelog_url="${args[changelog_url]}"
 	if [ "${args[patcher_args]}" ]; then p_patcher_args+=("${args[patcher_args]}"); fi
 	for build_mode in "${build_mode_arr[@]}"; do
 		patcher_args=("${p_patcher_args[@]}")
@@ -745,6 +796,7 @@ build_rv() {
 				mv -f "$patched_apk" "$apk_output"
 			fi
 			pr "Built ${table} (non-root): '${apk_output}'"
+			write_build_info "${table% (*}" "${arch_f}" ".apk" "${app_name_l}-${rv_brand_f}" "$version_f" "$patches_ref" "$changelog_url"
 			continue
 		fi
 		local base_template
@@ -794,6 +846,7 @@ build_rv() {
 		zip -"$COMPRESSION_LEVEL" -FSqr "${CWD}/${BUILD_DIR}/${module_output}" .
 		popd >/dev/null || :
 		pr "Built ${table} (root): '${BUILD_DIR}/${module_output}'"
+		write_build_info "${table% (*}" "${arch_f}" ".zip" "${app_name_l}-${rv_brand_f}" "$version_f" "$patches_ref" "$changelog_url"
 	done
 }
 

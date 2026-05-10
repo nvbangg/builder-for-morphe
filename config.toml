@@ -1,74 +1,202 @@
 enable-module-update = true # set this to false if you do not want to receive updates for the module
-parallel-jobs = 1
-
-# add 'enabled = false' for not patching a specific app or remove it from the config
-# see https://github.com/j-hc/revanced-magisk-module/blob/main/CONFIG.md for more detailed explanations
-
-# you can use rvmm-config-gen to generate a config
+# parallel-jobs = 1 
+# NOTE: parallel-jobs MUST BE 1 if using `arch="both"` to avoid download errors.
+# see https://github.com/nvbangg/morphe-builder/blob/main/CONFIG.md for more detailed explanations
 
 [YouTube]
-build-mode = "both"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube"
-uptodown-dlurl = "https://youtube.en.uptodown.com/android"
+rv-brand = "nvbangg"
 archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.google.android.youtube"
+uptodown-dlurl = "https://youtube.en.uptodown.com/android"
+exclusive-patches = true
+included-patches = "'Bypass URL redirects' 'Disable Shorts resuming on startup' 'Downloads' 'Hide Shorts components' 'Hide ads' 'Open links externally' 'Override YouTube Music buttons' 'Playback speed' 'Remove background playback restrictions' 'Sanitize sharing links' 'Shorts autoplay' 'SponsorBlock' 'Spoof video streams' 'Video ads' 'Video quality'"
 
 [YouTube-Morphe]
-app-name = "YouTube"
-patches-source = "MorpheApp/morphe-patches"
-cli-source = "MorpheApp/morphe-cli"
-rv-brand = "Morphe"
-build-mode = "both"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube"
-uptodown-dlurl = "https://youtube.en.uptodown.com/android"
+app-name = "youtube"
 archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.google.android.youtube"
+uptodown-dlurl = "https://youtube.en.uptodown.com/android"
 
-[Music]
-build-mode = "both"
-arch = "both"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube-music"
-uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
+[YouTube-Music]
 archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.google.android.apps.youtube.music"
-
-[Music-Morphe]
-app-name = "Music"
-patches-source = "MorpheApp/morphe-patches"
-cli-source = "MorpheApp/morphe-cli"
-rv-brand = "Morphe"
-build-mode = "both"
-arch = "both"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube-music"
 uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
-archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.google.android.apps.youtube.music"
 
-[Reddit-Morphe]
-app-name = "Reddit"
-rv-brand = "Morphe"
-build-mode = "both"
-patches-source = "MorpheApp/morphe-patches"
-cli-source = "MorpheApp/morphe-cli"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/redditinc/reddit/"
+[Google-Photos]
+patches-source = "RookieEnough/De-ReVanced"
+archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.google.android.apps.photos"
+uptodown-dlurl = "https://google-photos.en.uptodown.com/android"
+
+[Facebook]
+patches-source = "RookieEnough/De-ReVanced"
+github-dlurl = "https://github.com/nvbangg/apks/releases/tag/com.facebook.katana"
+uptodown-durl = "https://facebook.en.uptodown.com/android"
+
+[Instagram]
+patches-source = "crimera/piko"
+uptodown-dlurl = "https://instagram.en.uptodown.com/android"
+
+[Threads] 
+patches-source = "RookieEnough/De-ReVanced"
+github-dlurl = "https://github.com/nvbangg/apks/releases/tag/com.instagram.barcelona"
+uptodown-dlurl = "https://threads.en.uptodown.com/android"
+
+[Messenger]
+patches-source = "RookieEnough/De-ReVanced"
+uptodown-dlurl = "https://facebook-messenger.en.uptodown.com/android"
+
+[Viber]
+patches-source = "RookieEnough/De-ReVanced"
+github-dlurl = "https://github.com/nvbangg/apks/releases/tag/com.viber.voip"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/viber-media-s-a-r-l/viber/"
+
+[TikTok]
+patches-source = "RookieEnough/De-ReVanced"
+uptodown-dlurl = "https://tiktok.en.uptodown.com/android"
+
+[Telegram]
+patches-source = "Paresh-Maheshwari/paresh-patches" 
+uptodown-dlurl = "https://telegram.en.uptodown.com/android"
+
+[X]
+patches-source = "crimera/piko"
+uptodown-dlurl = "https://twitter.en.uptodown.com/android"
+
+[Amazon-Shopping]
+patches-source = "RookieEnough/De-ReVanced"
+uptodown-dlurl = "https://amazon-shopping.en.uptodown.com/android"
+
+[Prime-Video]
+patches-source = "hoo-dles/morphe-patches"
+uptodown-dlurl = "https://amazon-video.en.uptodown.com/android"
+
+[Disney-Plus]
+patches-source = "RookieEnough/De-ReVanced"
+uptodown-dlurl = "https://disney-disneyplus.en.uptodown.com/android"
+
+[Reddit]
 archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.reddit.frontpage"
 uptodown-dlurl = "https://reddit-official-app.en.uptodown.com/android"
-dpi = "120-640dpi"
 
-[Twitter]
-patches-source = "crimera/piko"
-cli-source = "MorpheApp/morphe-cli"
-rv-brand = "Piko"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter/"
-archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.twitter.android"
-build-mode = "module"
-version = "11.81.0-release.0"
-include-stock = "split"
+[Truecaller]
+patches-source = "Paresh-Maheshwari/paresh-patches"
+github-dlurl = "https://github.com/nvbangg/apks/releases/tag/com.truecaller"
 
-[GooglePhotos]
-build-mode = "both"
-arch = "both"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/photos/"
-uptodown-dlurl = "https://google-photos.en.uptodown.com/android"
-archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.google.android.apps.photos"
+[Pinterest]
+patches-source = "binarymend/morphe-patches"
+uptodown-dlurl = "https://pinterest.en.uptodown.com/android"
+
+[WPS-Office]
+patches-source = "hoo-dles/morphe-patches"
+uptodown-dlurl = "https://wps-office.en.uptodown.com/android"
+version = "18.12.1"
+
+[Duolingo]
+patches-source = "hoo-dles/morphe-patches"
+uptodown-dlurl = "https://duolingo.en.uptodown.com/android"
+
+[Google-News] 
+patches-source = "RookieEnough/De-ReVanced"
+uptodown-dlurl = "https://google-play-newsstand.en.uptodown.com/android"
+
+[Gboard]
+patches-source = "jkennethcarino/adobo"
+uptodown-dlurl = "https://gboard-go.en.uptodown.com/android"
+
+[Google-Recorder]
+patches-source = "RookieEnough/De-ReVanced"
+uptodown-dlurl = "https://opnemer.en.uptodown.com/android"
+
+# [Photomath]
+# patches-source = "RookieEnough/De-ReVanced"
+# uptodown-dlurl = "https://photomath.en.uptodown.com/android"
+
+# [ibis-Paint-X]
+# patches-source = "hoo-dles/morphe-patches"
+# uptodown-dlurl = "https://ibispaint-x.en.uptodown.com/android"
+
+# [VN-Video-Editor]
+# patches-source = "Paresh-Maheshwari/paresh-patches"
+# uptodown-dlurl = "https://vn-video-editor.en.uptodown.com/android"
+
+[Pandora]
+patches-source = "hoo-dles/morphe-patches"
+github-dlurl = "https://github.com/nvbangg/apks/releases/tag/com.pandora.android"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/pandora/pandora-music-podcasts/"
+
+[KakaoTalk]
+patches-source = "AmpleReVanced/revanced-patches"
+uptodown-dlurl = "https://kakaotalk.en.uptodown.com/android"
+
+# [RAR]
+# patches-source = "RookieEnough/De-ReVanced"
+# uptodown-dlurl = "https://rar-for-android.en.uptodown.com/android"
+
+[Cricbuzz]
+patches-source = "RookieEnough/De-ReVanced"
+uptodown-dlurl = "https://cricbuzz-cricket-scores-and-news.en.uptodown.com/android"
+
+[SoundCloud]
+patches-source = "hoo-dles/morphe-patches"
+uptodown-dlurl = "https://soundcloud.en.uptodown.com/android"
 
 [Twitch]
-enabled = false
-apkmirror-dlurl = "https://www.apkmirror.com/apk/twitch-interactive-inc/twitch/"
+patches-source = "RookieEnough/De-ReVanced"
+github-dlurl = "https://github.com/nvbangg/apks/releases/tag/tv.twitch.android.app"
 uptodown-dlurl = "https://twitch.en.uptodown.com/android"
+
+[Tumblr]
+patches-source = "RookieEnough/De-ReVanced"
+uptodown-dlurl = "https://tumblr.en.uptodown.com/android"
+
+[MyFitnessPal]
+patches-source = "hoo-dles/morphe-patches"
+uptodown-dlurl = "https://calorie-counter-myfitnesspal.en.uptodown.com/android"
+
+[Proton-VPN]
+patches-source = "Paresh-Maheshwari/paresh-patches"
+uptodown-dlurl = "https://protonvpn.en.uptodown.com/android"
+
+[Strava]
+patches-source = "RookieEnough/De-ReVanced"
+uptodown-dlurl = "https://strava.en.uptodown.com/android"
+
+# [Cake]
+# patches-source = "hoo-dles/morphe-patches"
+# uptodown-dlurl = "https://me-mycake.en.uptodown.com/android"
+
+# [Nova-Launcher]
+# patches-source = "hoo-dles/morphe-patches"
+# github-dlurl = "https://github.com/nvbangg/apks/releases/tag/com.teslacoilsw.launcher"
+# uptodown-dlurl = "https://nova-launcher.en.uptodown.com/android"
+
+# [Sofascore]
+# patches-source = "hoo-dles/morphe-patches"
+# uptodown-dlurl = "https://sofascore.en.uptodown.com/android"
+
+# [Document-Scanner]
+# patches-source = "Paresh-Maheshwari/paresh-patches"
+# uptodown-dlurl = "https://doc-scanner.en.uptodown.com/android"
+
+# [Wallcraft]
+# patches-source = "hoo-dles/morphe-patches"
+# uptodown-dlurl = "https://wallpaperscraft.en.uptodown.com/android"
+
+# [Fing]
+# patches-source = "Paresh-Maheshwari/paresh-patches"
+# uptodown-dlurl = "https://fing-network-tools.en.uptodown.com/android"
+
+# [Windy]
+# patches-source = "hoo-dles/morphe-patches"
+# uptodown-dlurl = "https://windy-wind-waves-and-hurricanes-forecast.en.uptodown.com/android"
+
+# [Merriam-Webster-Dictionary]
+# patches-source = "hoo-dles/morphe-patches"
+# uptodown-dlurl = "https://merriam-webster-dictionary.en.uptodown.com/android"
+# version = "5.5.0" 
+
+# [Busuu]
+# patches-source = "hoo-dles/morphe-patches"
+# uptodown-dlurl = "https://busuu.en.uptodown.com/android"
+
+# [Smart-Launcher-6]
+# patches-source = "hoo-dles/morphe-patches"
+# uptodown-dlurl = "https://smart-launcher.en.uptodown.com/android"
+# version = "6.6 build 002 patch 1"
