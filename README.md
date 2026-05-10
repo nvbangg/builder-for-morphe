@@ -44,7 +44,7 @@ Here you can download and use applications selected for this repository, which a
 
 > [!NOTE]   
 > 🔒 All release files are immutable, meaning they cannot be modified once published — even by me.  
-> 💡 Do not be afraid to [open an issue](https://github.com/nvbangg/awesome-for-morphe/issues/new) if you want to add support for any additional app. 
+> 💡 Do not be afraid to [open an issue](https://github.com/nvbangg/awesome-for-morphe/issues) if you want to add support for any additional app. 
 
 
 ## 🔥 Features
@@ -64,7 +64,7 @@ Here you can download and use applications selected for this repository, which a
 
 🧩 Morphe: <a href="https://nvbangg.github.io/awesome-for-morphe/?source=morphe&app=com.google.android.youtube">View Details</a>
 
-<a href="https://github.com/nvbangg/builder-for-morphe/releases?q=YouTube&expanded=true"><img src="https://img.shields.io/badge/YouTube-Download-gray?labelColor=FF0000&logo=YouTube&logoColor=white" alt="YouTube Download"></a> <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22app.morphe.android.youtube%22%2C%22name%22%3A%22YouTube%22%2C%22author%22%3A%22nvbangg%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2Fnvbangg%2Fbuilder-for-morphe%22%2C%22additionalSettings%22%3A%22%7B%5C%22apkFilterRegEx%5C%22%3A%5C%22youtube-morphe%5C%22%7D%22%7D"><img src="https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium" alt="Add to Obtainium"></a>
+<a href="https://github.com/nvbangg/builder-for-morphe/releases?q=YouTube&expanded=true"><img src="https://img.shields.io/badge/YouTube-Download-gray?labelColor=FF0000&logo=YouTube&logoColor=white" alt="YouTube Download"></a> <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22app.morphe.android.youtube%22%2C%22name%22%3A%22YouTube%22%2C%22author%22%3A%22nvbangg%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2Fnvbangg%2Fbuilder-for-morphe%22%2C%22additionalSettings%22%3A%22%7B%5C%22apkFilterRegEx%5C%22%3A%5C%22youtube%5C%22%7D%22%7D"><img src="https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium" alt="Add to Obtainium"></a>
 
 ---
 <h3 id="youtube-music"><a href="https://play.google.com/store/apps/details?id=com.google.android.apps.youtube.music">YouTube Music</a></h3>
@@ -95,7 +95,7 @@ Here you can download and use applications selected for this repository, which a
 <a href="https://github.com/nvbangg/builder-for-morphe/releases?q=Instagram&expanded=true"><img src="https://img.shields.io/badge/Instagram-Download-gray?labelColor=E4405F&logo=Instagram&logoColor=white" alt="Instagram Download"></a> <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22com.instagram.android%22%2C%22name%22%3A%22Instagram%22%2C%22author%22%3A%22nvbangg%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2Fnvbangg%2Fbuilder-for-morphe%22%2C%22additionalSettings%22%3A%22%7B%5C%22apkFilterRegEx%5C%22%3A%5C%22instagram%5C%22%7D%22%7D"><img src="https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium" alt="Add to Obtainium"></a>
 
 ---
-<h3 id="x"><a href="https://play.google.com/store/apps/details?id=com.twitter.android">X (Twitter)</a></h3>
+<h3 id="x-twitter"><a href="https://play.google.com/store/apps/details?id=com.twitter.android">X (Twitter)</a></h3>
 
 🧩 Piko: <a href="https://nvbangg.github.io/awesome-for-morphe/?source=piko&app=com.twitter.android">View Details</a>
 
