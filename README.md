@@ -1,16 +1,23 @@
 # [nvbangg/builder-for-morphe](https://github.com/nvbangg/builder-for-morphe)
 
+[nvbangg.github.io/builder-for-morphe](https://nvbangg.github.io/builder-for-morphe)
+
 ### 🔗 Jump to:
 
+- [🔥 Features](#features)
+- [📚 Documentation](#documentation)
+- [⚠️ Disclaimer](#disclaimer)
+- [⭐ Star History](#star-history)
+
 <details>
-  <summary><b>📋 List of apps</b></summary>
+  <summary><b>📋 List of apps in this repository</b></summary>
 
   - [YouTube](#youtube)
   - [YouTube Music](#youtube-music)
   - [Google Photos](#google-photos)
   - [Facebook](#facebook)
   - [Instagram](#instagram)
-  - [X](#x-twitter)
+  - [X (Twitter)](#x-twitter)
   - [Reddit](#reddit)
   - [TikTok](#tiktok)
   - [Prime Video](#prime-video)
@@ -25,20 +32,14 @@
   - [Twitch](#twitch)
   - [Cricbuzz](#cricbuzz)
   - [Strava](#strava)
-
-  </details>
-
-- [🔥 Features](#-features)
-- [📚 Documentation](#-documentation--contributing)
-- [⚠️ Disclaimer](#%EF%B8%8F-disclaimer)
-- [⭐ Star History](#-star-history)
+</details>
 
 <div align="center">
 <a href="#-features"><img src="https://readme-typing-svg.demolab.com/?font=Google+Sans&size=25&pause=1000&color=4500FF&center=true&vCenter=true&random=false&width=550&lines=%F0%9F%93%A6+Pre-built+APKs+from+various+patch+sources"></a>
 
 Here you can download and use applications selected for this repository, which are enhanced with many functionalities that will certainly be useful to you.
 
-[![CI](https://img.shields.io/github/actions/workflow/status/nvbangg/builder-for-morphe/ci.yml?label=CI&logo=githubactions&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/actions/workflows/ci.yml)　[![Releases](https://img.shields.io/github/downloads/nvbangg/builder-for-morphe/total?logo=data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjZmZmZmZmIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNNSAyMGgxNHYtMkg1djJ6TTE5IDloLTRWM0g5djZINWw3IDcgNy03eiIvPjwvc3ZnPg==&label=Downloads)](https://github.com/nvbangg/builder-for-morphe/releases)　[![Stars](https://img.shields.io/github/stars/nvbangg/builder-for-morphe?label=Star%20this%20repo%20if%20useful%20⭐&logo=github)](https://github.com/nvbangg/builder-for-morphe)　[![Sponsor](https://img.shields.io/badge/Support-pink?style=social&logo=github-sponsors)](https://github.com/sponsors/nvbangg)　[![Related Repo](https://img.shields.io/badge/%F0%9F%94%97%20Related%20Repo-awesome--for--morphe-blue)](https://github.com/nvbangg/awesome-for-morphe)
+<a href="https://github.com/nvbangg/builder-for-morphe/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/nvbangg/builder-for-morphe/ci.yml?label=CI&logo=githubactions&logoColor=white" alt="CI"></a>　<a href="https://github.com/nvbangg/builder-for-morphe/releases"><img src="https://img.shields.io/github/downloads/nvbangg/builder-for-morphe/total?logo=data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjZmZmZmZmIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNNSAyMGgxNHYtMkg1djJ6TTE5IDloLTRWM0g5djZINWw3IDcgNy03eiIvPjwvc3ZnPg==&label=Downloads" alt="Releases"></a>　<a href="https://github.com/nvbangg/builder-for-morphe"><img src="https://img.shields.io/github/stars/nvbangg/builder-for-morphe?label=Star%20this%20repo%20if%20useful%20⭐&logo=github" alt="Stars"></a>　<a href="https://github.com/sponsors/nvbangg"><img src="https://img.shields.io/badge/Support-pink?style=social&logo=github-sponsors" alt="Sponsor"></a>　<a href="https://github.com/nvbangg/awesome-for-morphe"><img src="https://img.shields.io/badge/%F0%9F%94%97%20Related%20Repo-awesome--for--morphe-blue" alt="Related Repo"></a>
 
 </div>
 
@@ -47,7 +48,7 @@ Here you can download and use applications selected for this repository, which a
 > 💡 Do not be afraid to [open an issue](https://github.com/nvbangg/awesome-for-morphe/issues) if you want to add support for any additional app. 
 
 
-## 🔥 Features
+## 🔥 Features <a id="features"></a>
 
 - 🛑 **Ad-blocking**: blocks all types of ads (who needs them anyway?).
 - 🚀 **Enhanced features**: squeezes more out of the app.
@@ -58,153 +59,168 @@ Here you can download and use applications selected for this repository, which a
 - ✨ **And much more!**
 
 ---
-## 📋 List of apps in this repository
+## 📋 List of apps in this repository <a id="apps-list"></a>
 
-<h3 id="youtube"><a href="https://play.google.com/store/apps/details?id=com.google.android.youtube">YouTube</a></h3> 
+### [YouTube](https://play.google.com/store/apps/details?id=com.google.android.youtube) <a id="youtube"></a> 
 
-🧩 Morphe: <a href="https://nvbangg.github.io/awesome-for-morphe/?source=morphe&app=com.google.android.youtube">View Details</a>
+🧩 Morphe: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=morphe&app=com.google.android.youtube)
 
-<a href="https://github.com/nvbangg/builder-for-morphe/releases?q=YouTube&expanded=true"><img src="https://img.shields.io/badge/YouTube-Download-gray?labelColor=FF0000&logo=YouTube&logoColor=white" alt="YouTube Download"></a> [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-youtube]
-
----
-<h3 id="youtube-music"><a href="https://play.google.com/store/apps/details?id=com.google.android.apps.youtube.music">YouTube Music</a></h3>
-
-🧩 Morphe: <a href="https://nvbangg.github.io/awesome-for-morphe/?source=morphe&app=com.google.android.apps.youtube.music">View Details</a>
-
-<a href="https://github.com/nvbangg/builder-for-morphe/releases?q=YT-Music&expanded=true"><img src="https://img.shields.io/badge/YouTube_Music-Download-gray?labelColor=FF0000&logo=youtube-music&logoColor=white" alt="YouTube Music Download"></a> [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-music]
+[![YouTube Download](https://img.shields.io/badge/YouTube-Download-gray?labelColor=FF0000&logo=YouTube&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=YouTube&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-youtube]
 
 ---
-<h3 id="google-photos"><a href="https://play.google.com/store/apps/details?id=com.google.android.apps.photos">Google Photos</a></h3>
+### [YouTube Music](https://play.google.com/store/apps/details?id=com.google.android.apps.youtube.music) <a id="youtube-music"></a>
 
-🧩 RookieEnough: <a href="https://nvbangg.github.io/awesome-for-morphe/?source=rookieenough&app=com.google.android.apps.photos">View Details</a>
+🧩 Morphe: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=morphe&app=com.google.android.apps.youtube.music)
 
-<a href="https://github.com/nvbangg/builder-for-morphe/releases?q=Google-Photos&expanded=true"><img src="https://img.shields.io/badge/Google_Photos-Download-gray?labelColor=FBBC04&logo=google-photos&logoColor=000000" alt="Google Photos Download"></a> [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-photos]
-
----
-<h3 id="facebook"><a href="https://play.google.com/store/apps/details?id=com.facebook.katana">Facebook</a></h3>
-
-🧩 RookieEnough: <a href="https://nvbangg.github.io/awesome-for-morphe/?source=rookieenough&app=com.facebook.katana">View Details</a>
-
-<a href="https://github.com/nvbangg/builder-for-morphe/releases?q=Facebook&expanded=true"><img src="https://img.shields.io/badge/Facebook-Download-gray?labelColor=1877F2&logo=Facebook&logoColor=white" alt="Facebook Download"></a> [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-facebook]
+[![YouTube Music Download](https://img.shields.io/badge/YouTube_Music-Download-gray?labelColor=FF0000&logo=youtube-music&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=YT-Music&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-music]
 
 ---
-<h3 id="instagram"><a href="https://play.google.com/store/apps/details?id=com.instagram.android">Instagram</a></h3>
+### [Google Photos](https://play.google.com/store/apps/details?id=com.google.android.apps.photos) <a id="google-photos"></a>
 
-🧩 Piko: <a href="https://nvbangg.github.io/awesome-for-morphe/?source=piko&app=com.instagram.android">View Details</a>
+🧩 RookieEnough: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=rookieenough&app=com.google.android.apps.photos)
 
-<a href="https://github.com/nvbangg/builder-for-morphe/releases?q=Instagram&expanded=true"><img src="https://img.shields.io/badge/Instagram-Download-gray?labelColor=E4405F&logo=Instagram&logoColor=white" alt="Instagram Download"></a> [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-instagram]
-
----
-<h3 id="x-twitter"><a href="https://play.google.com/store/apps/details?id=com.twitter.android">X (Twitter)</a></h3>
-
-🧩 Piko: <a href="https://nvbangg.github.io/awesome-for-morphe/?source=piko&app=com.twitter.android">View Details</a>
-
-<a href="https://github.com/nvbangg/builder-for-morphe/releases?q=X-Twitter&expanded=true"><img src="https://img.shields.io/badge/Twitter-Download-gray?labelColor=0F1419&logo=X&logoColor=white" alt="X (Twitter) Download"></a> [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-x]
+[![Google Photos Download](https://img.shields.io/badge/Google_Photos-Download-gray?labelColor=FBBC04&logo=google-photos&logoColor=000000)](https://github.com/nvbangg/builder-for-morphe/releases?q=Google-Photos&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-photos]
 
 ---
-<h3 id="reddit"><a href="https://play.google.com/store/apps/details?id=com.reddit.frontpage">Reddit</a></h3>
+### [Facebook](https://play.google.com/store/apps/details?id=com.facebook.katana) <a id="facebook"></a>
 
-🧩 Morphe: <a href="https://nvbangg.github.io/awesome-for-morphe/?source=morphe&app=com.reddit.frontpage">View Details</a>
+🧩 RookieEnough: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=rookieenough&app=com.facebook.katana)
 
-<a href="https://github.com/nvbangg/builder-for-morphe/releases?q=Reddit&expanded=true"><img src="https://img.shields.io/badge/Reddit-Download-gray?labelColor=FF4500&logo=Reddit&logoColor=white" alt="Reddit Download"></a> [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-reddit]
-
----
-<h3 id="tiktok"><a href="https://play.google.com/store/apps/details?id=com.ss.android.ugc.trill">TikTok</a></h3>
-
-🧩 RookieEnough: <a href="https://nvbangg.github.io/awesome-for-morphe/?source=rookieenough&app=com.ss.android.ugc.trill">View Details</a>
-
-<a href="https://github.com/nvbangg/builder-for-morphe/releases?q=TikTok&expanded=true"><img src="https://img.shields.io/badge/TikTok-Download-gray?labelColor=252525&logo=TikTok&logoColor=white" alt="TikTok Download"></a> [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-tiktok]
+[![Facebook Download](https://img.shields.io/badge/Facebook-Download-gray?labelColor=1877F2&logo=Facebook&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Facebook&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-facebook]
 
 ---
-<h3 id="prime-video"><a href="https://play.google.com/store/apps/details?id=com.amazon.avod.thirdpartyclient">Prime Video</a></h3>
+### [Instagram](https://play.google.com/store/apps/details?id=com.instagram.android) <a id="instagram"></a>
 
-🧩 Hoo-dles: <a href="https://nvbangg.github.io/awesome-for-morphe/?source=hoo-dles&app=com.amazon.avod.thirdpartyclient">View Details</a>
+🧩 Piko: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=piko&app=com.instagram.android)
 
-<a href="https://github.com/nvbangg/builder-for-morphe/releases?q=Prime-Video&expanded=true"><img src="https://img.shields.io/badge/Prime_Video-Download-gray?labelColor=00A8E1&logo=Prime-Video&logoColor=white" alt="Prime Video Download"></a> [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-prime]
-
----
-<h3 id="disney-plus"><a href="https://play.google.com/store/apps/details?id=com.disney.disneyplus">Disney+</a></h3>
-
-🧩 RookieEnough: <a href="https://nvbangg.github.io/awesome-for-morphe/?source=rookieenough&app=com.disney.disneyplus">View Details</a>
-
-<a href="https://github.com/nvbangg/builder-for-morphe/releases?q=Disney-Plus&expanded=true"><img src="https://img.shields.io/badge/Disney+-Download-gray?labelColor=113CCF&logo=Disney%2B&logoColor=white" alt="Disney+ Download"></a> [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-disney]
+[![Instagram Download](https://img.shields.io/badge/Instagram-Download-gray?labelColor=E4405F&logo=Instagram&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Instagram&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-instagram]
 
 ---
-<h3 id="pinterest"><a href="https://play.google.com/store/apps/details?id=com.pinterest">Pinterest</a></h3>
+### [X (Twitter)](https://play.google.com/store/apps/details?id=com.twitter.android) <a id="x-twitter"></a>
 
-🧩 Binarymend: <a href="https://nvbangg.github.io/awesome-for-morphe/?source=binarymend&app=com.pinterest">View Details</a>
+🧩 Piko: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=piko&app=com.twitter.android)
 
-<a href="https://github.com/nvbangg/builder-for-morphe/releases?q=Pinterest&expanded=true"><img src="https://img.shields.io/badge/Pinterest-Download-gray?labelColor=E60023&logo=Pinterest&logoColor=white" alt="Pinterest Download"></a> [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-pinterest]
-
----
-<h3 id="wps-office"><a href="https://play.google.com/store/apps/details?id=cn.wps.moffice_eng">WPS Office</a> - PDF, Word, Sheet, PPT</h3>
-
-🧩 Hoo-dles: <a href="https://nvbangg.github.io/awesome-for-morphe/?source=hoo-dles&app=cn.wps.moffice_eng">View Details</a>
-
-<a href="https://github.com/nvbangg/builder-for-morphe/releases?q=WPS-Office&expanded=true"><img src="https://img.shields.io/badge/WPS_Office-Download-gray?labelColor=C03426&logo=wpsoffice&logoColor=white" alt="WPS Office Download"></a> [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-wps]
+[![X (Twitter) Download](https://img.shields.io/badge/Twitter-Download-gray?labelColor=0F1419&logo=X&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=X-Twitter&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-x]
 
 ---
-<h3 id="duolingo"><a href="https://play.google.com/store/apps/details?id=com.duolingo">Duolingo</a></h3>
+### [Reddit](https://play.google.com/store/apps/details?id=com.reddit.frontpage) <a id="reddit"></a>
 
-🧩 Hoo-dles: <a href="https://nvbangg.github.io/awesome-for-morphe/?source=hoo-dles&app=com.duolingo">View Details</a>
+🧩 Morphe: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=morphe&app=com.reddit.frontpage)
 
-<a href="https://github.com/nvbangg/builder-for-morphe/releases?q=Duolingo&expanded=true"><img src="https://img.shields.io/badge/Duolingo-Download-gray?labelColor=4DC730&logo=Duolingo&logoColor=white" alt="Duolingo Download"></a> [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-duolingo]
-
----
-<h3 id="viber"><a href="https://play.google.com/store/apps/details?id=com.viber.voip">Rakuten Viber Messenger</a></h3>
-
-🧩 RookieEnough: <a href="https://nvbangg.github.io/awesome-for-morphe/?source=rookieenough&app=com.viber.voip">View Details</a>
-
-<a href="https://github.com/nvbangg/builder-for-morphe/releases?q=Viber&expanded=true"><img src="https://img.shields.io/badge/Viber-Download-gray?labelColor=665CAC&logo=Viber&logoColor=white" alt="Viber Download"></a> [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-viber]
+[![Reddit Download](https://img.shields.io/badge/Reddit-Download-gray?labelColor=FF4500&logo=Reddit&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Reddit&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-reddit]
 
 ---
-<h3 id="kakaotalk"><a href="https://play.google.com/store/apps/details?id=com.kakao.talk">KakaoTalk</a></h3>
+### [TikTok](https://play.google.com/store/apps/details?id=com.ss.android.ugc.trill) <a id="tiktok"></a>
 
-🧩 AmpleReVanced: <a href="https://nvbangg.github.io/awesome-for-morphe/?source=amplerevanced&app=com.kakao.talk">View Details</a>
+🧩 RookieEnough: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=rookieenough&app=com.ss.android.ugc.trill)
 
-<a href="https://github.com/nvbangg/builder-for-morphe/releases?q=KakaoTalk&expanded=true"><img src="https://img.shields.io/badge/KakaoTalk-Download-gray?labelColor=FEE500&logo=kakaotalk&logoColor=000000" alt="KakaoTalk Download"></a> [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-kakaotalk]
-
----
-<h3 id="pandora"><a href="https://play.google.com/store/apps/details?id=com.pandora.android">Pandora</a> - Music & Podcasts</h3>
-
-🧩 Hoo-dles: <a href="https://nvbangg.github.io/awesome-for-morphe/?source=hoo-dles&app=com.pandora.android">View Details</a>
-
-<a href="https://github.com/nvbangg/builder-for-morphe/releases?q=Pandora&expanded=true"><img src="https://img.shields.io/badge/Pandora-Download-gray?labelColor=3668FF&logo=Pandora&logoColor=white" alt="Pandora Download"></a> [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-pandora]
+[![TikTok Download](https://img.shields.io/badge/TikTok-Download-gray?labelColor=252525&logo=TikTok&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=TikTok&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-tiktok]
 
 ---
-<h3 id="soundcloud"><a href="https://play.google.com/store/apps/details?id=com.soundcloud.android">SoundCloud</a>: The Music You Love</h3>
+### [Prime Video](https://play.google.com/store/apps/details?id=com.amazon.avod.thirdpartyclient) <a id="prime-video"></a>
 
-🧩 Hoo-dles: <a href="https://nvbangg.github.io/awesome-for-morphe/?source=hoo-dles&app=com.soundcloud.android">View Details</a>
+🧩 Hoo-dles: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=hoo-dles&app=com.amazon.avod.thirdpartyclient)
 
-<a href="https://github.com/nvbangg/builder-for-morphe/releases?q=SoundCloud&expanded=true"><img src="https://img.shields.io/badge/SoundCloud-Download-gray?labelColor=FF5500&logo=SoundCloud&logoColor=white" alt="SoundCloud Download"></a> [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-soundcloud]
-
----
-<h3 id="twitch"><a href="https://play.google.com/store/apps/details?id=tv.twitch.android.app">Twitch</a>: Live Streaming</h3>
-
-🧩 ReVanced: <a href="https://nvbangg.github.io/awesome-for-morphe/?source=revanced&app=tv.twitch.android.app">View Details</a>
-
-<a href="https://github.com/nvbangg/builder-for-morphe/releases?q=Twitch&expanded=true"><img src="https://img.shields.io/badge/Twitch-Download-gray?labelColor=9146FF&logo=Twitch&logoColor=white" alt="Twitch Download"></a> [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-twitch]
+[![Prime Video Download](https://img.shields.io/badge/Prime_Video-Download-gray?labelColor=00A8E1&logo=Prime-Video&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Prime-Video&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-prime]
 
 ---
-<h3 id="cricbuzz"><a href="https://play.google.com/store/apps/details?id=com.cricbuzz.android">Cricbuzz</a> - Live Cricket Scores</h3>
+### [Disney+](https://play.google.com/store/apps/details?id=com.disney.disneyplus) <a id="disney-plus"></a>
 
-🧩 RookieEnough: <a href="https://nvbangg.github.io/awesome-for-morphe/?source=rookieenough&app=com.cricbuzz.android">View Details</a>
+🧩 RookieEnough: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=rookieenough&app=com.disney.disneyplus)
 
-<a href="https://github.com/nvbangg/builder-for-morphe/releases?q=Cricbuzz&expanded=true"><img src="https://img.shields.io/badge/Cricbuzz-Download-gray?labelColor=009270&logo=Cricbuzz&logoColor=white" alt="Cricbuzz Download"></a> [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-cricbuzz]
-
----
-<h3 id="strava"><a href="https://play.google.com/store/apps/details?id=com.strava">Strava</a>: Run, Bike, Walk</h3>
-
-🧩 RookieEnough: <a href="https://nvbangg.github.io/awesome-for-morphe/?source=rookieenough&app=com.strava">View Details</a>
-
-<a href="https://github.com/nvbangg/builder-for-morphe/releases?q=Strava&expanded=true"><img src="https://img.shields.io/badge/Strava-Download-gray?labelColor=FC4C02&logo=Strava&logoColor=white" alt="Strava Download"></a> [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-strava]
+[![Disney+ Download](https://img.shields.io/badge/Disney+-Download-gray?labelColor=113CCF&logo=Disney%2B&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Disney-Plus&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-disney]
 
 ---
-## 📚 Documentation & Contributing
+### [Pinterest](https://play.google.com/store/apps/details?id=com.pinterest) <a id="pinterest"></a>
 
-For full configuration reference, setup and contributing guide, see [CONTRIBUTING.md](CONTRIBUTING.md).
+🧩 Binarymend: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=binarymend&app=com.pinterest)
 
-## ⚠️ Disclaimer
+[![Pinterest Download](https://img.shields.io/badge/Pinterest-Download-gray?labelColor=E60023&logo=Pinterest&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Pinterest&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-pinterest]
+
+---
+### [WPS Office](https://play.google.com/store/apps/details?id=cn.wps.moffice_eng) - PDF, Word, Sheet, PPT <a id="wps-office"></a>
+
+🧩 Hoo-dles: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=hoo-dles&app=cn.wps.moffice_eng)
+
+[![WPS Office Download](https://img.shields.io/badge/WPS_Office-Download-gray?labelColor=C03426&logo=wpsoffice&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=WPS-Office&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-wps]
+
+---
+### [Duolingo](https://play.google.com/store/apps/details?id=com.duolingo) <a id="duolingo"></a>
+
+🧩 Hoo-dles: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=hoo-dles&app=com.duolingo)
+
+[![Duolingo Download](https://img.shields.io/badge/Duolingo-Download-gray?labelColor=4DC730&logo=Duolingo&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Duolingo&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-duolingo]
+
+---
+### [Rakuten Viber Messenger](https://play.google.com/store/apps/details?id=com.viber.voip) <a id="viber"></a>
+
+🧩 RookieEnough: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=rookieenough&app=com.viber.voip)
+
+[![Viber Download](https://img.shields.io/badge/Viber-Download-gray?labelColor=665CAC&logo=Viber&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Viber&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-viber]
+
+---
+### [KakaoTalk](https://play.google.com/store/apps/details?id=com.kakao.talk) <a id="kakaotalk"></a>
+
+🧩 AmpleReVanced: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=amplerevanced&app=com.kakao.talk)
+
+[![KakaoTalk Download](https://img.shields.io/badge/KakaoTalk-Download-gray?labelColor=FEE500&logo=kakaotalk&logoColor=000000)](https://github.com/nvbangg/builder-for-morphe/releases?q=KakaoTalk&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-kakaotalk]
+
+---
+### [Pandora](https://play.google.com/store/apps/details?id=com.pandora.android) - Music & Podcasts <a id="pandora"></a>
+
+🧩 Hoo-dles: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=hoo-dles&app=com.pandora.android)
+
+[![Pandora Download](https://img.shields.io/badge/Pandora-Download-gray?labelColor=3668FF&logo=Pandora&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Pandora&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-pandora]
+
+---
+### [SoundCloud](https://play.google.com/store/apps/details?id=com.soundcloud.android): The Music You Love <a id="soundcloud"></a>
+
+🧩 Hoo-dles: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=hoo-dles&app=com.soundcloud.android)
+
+[![SoundCloud Download](https://img.shields.io/badge/SoundCloud-Download-gray?labelColor=FF5500&logo=SoundCloud&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=SoundCloud&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-soundcloud]
+
+---
+### [Twitch](https://play.google.com/store/apps/details?id=tv.twitch.android.app): Live Streaming <a id="twitch"></a>
+
+🧩 ReVanced: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=revanced&app=tv.twitch.android.app)
+
+[![Twitch Download](https://img.shields.io/badge/Twitch-Download-gray?labelColor=9146FF&logo=Twitch&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Twitch&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-twitch]
+
+---
+### [Cricbuzz](https://play.google.com/store/apps/details?id=com.cricbuzz.android) - Live Cricket Scores <a id="cricbuzz"></a>
+
+🧩 RookieEnough: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=rookieenough&app=com.cricbuzz.android)
+
+[![Cricbuzz Download](https://img.shields.io/badge/Cricbuzz-Download-gray?labelColor=009270&logo=Cricbuzz&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Cricbuzz&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-cricbuzz]
+
+---
+### [Strava](https://play.google.com/store/apps/details?id=com.strava): Run, Bike, Walk <a id="strava"></a>
+
+🧩 RookieEnough: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=rookieenough&app=com.strava)
+
+[![Strava Download](https://img.shields.io/badge/Strava-Download-gray?labelColor=FC4C02&logo=Strava&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Strava&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-strava]
+
+---
+## 📚 Documentation & Contributing <a id="documentation"></a>
+
+For full configuration reference, setup and contributing guide, see [CONTRIBUTING.md](https://github.com/nvbangg/builder-for-morphe/blob/main/CONTRIBUTING.md).
+
+### 🔒 Verifying authenticity
+
+For those of you who would like to be 100% sure that the APK files you download are genuinely mine, you can check the certificate fingerprint of the APK file. All future releases will have this SHA-256 fingerprint:
+
+`98d443d7bf2495e4faa56ed0190ad84619702d2322c0ac91c7d52ba6d676969c`
+
+### 🙏 Credits
+
+This repository was generated from the [krvstek/uni-apks](https://github.com/krvstek/uni-apks) template (GPL-3.0), with the following changes:
+- Support for GitHub Pages deployment
+- Support for additional apps
+- UI and configuration improvements
+- Immutable release support
+- Direct download links in release notes
+
+## ⚠️ Disclaimer <a id="disclaimer"></a>
 
 - This project is **not affiliated with any patch creators mentioned here**, and is intended for educational & personal use only.
 - All builds are done using **publicly available tools**. This repository simply automates the process for convenience.
@@ -212,11 +228,10 @@ For full configuration reference, setup and contributing guide, see [CONTRIBUTIN
 - The build code is a **complete Python rewrite** based on an adaptation that was first implemented by *[j-hc](https://github.com/j-hc)*. All credits go to him for laying down the initial foundation.
 - This repository only provides pre-built APKs. If a build fails due to upstream app or patch changes, please report it to the patch creators or wait for an update.
 
-## 🙏 Credits
+## ⭐ Star History <a id="star-history"></a>
 
-- This repository was generated from the [krvstek/uni-apks](https://github.com/krvstek/uni-apks) template.
-
-## ⭐ Star History
+<div>
+<a href="https://github.com/nvbangg/builder-for-morphe"><img src="https://img.shields.io/github/stars/nvbangg/builder-for-morphe?label=Star%20this%20repo%20if%20useful%20⭐&logo=github" alt="Stars"></a>　<a href="https://github.com/sponsors/nvbangg"><img src="https://img.shields.io/badge/Support-pink?style=social&logo=github-sponsors" alt="Sponsor"></a>
 
 <a href="https://www.star-history.com/?repos=nvbangg%2Fbuilder-for-morphe&type=date&legend=top-left">
  <picture>
@@ -225,6 +240,7 @@ For full configuration reference, setup and contributing guide, see [CONTRIBUTIN
    <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=nvbangg/builder-for-morphe&type=date&legend=top-left" />
  </picture>
 </a>
+</div>
 
 ---
 
