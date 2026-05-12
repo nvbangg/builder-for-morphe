@@ -2,52 +2,26 @@
 
 [nvbangg.github.io/builder-for-morphe](https://nvbangg.github.io/builder-for-morphe)
 
+<div align="center">
+<a href="#-features"><img src="https://readme-typing-svg.demolab.com/?font=Google+Sans&size=25&pause=1000&color=&center=true&vCenter=true&random=false&width=550&lines=%F0%9F%93%A6+Pre-built+APKs+from+various+patch+sources"></a>
+
+Here you can download and use applications selected for this repository, which are enhanced with many functionalities that will certainly be useful to you.
+</div>
+
 ### 🔗 Jump to:
 
 - [🔥 Features](#features)
+- [📋 List of apps](#apps-list)
+> [YouTube](#youtube) ✦ [YouTube Music](#youtube-music) ✦ [Google Photos](#google-photos) ✦ [Facebook](#facebook) ✦ [Instagram](#instagram) ✦ [X (Twitter)](#x-twitter) ✦ [Reddit](#reddit) ✦ [TikTok](#tiktok) ✦ [Prime Video](#prime-video) ✦ [Disney+](#disney-plus) ✦ [Pinterest](#pinterest) ✦ [WPS Office](#wps-office) ✦ [Duolingo](#duolingo) ✦ [Viber](#viber) ✦ [KakaoTalk](#kakaotalk) ✦ [Pandora](#pandora) ✦ [SoundCloud](#soundcloud) ✦ [Twitch](#twitch) ✦ [Cricbuzz](#cricbuzz) ✦ [Strava](#strava)
 - [📚 Documentation](#documentation)
 - [⚠️ Disclaimer](#disclaimer)
 - [⭐ Star History](#star-history)
 
-<details>
-  <summary><b>📋 List of apps in this repository</b></summary>
-
-  - [YouTube](#youtube)
-  - [YouTube Music](#youtube-music)
-  - [Google Photos](#google-photos)
-  - [Facebook](#facebook)
-  - [Instagram](#instagram)
-  - [X (Twitter)](#x-twitter)
-  - [Reddit](#reddit)
-  - [TikTok](#tiktok)
-  - [Prime Video](#prime-video)
-  - [Disney+](#disney-plus)
-  - [Pinterest](#pinterest)
-  - [WPS Office](#wps-office)
-  - [Duolingo](#duolingo)
-  - [Viber](#viber)
-  - [KakaoTalk](#kakaotalk)
-  - [Pandora](#pandora)
-  - [SoundCloud](#soundcloud)
-  - [Twitch](#twitch)
-  - [Cricbuzz](#cricbuzz)
-  - [Strava](#strava)
-</details>
-
 <div align="center">
-<a href="#-features"><img src="https://readme-typing-svg.demolab.com/?font=Google+Sans&size=25&pause=1000&color=4500FF&center=true&vCenter=true&random=false&width=550&lines=%F0%9F%93%A6+Pre-built+APKs+from+various+patch+sources"></a>
-
-Here you can download and use applications selected for this repository, which are enhanced with many functionalities that will certainly be useful to you.
-
 <a href="https://github.com/nvbangg/builder-for-morphe/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/nvbangg/builder-for-morphe/ci.yml?label=CI&logo=githubactions&logoColor=white" alt="CI"></a>　<a href="https://github.com/nvbangg/builder-for-morphe/releases"><img src="https://img.shields.io/github/downloads/nvbangg/builder-for-morphe/total?logo=data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjZmZmZmZmIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNNSAyMGgxNHYtMkg1djJ6TTE5IDloLTRWM0g5djZINWw3IDcgNy03eiIvPjwvc3ZnPg==&label=Downloads" alt="Releases"></a>　<a href="https://github.com/nvbangg/builder-for-morphe"><img src="https://img.shields.io/github/stars/nvbangg/builder-for-morphe?label=Star%20this%20repo%20if%20useful%20%E2%AD%90&logo=github" alt="Stars"></a>　<a href="https://github.com/sponsors/nvbangg"><img src="https://img.shields.io/badge/Support-pink?style=social&logo=github-sponsors" alt="Sponsor"></a>　<a href="https://github.com/nvbangg/awesome-for-morphe"><img src="https://img.shields.io/badge/%F0%9F%94%97%20Related%20Repo-awesome--for--morphe-blue" alt="Related Repo"></a>
-
 </div>
 
-> [!NOTE]   
-> 🔒 All release files are immutable, meaning they cannot be modified once published — even by me.  
-> 💡 Do not be afraid to [open an issue](https://github.com/nvbangg/awesome-for-morphe/issues) if you want to add support for any additional app. 
-
-
+---
 ## 🔥 Features <a id="features"></a>
 
 - 🛑 **Ad-blocking**: blocks all types of ads (who needs them anyway?).
@@ -57,6 +31,10 @@ Here you can download and use applications selected for this repository, which a
 - 🔒 **Persistent**: patched app won't be updated or overwritten by Play Store.
 - 🔄 **Auto-updates**: supports automatic updates through [Obtainium](https://github.com/ImranR98/Obtainium) using individual configs (see app list below).
 - ✨ **And much more!**
+
+> [!NOTE]   
+> 🔒 All release files are immutable, meaning they cannot be modified once published — even by me.  
+> 💡 Do not be afraid to [open an issue](https://github.com/nvbangg/awesome-for-morphe/issues) if you want to add support for any additional app. 
 
 ---
 ## 📋 List of apps in this repository <a id="apps-list"></a>
@@ -209,7 +187,9 @@ For full configuration reference, setup and contributing guide, see [CONTRIBUTIN
 
 For those of you who would like to be 100% sure that the APK files you download are genuinely mine, you can check the certificate fingerprint of the APK file. All future releases will have this SHA-256 fingerprint:
 
-`98d443d7bf2495e4faa56ed0190ad84619702d2322c0ac91c7d52ba6d676969c`
+```
+98d443d7bf2495e4faa56ed0190ad84619702d2322c0ac91c7d52ba6d676969c
+```
 
 ### 🙏 Credits
 
