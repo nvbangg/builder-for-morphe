@@ -33,11 +33,20 @@ def _load_dotenv(path: Path = Path(".env")) -> None:
 
     for line in path.read_text(encoding="utf-8").splitlines():
         line = line.strip()
-        if line and not line.startswith("#") and "=" in line:
-            key, _, value = line.partition("=")
-            key = key.strip()
-            if key and key not in os.environ:
-                os.environ[key] = value.strip().strip('"\'')
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        if (key := key.strip()) and key not in os.environ:
+            os.environ[key] = value.strip().strip('"\'')
+
+def _require_java(min_version: int = 21) -> None:
+    if not shutil.which("java"):
+        abort(f"Java not found. Please install Java {min_version} or higher")
+    result = subprocess.run(["java", "-version"], capture_output=True, text=True)
+    if not (match := re.search(r'version "(\d+)', result.stderr)):
+        abort("Could not determine Java version")
+    if (version := int(match.group(1))) < min_version:
+        abort(f"Java {version} found, but Java {min_version}+ is required")
 
 def _build(target_app: str | None = None, arch_override: str | None = None) -> int:
     _require_java()
@@ -82,23 +91,6 @@ def _sigint_handler(sig: int, frame: object) -> None:
         ks.unlink(missing_ok=True)
     os._exit(130)
 
-def _require_ci(cmd: str) -> None:
-    if os.getenv("GITHUB_ACTIONS") != "true":
-        abort(f"'{cmd}' is only available in GitHub Actions")
-
-def _require_java(min_version: int = 25) -> None:
-    if not shutil.which("java"):
-        abort(f"Java not found. Please install Java {min_version} or higher")
-
-    result = subprocess.run(["java", "-version"], capture_output=True, text=True)
-    match = re.search(r'version "(\d+)', result.stderr)
-    if not match:
-        abort("Could not determine Java version")
-
-    version = int(match.group(1))
-    if version < min_version:
-        abort(f"Java {version} found, but Java {min_version}+ is required")
-
 def main() -> None:
     signal.signal(signal.SIGINT, _sigint_handler)
     _load_dotenv()
@@ -108,12 +100,14 @@ def main() -> None:
             case []:
                 sys.exit(_build())
             case ["get-matrix", *source]:
-                _require_ci("get-matrix")
+                if os.getenv("GITHUB_ACTIONS") != "true":
+                    abort("'get-matrix' is only available in GitHub Actions")
                 get_matrix(source[0] if source else "morphe")
             case ["clear"]:
                 sys.exit(_clear())
             case ["combine-logs", *dir]:
-                _require_ci("combine-logs")
+                if os.getenv("GITHUB_ACTIONS") != "true":
+                    abort("'combine-logs' is only available in GitHub Actions")
                 combine_logs(logs_dir=Path(dir[0] if dir else "logs"))
             case [target, *rest] if not rest or rest[0] in VALID_ARCHES:
                 sys.exit(_build(target_app=target, arch_override=rest[0] if rest else None))

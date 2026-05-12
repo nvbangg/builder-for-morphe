@@ -19,10 +19,7 @@ class Prebuilts:
     patches_mpp: Path
 
 def _ver_key(ver: str) -> tuple[int, ...]:
-    try:
-        return tuple(int(x) for x in re.findall(r'\d+', ver))
-    except ValueError:
-        return (0,)
+    return tuple(int(x) for x in re.findall(r"\d+", ver)) or (0,)
 
 def get_highest_ver(versions: list[str]) -> str:
     if not (clean := [v.strip() for v in versions if v.strip()]):
@@ -33,44 +30,36 @@ def fetch_prebuilts(cli_src: str, cli_ver: str, patches_src: str, patches_ver: s
     patches_org = patches_src.split("/")[0]
     cl_dir = TEMP_DIR / patches_org.lower()
     cl_dir.mkdir(parents=True, exist_ok=True)
-
     pr(f"Getting prebuilts ({patches_org})")
-    specs: list[tuple[str, str, str, str, str]] = [
+    specs = [
         (cli_src, "CLI", cli_ver, "cli", "jar"),
         (patches_src, "Patches", patches_ver, "patches", "mpp"),
     ]
-
-    cli_jar, patches_mpp = (_fetch_single_asset(src=src, tag=tag, ver=ver, fprefix=fprefix, ext=ext, cl_dir=cl_dir, net=net) for src, tag, ver, fprefix, ext in specs)
+    cli_jar, patches_mpp = (_fetch_single_asset(*spec, cl_dir=cl_dir, net=net) for spec in specs)
     return Prebuilts(cli_jar=cli_jar, patches_mpp=patches_mpp)
 
 def _fetch_single_asset(src: str, tag: str, ver: str, fprefix: str, ext: str, cl_dir: Path, net: NetworkManager) -> Path:
-    org = src.split("/")[0]
-    dir_path = TEMP_DIR / org.lower()
+    dir_path = TEMP_DIR / src.split("/")[0].lower()
     dir_path.mkdir(parents=True, exist_ok=True)
-
     base_url = f"https://api.github.com/repos/{src}/releases"
     if ver == "dev":
         releases: list[dict] = json.loads(net.gh_get(base_url))
-        tag_names = [r["tag_name"] for r in releases if r.get("tag_name")]
-        ver = get_highest_ver(tag_names)
+        ver = get_highest_ver([r["tag_name"] for r in releases if r.get("tag_name")])
 
-    api_url = f"{base_url}/latest" if ver == "latest" else f"{base_url}/tags/{ver}"
     name_ver = "*" if ver == "latest" else ver
     file = _find_cached(dir_path, fprefix, name_ver, ext, exclude_dev=(ver == "latest"))
-    grab_cl = (tag == "Patches") and (file is None)
+    grab_cl = tag == "Patches" and file is None
     tag_name = ""
     changelog = ""
 
     if file is None:
+        api_url = f"{base_url}/latest" if ver == "latest" else f"{base_url}/tags/{ver}"
         release: dict = json.loads(net.gh_get(api_url))
         tag_name = release.get("tag_name", "")
-        assets: list[dict] = release.get("assets", [])
-        matches = [a for a in assets if a.get("name", "").endswith(f".{ext}")]
+        matches = [a for a in release.get("assets", []) if a.get("name", "").endswith(f".{ext}")]
 
-        if len(matches) > 1:
-            non_dev = [a for a in matches if "-dev" not in a.get("name", "")]
-            if non_dev:
-                matches = non_dev
+        if len(matches) > 1 and (non_dev := [a for a in matches if "-dev" not in a.get("name", "")]):
+            matches = non_dev
         if not matches:
             raise PrebuiltsError(f"No asset (.{ext}) found for {src} @ {ver}")
         if len(matches) > 1:
@@ -79,13 +68,12 @@ def _fetch_single_asset(src: str, tag: str, ver: str, fprefix: str, ext: str, cl
         asset = matches[0]
         file = dir_path / asset["name"]
         net.gh_download(asset["url"], file)
-        changelog = f"> ⚙️ » {tag}: `{org}/{asset['name']}`  \n"
+        changelog = f"> ⚙️ » {tag}: `{src.split('/')[0]}/{asset['name']}`  \n"
     else:
         tag_name = _tag_from_filename(file)
 
     if grab_cl and tag_name:
         changelog += f"[🔗 » Changelog](https://github.com/{src}/releases/tag/{tag_name})\n\n"
-
     if changelog:
         with (cl_dir / "changelog.md").open("a", encoding="utf-8") as f:
             f.write(changelog)

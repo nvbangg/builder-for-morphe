@@ -18,13 +18,13 @@ def get_matrix(source: str) -> None:
     main_cfg = parse_config(data)
     source_lower = source.lower()
     include: list[dict[str, str]] = []
-
     for entry in parse_app_entries(data, main_cfg):
-        if entry.enabled and entry.brand.lower() == source_lower:
-            if entry.arch == "both":
-                include.extend([{"id": entry.table, "arch": "arm64-v8a"}, {"id": entry.table, "arch": "arm-v7a"}])
-            else:
-                include.append({"id": entry.table})
+        if not entry.enabled or entry.brand.lower() != source_lower:
+            continue
+        if entry.arch == "both":
+            include.extend([{"id": entry.table, "arch": "arm64-v8a"}, {"id": entry.table, "arch": "arm-v7a"}])
+        else:
+            include.append({"id": entry.table})
 
     if not include:
         abort(f"No apps found for patch source '{source}'")
@@ -37,30 +37,28 @@ def combine_logs(logs_dir: Path | str) -> None:
         return
 
     green_lines: list[str] = []
-    microg_line: str = ""
+    microg_line = ""
     collected: list[str] = []
-
     for log in logs:
         capturing = False
         current: list[str] = []
+        for raw in log.read_text(encoding="utf-8").splitlines():
+            line = raw.strip()
+            if not line:
+                continue
+            if line.startswith("🟢"):
+                green_lines.append(f"{line}  ")
+            elif not microg_line and line.startswith("-") and "MicroG" in line:
+                microg_line = line
+            if _RE_CLI_START.match(line):
+                capturing = True
+                current = []
+            if capturing:
+                current.append(f"{line}  ")
+                if _RE_CHANGELOG_END.match(line):
+                    collected.append("\n".join(current))
+                    capturing = False
 
-        with log.open("r", encoding="utf-8") as fh:
-            for raw in fh:
-                line = raw.strip()
-                if not line:
-                    continue
-                if line.startswith("🟢"):
-                    green_lines.append(line)
-                elif not microg_line and line.startswith("-") and "MicroG" in line:
-                    microg_line = line
-                if _RE_CLI_START.match(line):
-                    capturing = True
-                    current = []
-                if capturing:
-                    current.append(line)
-                    if _RE_CHANGELOG_END.match(line):
-                        collected.append("\n".join(current))
-                        capturing = False
         if capturing:
             epr(f"Warning: unclosed CLI section in '{log}' - changelog end marker not found")
 

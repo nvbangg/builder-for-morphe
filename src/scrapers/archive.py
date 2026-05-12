@@ -6,6 +6,7 @@ from src.scrapers.base import AppMetadata, BaseScraper, DownloadResult, parse_ht
 
 _ARCH_SUFFIX = re.compile(r"-(?:all|arm64-v8a|arm-v7a)\.(?:apk|apkm|xapk)$")
 
+
 class ArchiveError(Exception):
     pass
 
@@ -24,22 +25,17 @@ class ArchiveScraper(BaseScraper):
             a["href"] for a in soup.find_all("a", href=True)
             if not a["href"].startswith(("?", "/", "http"))
         ]
-
-        versions: list[str] = []
         prefix = f"{self._pkg_name}-"
-        for fname in self._file_list:
-            if not fname.startswith(prefix):
-                continue
-            if ver_part := _ARCH_SUFFIX.sub("", fname[len(prefix):]):
-                versions.append(ver_part)
-        return AppMetadata(pkg_name=self._pkg_name, versions=list(dict.fromkeys(versions)))
+        versions = dict.fromkeys(
+            ver for f in self._file_list
+            if f.startswith(prefix) and (ver := _ARCH_SUFFIX.sub("", f[len(prefix):]))
+        )
+        return AppMetadata(pkg_name=self._pkg_name, versions=list(versions))
 
     def download(self, url: str, version: str, dest: Path, arch: str, dpi: str) -> DownloadResult:
         version = version.replace(" ", "").lstrip("v")
-        arch = arch.replace(" ", "")
-        expected_prefix = f"{self._pkg_name}-{version}-{arch}"
-        match = next((f for f in self._file_list if f.startswith(expected_prefix)), None)
-        if not match:
+        expected_prefix = f"{self._pkg_name}-{version}-{arch.replace(' ', '')}"
+        if not (match := next((f for f in self._file_list if f.startswith(expected_prefix)), None)):
             raise ArchiveError(f"Archive: no file matching version='{version}' arch='{arch}' in {url}")
 
         is_bundle = match.endswith((".apkm", ".xapk"))

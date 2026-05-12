@@ -31,25 +31,23 @@ def _run_java(*args: str | Path, capture: bool = True) -> str:
     return combined
 
 def _parse_patch_block(output: str, patch_name: str) -> list[str]:
-    if match := re.search(rf"Name:\s*{re.escape(patch_name)}\n.*?Compatible versions:\s*\n(.*?)(?:\n\n|\Z)", output, re.DOTALL | re.IGNORECASE):
-        return [v.strip() for v in match.group(1).splitlines() if v.strip()]
+    if m := re.search(rf"Name:\s*{re.escape(patch_name)}\n.*?Compatible versions:\s*\n(.*?)(?:\n\n|\Z)", output, re.DOTALL | re.IGNORECASE):
+        return [v.strip() for v in m.group(1).splitlines() if v.strip()]
     return []
 
 def _parse_versions_output(output: str) -> list[str]:
-    if match := re.search(r"Most common compatible versions:\n(.*?)(?:\n\n|\Z)", output, re.DOTALL):
-        return [re.sub(r"\s*\(.*?\)", "", v).strip() for v in match.group(1).splitlines() if v.strip()]
+    if m := re.search(r"Most common compatible versions:\n(.*?)(?:\n\n|\Z)", output, re.DOTALL):
+        return [re.sub(r"\s*\(.*?\)", "", v).strip() for v in m.group(1).splitlines() if v.strip()]
     return []
 
 def _redact_args(args: list[str | Path]) -> list[str]:
-    redacted: list[str] = []
+    redacted = []
     for a in args:
         s = str(a)
         if "keystore-password=" in s or "keystore-entry-password=" in s:
-            key, _, _ = s.partition("=")
-            redacted.append(f"{key}=***")
+            redacted.append(f"{s.partition('=')[0]}=***")
         elif s.startswith("--keystore="):
-            _, _, val = s.partition("=")
-            p = Path(val)
+            p = Path(s.partition("=")[2])
             redacted.append(f"--keystore={p.parent.name}/{p.name}")
         else:
             redacted.append(s)
@@ -74,10 +72,8 @@ class PatcherCLI:
         return _run_java("-jar", self.cli_jar, "list-versions", "--patches", self.patches_mpp, "-f", pkg_name)
 
     def get_last_supported_version(self, list_patches_output: str, pkg_name: str, included_patches: list[str]) -> str | None:
-        if included_patches:
-            all_vers = [v for p in included_patches for v in _parse_patch_block(list_patches_output, p)]
-            if all_vers:
-                return get_highest_ver(all_vers)
+        if included_patches and (all_vers := [v for p in included_patches for v in _parse_patch_block(list_patches_output, p)]):
+            return get_highest_ver(all_vers)
 
         versions_output = self.list_versions(pkg_name)
         if "Any" in versions_output:
@@ -89,18 +85,14 @@ class PatcherCLI:
 
     def resolve_auto_patches(self, list_patches_output: str) -> tuple[str, str]:
         def find(pattern: str) -> str:
-            if m := re.search(pattern, list_patches_output, re.I | re.M):
-                return m.group(1).strip()
-            return ""
+            m = re.search(pattern, list_patches_output, re.I | re.M)
+            return m.group(1).strip() if m else ""
 
         return find(r"^Name:\s*(.*(?:gmscore|microg).*)$"), find(r"^Name:\s*(.*disable play store updates.*)$")
 
     def build_patch_args(self, included_patches: list[str], excluded_patches: list[str], exclusive: bool, extra_args: list[str], arch: str, auto_patches: list[str], force: bool = False) -> list[str]:
         active_auto = {p for p in auto_patches if p}
-        p_args: list[str] = []
-        if force:
-            p_args.append("-f")
-
+        p_args: list[str] = ["-f"] if force else []
         for p in excluded_patches:
             if p in active_auto:
                 wpr(f"You can't exclude '{p}' patch as that's done by builder automatically")
@@ -116,7 +108,6 @@ class PatcherCLI:
             p_args.append("--exclusive")
 
         p_args.extend(extra_args)
-
         for auto_p in active_auto:
             p_args.extend(("-e", auto_p))
         p_args.extend(("--striplibs", _arch_to_libs(arch)))

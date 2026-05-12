@@ -46,8 +46,7 @@ class AppEntry:
 def load_toml(path: Path) -> dict[str, object]:
     if path.suffix != ".toml":
         raise ValueError(f"Only .toml config files are supported, got: '{path}'")
-    with path.open("rb") as fh:
-        return tomllib.load(fh)
+    return tomllib.loads(path.read_bytes().decode())
 
 def parse_config(data: dict[str, object]) -> Config:
     return Config(
@@ -68,11 +67,7 @@ def parse_app_entries(data: dict[str, object], main: Config) -> list[AppEntry]:
         if (arch := str(t.get("arch", "all"))) not in VALID_ARCHES:
             raise ValueError(f"Wrong arch '{arch}' for '{table_name}'")
 
-        dl_urls = {}
-        for src in SOURCES:
-            if url := _clean_dlurl(t.get(f"{src}-dlurl")):
-                dl_urls[src] = url
-
+        dl_urls = {src: url for src in SOURCES if (url := _clean_dlurl(t.get(f"{src}-dlurl")))}
         inc_raw = str(t.get("included-patches", ""))
         exc_raw = str(t.get("excluded-patches", ""))
         for name, raw in (("included-patches", inc_raw), ("excluded-patches", exc_raw)):
