@@ -145,7 +145,7 @@ def _build_single(entry: AppEntry, arch: str, label: str, net: NetworkManager, p
         apk_output = _apply_patch(entry, arch, version, force, patcher, list_patches, stock_apk, stock_apkm)
         pr(f"Built {label}: '{apk_output}'")
         return f"🟢 » {label}: `{version}`"
-    except (BuilderError, PatcherError, ValueError) as exc:
+    except (BuilderError, PatcherError, ValueError, Exception) as exc:
         epr(f"Building '{label}' failed! {exc}")
         return None
 
@@ -201,7 +201,14 @@ def run_build(data: dict[str, object], config: Config, net: NetworkManager, targ
     for tmp in TEMP_DIR.rglob("tmp*"):
         shutil.rmtree(tmp, ignore_errors=True)
 
-    log_lines = [r for fut in as_completed(futures) if (r := fut.result())]
+    log_lines: list[str] = []
+    for fut in as_completed(futures):
+        try:
+            if r := fut.result():
+                log_lines.append(r)
+        except Exception as exc:
+            epr(f"Build task raised unhandled exception: {exc}")
+
     if not log_lines:
         epr("All builds failed")
         return False
