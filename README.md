@@ -187,11 +187,12 @@ For those of you who would like to be 100% sure that the APK files you download 
 ### 🙏 Credits
 
 This repository was generated from the [krvstek/uni-apks](https://github.com/krvstek/uni-apks) template (licensed under GPL-3.0), with the following changes:
-- Support for GitHub Pages deployment
-- Support for additional apps
-- UI and configuration improvements
+- GitHub Pages deployment support
+- Additional app support
+- Automatic upstream synchronization
 - Immutable release support
-- Direct download links in release notes
+- UI and configuration improvements
+- Direct download links in release notes (contributed upstream in [PR #42](https://github.com/krvstek/uni-apks/pull/42))
 
 ---
 ## <a id="disclaimer"></a> ⚠️ Disclaimer 
