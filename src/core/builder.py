@@ -144,7 +144,7 @@ def _build_single(entry: AppEntry, arch: str, label: str, net: NetworkManager, p
         _verify_sig(stock_apk, stock_apkm, pkg_name, patcher, label)
         apk_output = _apply_patch(entry, arch, version, force, patcher, list_patches, stock_apk, stock_apkm)
         pr(f"Built {label}: '{apk_output}'")
-        return f"🟢 » {label}: [`⬇️ {version}`](../../releases/download/{{TAG}}/{apk_output.name})"
+        return f"- 🟢 » {label}: [`⬇️{version}`](../../releases/download/{{TAG}}/{apk_output.name})"
     except (BuilderError, PatcherError, ValueError) as exc:
         epr(f"Building '{label}' failed! {exc}")
         return None
@@ -207,6 +207,6 @@ def run_build(data: dict[str, object], config: Config, net: NetworkManager, targ
         return False
 
     changelogs = "".join(cl.read_text(encoding="utf-8") for cl in sorted(TEMP_DIR.glob("*/changelog.md")))
-    Path("build.md").write_text("\n".join([*log_lines, "", "- ▶️ » Install [MicroG-RE](https://github.com/MorpheApp/MicroG-RE/releases) and sign in to use apps that require a Google account\n", changelogs]), encoding="utf-8")
+    Path("build.md").write_text("\n".join([*log_lines, "", "▶️ » Install [MicroG-RE](https://github.com/MorpheApp/MicroG-RE/releases) and sign in to use apps that require a Google account\n", changelogs]), encoding="utf-8")
     pr("Done")
     return True
