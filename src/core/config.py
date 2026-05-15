@@ -46,7 +46,11 @@ class AppEntry:
 def load_toml(path: Path) -> dict[str, object]:
     if path.suffix != ".toml":
         raise ValueError(f"Only .toml config files are supported, got: '{path}'")
-    return tomllib.loads(path.read_bytes().decode())
+    try:
+        with path.open("rb") as fp:
+            return tomllib.load(fp)
+    except UnicodeDecodeError as exc:
+        raise ValueError(f"Config file '{path}' is not valid UTF-8: {exc}") from exc
 
 def parse_config(data: dict[str, object]) -> Config:
     return Config(

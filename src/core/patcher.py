@@ -60,10 +60,10 @@ class PatcherCLI:
                     self._signatures[parts[-1]] = parts[0].lower()
 
     def list_patches(self, pkg_name: str) -> str:
-        return _run_java("-jar", self.cli_jar, "list-patches", "--patches", self.patches_mpp, "-f", pkg_name, "-v", "-p")
+        return _run_java("-jar", self.cli_jar, "list-patches", "--patches", self.patches_mpp, "-f", pkg_name, "-v", "-p", timeout=60)
 
     def list_versions(self, pkg_name: str) -> str:
-        return _run_java("-jar", self.cli_jar, "list-versions", "--patches", self.patches_mpp, "-f", pkg_name)
+        return _run_java("-jar", self.cli_jar, "list-versions", "--patches", self.patches_mpp, "-f", pkg_name, timeout=60)
 
     def get_last_supported_version(self, list_patches_output: str, pkg_name: str, included_patches: list[str]) -> str | None:
         if included_patches and (all_vers := [v for p in included_patches for v in _parse_patch_block(list_patches_output, p)]):
@@ -148,10 +148,10 @@ class PatcherCLI:
             with zipfile.ZipFile(apk, "r") as zf:
                 names = zf.namelist()
                 if inner := next((n for n in ("base.apk", f"{pkg_name}.apk") if n in names), None):
-                    fd, tmp_path = tempfile.mkstemp(dir=TEMP_DIR, suffix=".apk")
-                    tmp_apk = Path(tmp_path)
-                    with os.fdopen(fd, "wb") as out_f, zf.open(inner) as in_f:
-                        shutil.copyfileobj(in_f, out_f)
+                    with tempfile.NamedTemporaryFile(dir=TEMP_DIR, suffix=".apk", delete=False) as tf:
+                        tmp_apk = Path(tf.name)
+                        with zf.open(inner) as in_f:
+                            shutil.copyfileobj(in_f, tf)
                     apk = tmp_apk
         except zipfile.BadZipFile as exc:
             wpr(f"Could not unpack bundle for sig check ({apk.name}): {exc}, verifying outer file")

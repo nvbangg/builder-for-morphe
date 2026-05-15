@@ -1,5 +1,6 @@
 import json
 import re
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -35,29 +36,34 @@ def fetch_prebuilts(cli_src: str, cli_ver: str, patches_src: str, patches_ver: s
         (cli_src, "CLI", cli_ver, "cli", "jar"),
         (patches_src, "Patches", patches_ver, "patches", "mpp"),
     ]
-    cli_jar, patches_mpp = (_fetch_single_asset(*spec, cl_dir=cl_dir, net=net) for spec in specs)
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        futures = [pool.submit(_fetch_single_asset, *spec, cl_dir=cl_dir, net=net) for spec in specs]
+        cli_jar, patches_mpp = (f.result() for f in futures)
     return Prebuilts(cli_jar=cli_jar, patches_mpp=patches_mpp)
 
 def _fetch_single_asset(src: str, tag: str, ver: str, fprefix: str, ext: str, cl_dir: Path, net: NetworkManager) -> Path:
     dir_path = TEMP_DIR / src.split("/")[0].lower()
     dir_path.mkdir(parents=True, exist_ok=True)
     base_url = f"https://api.github.com/repos/{src}/releases"
+    release = None
     if ver == "dev":
         releases: list[dict] = json.loads(net.gh_get(base_url))
         ver = get_highest_ver([r["tag_name"] for r in releases if r.get("tag_name")])
+    elif ver == "latest":
+        release = json.loads(net.gh_get(f"{base_url}/latest"))
+        ver = release.get("tag_name", "")
 
-    name_ver = "*" if ver == "latest" else ver
-    file = _find_cached(dir_path, fprefix, name_ver, ext, exclude_dev=(ver == "latest"))
+    file = _find_cached(dir_path, fprefix, ver, ext, exclude_dev=False)
     grab_cl = tag == "Patches" and file is None
     tag_name = ""
     changelog = ""
 
     if file is None:
-        api_url = f"{base_url}/latest" if ver == "latest" else f"{base_url}/tags/{ver}"
-        release: dict = json.loads(net.gh_get(api_url))
+        if release is None:
+            release = json.loads(net.gh_get(f"{base_url}/tags/{ver}"))
+
         tag_name = release.get("tag_name", "")
         matches = [a for a in release.get("assets", []) if a.get("name", "").endswith(f".{ext}")]
-
         if len(matches) > 1 and (non_dev := [a for a in matches if "-dev" not in a.get("name", "")]):
             matches = non_dev
         if not matches:
@@ -67,6 +73,10 @@ def _fetch_single_asset(src: str, tag: str, ver: str, fprefix: str, ext: str, cl
 
         asset = matches[0]
         file = dir_path / asset["name"]
+        for old_file in dir_path.glob(f"*{fprefix}-*.{ext}"):
+            if old_file.is_file() and not old_file.name.startswith("tmp."):
+                old_file.unlink(missing_ok=True)
+
         net.gh_download(asset["url"], file)
         changelog = f"> ⚙️ » {tag}: `{src.split('/')[0]}/{asset['name']}`  \n"
     else:
@@ -80,13 +90,13 @@ def _fetch_single_asset(src: str, tag: str, ver: str, fprefix: str, ext: str, cl
     return file
 
 def _find_cached(dir_path: Path, fprefix: str, name_ver: str, ext: str, exclude_dev: bool) -> Path | None:
-    pattern = f"*{fprefix}-*.{ext}" if name_ver == "*" else f"*{fprefix}-{name_ver.lstrip('v')}.{ext}"
+    pattern = f"*{fprefix}-*.{ext}" if name_ver == "*" else f"*{fprefix}-{name_ver.lstrip('v')}*.{ext}"
     candidates = [f for f in dir_path.glob(pattern) if f.is_file() and not f.name.startswith("tmp.")]
     if exclude_dev:
         candidates = [f for f in candidates if "-dev" not in f.name]
     return max(candidates, key=lambda f: _ver_key(f.name), default=None)
 
 def _tag_from_filename(file: Path) -> str:
-    if m := re.search(r"-(\d[\w.]*)(?:\.\w+)?$", file.name):
+    if m := re.search(r"-(\d[\w.]*)(?:-[^.]+)?\.\w+$", file.name):
         return f"v{m.group(1)}"
     return ""
