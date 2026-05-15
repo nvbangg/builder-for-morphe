@@ -1,13 +1,7 @@
 # [nvbangg/builder-for-morphe](https://github.com/nvbangg/builder-for-morphe)
 
 <div align="center">
-<a href="#-features"><img src="https://readme-typing-svg.demolab.com/?font=Google+Sans&size=25&pause=1000&color=&center=true&vCenter=true&random=false&width=550&lines=%F0%9F%93%A6+Pre-built+APKs+from+various+patch+sources"></a>
-
-Here you can download and use applications selected for this repository, which are enhanced with many functionalities that will certainly be useful to you.
-</div>
-
-<div align="center">
-<a href="https://github.com/nvbangg/builder-for-morphe/releases"><img src="https://img.shields.io/github/downloads/nvbangg/builder-for-morphe/total?logo=data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjZmZmZmZmIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNNSAyMGgxNHYtMkg1djJ6TTE5IDloLTRWM0g5djZINWw3IDcgNy03eiIvPjwvc3ZnPg==&label=Downloads" alt="Releases"></a>　<a href="https://github.com/nvbangg/awesome-for-morphe"><img src="https://img.shields.io/badge/%F0%9F%94%97%20Related%20Repo-awesome--for--morphe-blue" alt="Related Repo"></a>　<a href="https://github.com/nvbangg/builder-for-morphe"><img src="https://img.shields.io/github/stars/nvbangg/builder-for-morphe?label=Star%20this%20repo%20if%20useful%20%E2%AD%90&logo=github" alt="Stars"></a>　<a href="https://github.com/sponsors/nvbangg"><img src="https://img.shields.io/badge/Support-pink?style=social&logo=github-sponsors" alt="Sponsor"></a>
+Here you will find a step-by-step technical guide on how to set up your environment, run the patching script, customize the build configuration, and contribute to the project's development.
 </div>
 
 ## 📦 Setting up environment

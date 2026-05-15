@@ -61,12 +61,6 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/disney/disney/"
 uptodown-dlurl = "https://disney-disneyplus.en.uptodown.com/android"
 version = "26.6.0+rc5-2026.04.21"
 
-[Pinterest]
-patches-source = "binarymend/morphe-patches"
-brand = "binarymend"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/pinterest/pinterest/"
-uptodown-dlurl = "https://pinterest.en.uptodown.com/android"
-
 [WPS-Office]
 patches-source = "hoo-dles/morphe-patches"
 brand = "hoo-dles"

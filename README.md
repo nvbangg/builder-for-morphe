@@ -12,7 +12,7 @@ Here you can download and use applications selected for this repository, which a
 
 - [🔥 Features](#features)
 - [📋 List of apps](#apps-list)
-> [`YouTube`](#youtube) ✦ [`YouTube Music`](#youtube-music) ✦ [`Google Photos`](#google-photos) ✦ [`Facebook`](#facebook) ✦ [`Instagram`](#instagram) ✦ [`X (Twitter)`](#x-twitter) ✦ [`Reddit`](#reddit) ✦ [`TikTok`](#tiktok) ✦ [`Prime Video`](#prime-video) ✦ [`Disney+`](#disney-plus) ✦ [`Pinterest`](#pinterest) ✦ [`WPS Office`](#wps-office) ✦ [`Duolingo`](#duolingo) ✦ [`Viber`](#viber) ✦ [`KakaoTalk`](#kakaotalk) ✦ [`Pandora`](#pandora) ✦ [`SoundCloud`](#soundcloud) ✦ [`Twitch`](#twitch) ✦ [`Cricbuzz`](#cricbuzz) ✦ [`Strava`](#strava)
+> [`YouTube`](#youtube) ✦ [`YouTube Music`](#youtube-music) ✦ [`Google Photos`](#google-photos) ✦ [`Facebook`](#facebook) ✦ [`Instagram`](#instagram) ✦ [`X (Twitter)`](#x-twitter) ✦ [`Reddit`](#reddit) ✦ [`TikTok`](#tiktok) ✦ [`Prime Video`](#prime-video) ✦ [`Disney+`](#disney-plus) ✦ [`WPS Office`](#wps-office) ✦ [`Duolingo`](#duolingo) ✦ [`Viber`](#viber) ✦ [`KakaoTalk`](#kakaotalk) ✦ [`Pandora`](#pandora) ✦ [`SoundCloud`](#soundcloud) ✦ [`Twitch`](#twitch) ✦ [`Cricbuzz`](#cricbuzz) ✦ [`Strava`](#strava)
 - [📚 Documentation](#documentation)
 - [⚠️ Disclaimer](#disclaimer)
 - [⭐ Star History](#star-history)
@@ -22,7 +22,7 @@ Here you can download and use applications selected for this repository, which a
 </div>
 
 ---
-## 🔥 Features <a id="features"></a>
+## <a id="features"></a> 🔥 Features 
 
 - 🛑 **Ad-blocking**: blocks all types of ads (who needs them anyway?).
 - 🚀 **Enhanced features**: squeezes more out of the app.
@@ -37,149 +37,142 @@ Here you can download and use applications selected for this repository, which a
 > 💡 Do not be afraid to [open an issue](https://github.com/nvbangg/awesome-for-morphe/issues) if you want to add support for any additional app. 
 
 ---
-## 📋 List of apps in this repository <a id="apps-list"></a>
+## <a id="apps-list"></a> 📋 List of apps in this repository 
 
-### [YouTube](https://play.google.com/store/apps/details?id=com.google.android.youtube) <a id="youtube"></a> 
+### <a id="youtube"></a> [YouTube](https://play.google.com/store/apps/details?id=com.google.android.youtube) 
 
 🧩 Morphe: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=morphe&app=com.google.android.youtube)
 
 [![YouTube Download](https://img.shields.io/badge/YouTube-Download-gray?labelColor=FF0000&logo=YouTube&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=YouTube&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-youtube]
 
 ---
-### [YouTube Music](https://play.google.com/store/apps/details?id=com.google.android.apps.youtube.music) <a id="youtube-music"></a>
+### <a id="youtube-music"></a> [YouTube Music](https://play.google.com/store/apps/details?id=com.google.android.apps.youtube.music) 
 
 🧩 Morphe: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=morphe&app=com.google.android.apps.youtube.music)
 
 [![YouTube Music Download](https://img.shields.io/badge/YouTube_Music-Download-gray?labelColor=FF0000&logo=youtube-music&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=YT-Music&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-music]
 
 ---
-### [Google Photos](https://play.google.com/store/apps/details?id=com.google.android.apps.photos) <a id="google-photos"></a>
+### <a id="google-photos"></a> [Google Photos](https://play.google.com/store/apps/details?id=com.google.android.apps.photos) 
 
 🧩 RookieEnough: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=rookieenough&app=com.google.android.apps.photos)
 
 [![Google Photos Download](https://img.shields.io/badge/Google_Photos-Download-gray?labelColor=FBBC04&logo=google-photos&logoColor=000000)](https://github.com/nvbangg/builder-for-morphe/releases?q=Google-Photos&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-photos]
 
 ---
-### [Facebook](https://play.google.com/store/apps/details?id=com.facebook.katana) <a id="facebook"></a>
+### <a id="facebook"></a> [Facebook](https://play.google.com/store/apps/details?id=com.facebook.katana) 
 
 🧩 RookieEnough: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=rookieenough&app=com.facebook.katana)
 
 [![Facebook Download](https://img.shields.io/badge/Facebook-Download-gray?labelColor=1877F2&logo=Facebook&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Facebook&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-facebook]
 
 ---
-### [Instagram](https://play.google.com/store/apps/details?id=com.instagram.android) <a id="instagram"></a>
+### <a id="instagram"></a> [Instagram](https://play.google.com/store/apps/details?id=com.instagram.android) 
 
 🧩 Piko: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=piko&app=com.instagram.android)
 
 [![Instagram Download](https://img.shields.io/badge/Instagram-Download-gray?labelColor=E4405F&logo=Instagram&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Instagram&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-instagram]
 
 ---
-### [X (Twitter)](https://play.google.com/store/apps/details?id=com.twitter.android) <a id="x-twitter"></a>
+### <a id="x-twitter"></a> [X (Twitter)](https://play.google.com/store/apps/details?id=com.twitter.android) 
 
 🧩 Piko: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=piko&app=com.twitter.android)
 
 [![X (Twitter) Download](https://img.shields.io/badge/Twitter-Download-gray?labelColor=0F1419&logo=X&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=X-Twitter&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-x]
 
 ---
-### [Reddit](https://play.google.com/store/apps/details?id=com.reddit.frontpage) <a id="reddit"></a>
+### <a id="reddit"></a> [Reddit](https://play.google.com/store/apps/details?id=com.reddit.frontpage) 
 
 🧩 Morphe: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=morphe&app=com.reddit.frontpage)
 
 [![Reddit Download](https://img.shields.io/badge/Reddit-Download-gray?labelColor=FF4500&logo=Reddit&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Reddit&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-reddit]
 
 ---
-### [TikTok](https://play.google.com/store/apps/details?id=com.ss.android.ugc.trill) <a id="tiktok"></a>
+### <a id="tiktok"></a> [TikTok](https://play.google.com/store/apps/details?id=com.ss.android.ugc.trill) 
 
 🧩 RookieEnough: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=rookieenough&app=com.ss.android.ugc.trill)
 
 [![TikTok Download](https://img.shields.io/badge/TikTok-Download-gray?labelColor=252525&logo=TikTok&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=TikTok&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-tiktok]
 
 ---
-### [Prime Video](https://play.google.com/store/apps/details?id=com.amazon.avod.thirdpartyclient) <a id="prime-video"></a>
+### <a id="prime-video"></a> [Prime Video](https://play.google.com/store/apps/details?id=com.amazon.avod.thirdpartyclient) 
 
 🧩 Hoo-dles: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=hoo-dles&app=com.amazon.avod.thirdpartyclient)
 
 [![Prime Video Download](https://img.shields.io/badge/Prime_Video-Download-gray?labelColor=00A8E1&logo=Prime-Video&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Prime-Video&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-prime]
 
 ---
-### [Disney+](https://play.google.com/store/apps/details?id=com.disney.disneyplus) <a id="disney-plus"></a>
+### <a id="disney-plus"></a> [Disney+](https://play.google.com/store/apps/details?id=com.disney.disneyplus) 
 
 🧩 RookieEnough: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=rookieenough&app=com.disney.disneyplus)
 
 [![Disney+ Download](https://img.shields.io/badge/Disney+-Download-gray?labelColor=113CCF&logo=Disney%2B&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Disney-Plus&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-disney]
 
 ---
-### [Pinterest](https://play.google.com/store/apps/details?id=com.pinterest) <a id="pinterest"></a>
-
-🧩 Binarymend: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=binarymend&app=com.pinterest)
-
-[![Pinterest Download](https://img.shields.io/badge/Pinterest-Download-gray?labelColor=E60023&logo=Pinterest&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Pinterest&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-pinterest]
-
----
-### [WPS Office](https://play.google.com/store/apps/details?id=cn.wps.moffice_eng) - PDF, Word, Sheet, PPT <a id="wps-office"></a>
+### <a id="wps-office"></a> [WPS Office](https://play.google.com/store/apps/details?id=cn.wps.moffice_eng) - PDF, Word, Sheet, PPT 
 
 🧩 Hoo-dles: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=hoo-dles&app=cn.wps.moffice_eng)
 
 [![WPS Office Download](https://img.shields.io/badge/WPS_Office-Download-gray?labelColor=C03426&logo=wpsoffice&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=WPS-Office&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-wps]
 
 ---
-### [Duolingo](https://play.google.com/store/apps/details?id=com.duolingo) <a id="duolingo"></a>
+### <a id="duolingo"></a> [Duolingo](https://play.google.com/store/apps/details?id=com.duolingo) 
 
 🧩 Hoo-dles: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=hoo-dles&app=com.duolingo)
 
 [![Duolingo Download](https://img.shields.io/badge/Duolingo-Download-gray?labelColor=4DC730&logo=Duolingo&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Duolingo&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-duolingo]
 
 ---
-### [Rakuten Viber Messenger](https://play.google.com/store/apps/details?id=com.viber.voip) <a id="viber"></a>
+### <a id="viber"></a> [Rakuten Viber Messenger](https://play.google.com/store/apps/details?id=com.viber.voip) 
 
 🧩 RookieEnough: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=rookieenough&app=com.viber.voip)
 
 [![Viber Download](https://img.shields.io/badge/Viber-Download-gray?labelColor=665CAC&logo=Viber&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Viber&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-viber]
 
 ---
-### [KakaoTalk](https://play.google.com/store/apps/details?id=com.kakao.talk) <a id="kakaotalk"></a>
+### <a id="kakaotalk"></a> [KakaoTalk](https://play.google.com/store/apps/details?id=com.kakao.talk) 
 
 🧩 AmpleReVanced: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=amplerevanced&app=com.kakao.talk)
 
 [![KakaoTalk Download](https://img.shields.io/badge/KakaoTalk-Download-gray?labelColor=FEE500&logo=kakaotalk&logoColor=000000)](https://github.com/nvbangg/builder-for-morphe/releases?q=KakaoTalk&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-kakaotalk]
 
 ---
-### [Pandora](https://play.google.com/store/apps/details?id=com.pandora.android) - Music & Podcasts <a id="pandora"></a>
+### <a id="pandora"></a> [Pandora](https://play.google.com/store/apps/details?id=com.pandora.android) - Music & Podcasts 
 
 🧩 Hoo-dles: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=hoo-dles&app=com.pandora.android)
 
 [![Pandora Download](https://img.shields.io/badge/Pandora-Download-gray?labelColor=3668FF&logo=Pandora&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Pandora&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-pandora]
 
 ---
-### [SoundCloud](https://play.google.com/store/apps/details?id=com.soundcloud.android): The Music You Love <a id="soundcloud"></a>
+### <a id="soundcloud"></a> [SoundCloud](https://play.google.com/store/apps/details?id=com.soundcloud.android): The Music You Love 
 
 🧩 Hoo-dles: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=hoo-dles&app=com.soundcloud.android)
 
 [![SoundCloud Download](https://img.shields.io/badge/SoundCloud-Download-gray?labelColor=FF5500&logo=SoundCloud&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=SoundCloud&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-soundcloud]
 
 ---
-### [Twitch](https://play.google.com/store/apps/details?id=tv.twitch.android.app): Live Streaming <a id="twitch"></a>
+###  <a id="twitch"></a> [Twitch](https://play.google.com/store/apps/details?id=tv.twitch.android.app): Live Streaming
 
-🧩 ReVanced: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=revanced&app=tv.twitch.android.app)
+🧩 RookieEnough: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=rookieenough&app=tv.twitch.android.app)
 
 [![Twitch Download](https://img.shields.io/badge/Twitch-Download-gray?labelColor=9146FF&logo=Twitch&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Twitch&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-twitch]
 
 ---
-### [Cricbuzz](https://play.google.com/store/apps/details?id=com.cricbuzz.android) - Live Cricket Scores <a id="cricbuzz"></a>
+### <a id="cricbuzz"></a> [Cricbuzz](https://play.google.com/store/apps/details?id=com.cricbuzz.android) - Live Cricket Scores 
 
 🧩 RookieEnough: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=rookieenough&app=com.cricbuzz.android)
 
 [![Cricbuzz Download](https://img.shields.io/badge/Cricbuzz-Download-gray?labelColor=009270&logo=Cricbuzz&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Cricbuzz&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-cricbuzz]
 
 ---
-### [Strava](https://play.google.com/store/apps/details?id=com.strava): Run, Bike, Walk <a id="strava"></a>
+### <a id="strava"></a> [Strava](https://play.google.com/store/apps/details?id=com.strava): Run, Bike, Walk 
 
 🧩 RookieEnough: [View Details](https://nvbangg.github.io/awesome-for-morphe/?source=rookieenough&app=com.strava)
 
 [![Strava Download](https://img.shields.io/badge/Strava-Download-gray?labelColor=FC4C02&logo=Strava&logoColor=white)](https://github.com/nvbangg/builder-for-morphe/releases?q=Strava&expanded=true) [![Obtainium](https://img.shields.io/badge/Add_to-Obtainium-4500FF?logo=obtainium)][ob-strava]
 
 ---
-## 📚 Documentation & Contributing <a id="documentation"></a>
+## <a id="documentation"></a> 📚 Documentation & Contributing 
 
 For full configuration reference, setup and contributing guide, see [CONTRIBUTING.md](https://github.com/nvbangg/builder-for-morphe/blob/main/CONTRIBUTING.md).
 
@@ -201,7 +194,7 @@ This repository was generated from the [krvstek/uni-apks](https://github.com/krv
 - Direct download links in release notes
 
 ---
-## ⚠️ Disclaimer <a id="disclaimer"></a>
+## <a id="disclaimer"></a> ⚠️ Disclaimer 
 
 - This project is **not affiliated with any patch creators mentioned here**, and is intended for educational & personal use only.
 - All builds are done using **publicly available tools**. This repository simply automates the process for convenience.
@@ -210,7 +203,7 @@ This repository was generated from the [krvstek/uni-apks](https://github.com/krv
 - This repository only provides pre-built APKs. If a build fails due to upstream app or patch changes, please report it to the patch creators or wait for an update.
 
 ---
-## ⭐ Star History <a id="star-history"></a>
+## <a id="star-history"></a> ⭐ Star History 
 
 <div>
 <a href="https://github.com/nvbangg/builder-for-morphe"><img src="https://img.shields.io/github/stars/nvbangg/builder-for-morphe?label=Star%20this%20repo%20if%20useful%20%E2%AD%90&logo=github" alt="Stars"></a>　<a href="https://github.com/sponsors/nvbangg"><img src="https://img.shields.io/badge/Support-pink?style=social&logo=github-sponsors" alt="Sponsor"></a>
@@ -239,7 +232,6 @@ This repository was generated from the [krvstek/uni-apks](https://github.com/krv
 [ob-tiktok]: https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22com.ss.android.ugc.trill%22%2C%22url%22%3A%22https%3A//github.com/nvbangg/builder-for-morphe%22%2C%22author%22%3A%22nvbangg%22%2C%22name%22%3A%22TikTok%22%2C%22preferredApkIndex%22%3A0%2C%22additionalSettings%22%3A%22%7B%5C%22includePrereleases%5C%22%3Afalse%2C%5C%22fallbackToOlderReleases%5C%22%3Atrue%2C%5C%22filterReleaseTitlesByRegEx%5C%22%3A%5C%22.%2A-rookie-enough%24%5C%22%2C%5C%22filterReleaseNotesByRegEx%5C%22%3A%5C%22TikTok%5C%22%2C%5C%22verifyLatestTag%5C%22%3Afalse%2C%5C%22sortMethodChoice%5C%22%3A%5C%22date%5C%22%2C%5C%22useLatestAssetDateAsReleaseDate%5C%22%3Afalse%2C%5C%22releaseTitleAsVersion%5C%22%3Afalse%2C%5C%22trackOnly%5C%22%3Afalse%2C%5C%22versionExtractionRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22matchGroupToUse%5C%22%3A%5C%22%5C%22%2C%5C%22versionDetection%5C%22%3Afalse%2C%5C%22releaseDateAsVersion%5C%22%3Afalse%2C%5C%22useVersionCodeAsOSVersion%5C%22%3Afalse%2C%5C%22apkFilterRegEx%5C%22%3A%5C%22tiktok-%5C%22%2C%5C%22invertAPKFilter%5C%22%3Afalse%2C%5C%22autoApkFilterByArch%5C%22%3Atrue%2C%5C%22appName%5C%22%3A%5C%22TikTok%5C%22%2C%5C%22appAuthor%5C%22%3A%5C%22%5C%22%2C%5C%22shizukuPretendToBeGooglePlay%5C%22%3Afalse%2C%5C%22allowInsecure%5C%22%3Afalse%2C%5C%22exemptFromBackgroundUpdates%5C%22%3Afalse%2C%5C%22skipUpdateNotifications%5C%22%3Afalse%2C%5C%22about%5C%22%3A%5C%22%5C%22%2C%5C%22refreshBeforeDownload%5C%22%3Afalse%2C%5C%22includeZips%5C%22%3Afalse%2C%5C%22zippedApkFilterRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22dontSortReleasesList%5C%22%3Afalse%2C%5C%22github-creds%5C%22%3A%5C%22%5C%22%7D%22%2C%22overrideSource%22%3A%22GitHub%22%7D
 [ob-prime]: https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22com.amazon.avod.thirdpartyclient%22%2C%22url%22%3A%22https%3A//github.com/nvbangg/builder-for-morphe%22%2C%22author%22%3A%22nvbangg%22%2C%22name%22%3A%22Prime%20Video%22%2C%22preferredApkIndex%22%3A0%2C%22additionalSettings%22%3A%22%7B%5C%22includePrereleases%5C%22%3Afalse%2C%5C%22fallbackToOlderReleases%5C%22%3Atrue%2C%5C%22filterReleaseTitlesByRegEx%5C%22%3A%5C%22.%2A-hoo-dles%24%5C%22%2C%5C%22filterReleaseNotesByRegEx%5C%22%3A%5C%22Prime%20Video%5C%22%2C%5C%22verifyLatestTag%5C%22%3Afalse%2C%5C%22sortMethodChoice%5C%22%3A%5C%22date%5C%22%2C%5C%22useLatestAssetDateAsReleaseDate%5C%22%3Afalse%2C%5C%22releaseTitleAsVersion%5C%22%3Afalse%2C%5C%22trackOnly%5C%22%3Afalse%2C%5C%22versionExtractionRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22matchGroupToUse%5C%22%3A%5C%22%5C%22%2C%5C%22versionDetection%5C%22%3Afalse%2C%5C%22releaseDateAsVersion%5C%22%3Afalse%2C%5C%22useVersionCodeAsOSVersion%5C%22%3Afalse%2C%5C%22apkFilterRegEx%5C%22%3A%5C%22prime-video-%5C%22%2C%5C%22invertAPKFilter%5C%22%3Afalse%2C%5C%22autoApkFilterByArch%5C%22%3Atrue%2C%5C%22appName%5C%22%3A%5C%22Prime%20Video%5C%22%2C%5C%22appAuthor%5C%22%3A%5C%22%5C%22%2C%5C%22shizukuPretendToBeGooglePlay%5C%22%3Afalse%2C%5C%22allowInsecure%5C%22%3Afalse%2C%5C%22exemptFromBackgroundUpdates%5C%22%3Afalse%2C%5C%22skipUpdateNotifications%5C%22%3Afalse%2C%5C%22about%5C%22%3A%5C%22%5C%22%2C%5C%22refreshBeforeDownload%5C%22%3Afalse%2C%5C%22includeZips%5C%22%3Afalse%2C%5C%22zippedApkFilterRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22dontSortReleasesList%5C%22%3Afalse%2C%5C%22github-creds%5C%22%3A%5C%22%5C%22%7D%22%2C%22overrideSource%22%3A%22GitHub%22%7D
 [ob-disney]: https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22com.disney.disneyplus%22%2C%22url%22%3A%22https%3A//github.com/nvbangg/builder-for-morphe%22%2C%22author%22%3A%22nvbangg%22%2C%22name%22%3A%22Disney%20Plus%22%2C%22preferredApkIndex%22%3A0%2C%22additionalSettings%22%3A%22%7B%5C%22includePrereleases%5C%22%3Afalse%2C%5C%22fallbackToOlderReleases%5C%22%3Atrue%2C%5C%22filterReleaseTitlesByRegEx%5C%22%3A%5C%22.%2A-rookie-enough%24%5C%22%2C%5C%22filterReleaseNotesByRegEx%5C%22%3A%5C%22Disney%20Plus%5C%22%2C%5C%22verifyLatestTag%5C%22%3Afalse%2C%5C%22sortMethodChoice%5C%22%3A%5C%22date%5C%22%2C%5C%22useLatestAssetDateAsReleaseDate%5C%22%3Afalse%2C%5C%22releaseTitleAsVersion%5C%22%3Afalse%2C%5C%22trackOnly%5C%22%3Afalse%2C%5C%22versionExtractionRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22matchGroupToUse%5C%22%3A%5C%22%5C%22%2C%5C%22versionDetection%5C%22%3Afalse%2C%5C%22releaseDateAsVersion%5C%22%3Afalse%2C%5C%22useVersionCodeAsOSVersion%5C%22%3Afalse%2C%5C%22apkFilterRegEx%5C%22%3A%5C%22disney-plus-%5C%22%2C%5C%22invertAPKFilter%5C%22%3Afalse%2C%5C%22autoApkFilterByArch%5C%22%3Atrue%2C%5C%22appName%5C%22%3A%5C%22Disney%20Plus%5C%22%2C%5C%22appAuthor%5C%22%3A%5C%22%5C%22%2C%5C%22shizukuPretendToBeGooglePlay%5C%22%3Afalse%2C%5C%22allowInsecure%5C%22%3Afalse%2C%5C%22exemptFromBackgroundUpdates%5C%22%3Afalse%2C%5C%22skipUpdateNotifications%5C%22%3Afalse%2C%5C%22about%5C%22%3A%5C%22%5C%22%2C%5C%22refreshBeforeDownload%5C%22%3Afalse%2C%5C%22includeZips%5C%22%3Afalse%2C%5C%22zippedApkFilterRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22dontSortReleasesList%5C%22%3Afalse%2C%5C%22github-creds%5C%22%3A%5C%22%5C%22%7D%22%2C%22overrideSource%22%3A%22GitHub%22%7D
-[ob-pinterest]: https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22com.pinterest%22%2C%22url%22%3A%22https%3A//github.com/nvbangg/builder-for-morphe%22%2C%22author%22%3A%22nvbangg%22%2C%22name%22%3A%22Pinterest%22%2C%22preferredApkIndex%22%3A0%2C%22additionalSettings%22%3A%22%7B%5C%22includePrereleases%5C%22%3Afalse%2C%5C%22fallbackToOlderReleases%5C%22%3Atrue%2C%5C%22filterReleaseTitlesByRegEx%5C%22%3A%5C%22.%2A-binarymend%24%5C%22%2C%5C%22filterReleaseNotesByRegEx%5C%22%3A%5C%22Pinterest%5C%22%2C%5C%22verifyLatestTag%5C%22%3Afalse%2C%5C%22sortMethodChoice%5C%22%3A%5C%22date%5C%22%2C%5C%22useLatestAssetDateAsReleaseDate%5C%22%3Afalse%2C%5C%22releaseTitleAsVersion%5C%22%3Afalse%2C%5C%22trackOnly%5C%22%3Afalse%2C%5C%22versionExtractionRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22matchGroupToUse%5C%22%3A%5C%22%5C%22%2C%5C%22versionDetection%5C%22%3Afalse%2C%5C%22releaseDateAsVersion%5C%22%3Afalse%2C%5C%22useVersionCodeAsOSVersion%5C%22%3Afalse%2C%5C%22apkFilterRegEx%5C%22%3A%5C%22pinterest-%5C%22%2C%5C%22invertAPKFilter%5C%22%3Afalse%2C%5C%22autoApkFilterByArch%5C%22%3Atrue%2C%5C%22appName%5C%22%3A%5C%22Pinterest%5C%22%2C%5C%22appAuthor%5C%22%3A%5C%22%5C%22%2C%5C%22shizukuPretendToBeGooglePlay%5C%22%3Afalse%2C%5C%22allowInsecure%5C%22%3Afalse%2C%5C%22exemptFromBackgroundUpdates%5C%22%3Afalse%2C%5C%22skipUpdateNotifications%5C%22%3Afalse%2C%5C%22about%5C%22%3A%5C%22%5C%22%2C%5C%22refreshBeforeDownload%5C%22%3Afalse%2C%5C%22includeZips%5C%22%3Afalse%2C%5C%22zippedApkFilterRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22dontSortReleasesList%5C%22%3Afalse%2C%5C%22github-creds%5C%22%3A%5C%22%5C%22%7D%22%2C%22overrideSource%22%3A%22GitHub%22%7D
 [ob-wps]: https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22cn.wps.moffice_eng%22%2C%22url%22%3A%22https%3A//github.com/nvbangg/builder-for-morphe%22%2C%22author%22%3A%22nvbangg%22%2C%22name%22%3A%22WPS%20Office%22%2C%22preferredApkIndex%22%3A0%2C%22additionalSettings%22%3A%22%7B%5C%22includePrereleases%5C%22%3Afalse%2C%5C%22fallbackToOlderReleases%5C%22%3Atrue%2C%5C%22filterReleaseTitlesByRegEx%5C%22%3A%5C%22.%2A-hoo-dles%24%5C%22%2C%5C%22filterReleaseNotesByRegEx%5C%22%3A%5C%22WPS%20Office%5C%22%2C%5C%22verifyLatestTag%5C%22%3Afalse%2C%5C%22sortMethodChoice%5C%22%3A%5C%22date%5C%22%2C%5C%22useLatestAssetDateAsReleaseDate%5C%22%3Afalse%2C%5C%22releaseTitleAsVersion%5C%22%3Afalse%2C%5C%22trackOnly%5C%22%3Afalse%2C%5C%22versionExtractionRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22matchGroupToUse%5C%22%3A%5C%22%5C%22%2C%5C%22versionDetection%5C%22%3Afalse%2C%5C%22releaseDateAsVersion%5C%22%3Afalse%2C%5C%22useVersionCodeAsOSVersion%5C%22%3Afalse%2C%5C%22apkFilterRegEx%5C%22%3A%5C%22wps-office-%5C%22%2C%5C%22invertAPKFilter%5C%22%3Afalse%2C%5C%22autoApkFilterByArch%5C%22%3Atrue%2C%5C%22appName%5C%22%3A%5C%22WPS%20Office%5C%22%2C%5C%22appAuthor%5C%22%3A%5C%22%5C%22%2C%5C%22shizukuPretendToBeGooglePlay%5C%22%3Afalse%2C%5C%22allowInsecure%5C%22%3Afalse%2C%5C%22exemptFromBackgroundUpdates%5C%22%3Afalse%2C%5C%22skipUpdateNotifications%5C%22%3Afalse%2C%5C%22about%5C%22%3A%5C%22%5C%22%2C%5C%22refreshBeforeDownload%5C%22%3Afalse%2C%5C%22includeZips%5C%22%3Afalse%2C%5C%22zippedApkFilterRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22dontSortReleasesList%5C%22%3Afalse%2C%5C%22github-creds%5C%22%3A%5C%22%5C%22%7D%22%2C%22overrideSource%22%3A%22GitHub%22%7D
 [ob-duolingo]: https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22com.duolingo%22%2C%22url%22%3A%22https%3A//github.com/nvbangg/builder-for-morphe%22%2C%22author%22%3A%22nvbangg%22%2C%22name%22%3A%22Duolingo%22%2C%22preferredApkIndex%22%3A0%2C%22additionalSettings%22%3A%22%7B%5C%22includePrereleases%5C%22%3Afalse%2C%5C%22fallbackToOlderReleases%5C%22%3Atrue%2C%5C%22filterReleaseTitlesByRegEx%5C%22%3A%5C%22.%2A-hoo-dles%24%5C%22%2C%5C%22filterReleaseNotesByRegEx%5C%22%3A%5C%22Duolingo%5C%22%2C%5C%22verifyLatestTag%5C%22%3Afalse%2C%5C%22sortMethodChoice%5C%22%3A%5C%22date%5C%22%2C%5C%22useLatestAssetDateAsReleaseDate%5C%22%3Afalse%2C%5C%22releaseTitleAsVersion%5C%22%3Afalse%2C%5C%22trackOnly%5C%22%3Afalse%2C%5C%22versionExtractionRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22matchGroupToUse%5C%22%3A%5C%22%5C%22%2C%5C%22versionDetection%5C%22%3Afalse%2C%5C%22releaseDateAsVersion%5C%22%3Afalse%2C%5C%22useVersionCodeAsOSVersion%5C%22%3Afalse%2C%5C%22apkFilterRegEx%5C%22%3A%5C%22duolingo-%5C%22%2C%5C%22invertAPKFilter%5C%22%3Afalse%2C%5C%22autoApkFilterByArch%5C%22%3Atrue%2C%5C%22appName%5C%22%3A%5C%22Duolingo%5C%22%2C%5C%22appAuthor%5C%22%3A%5C%22%5C%22%2C%5C%22shizukuPretendToBeGooglePlay%5C%22%3Afalse%2C%5C%22allowInsecure%5C%22%3Afalse%2C%5C%22exemptFromBackgroundUpdates%5C%22%3Afalse%2C%5C%22skipUpdateNotifications%5C%22%3Afalse%2C%5C%22about%5C%22%3A%5C%22%5C%22%2C%5C%22refreshBeforeDownload%5C%22%3Afalse%2C%5C%22includeZips%5C%22%3Afalse%2C%5C%22zippedApkFilterRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22dontSortReleasesList%5C%22%3Afalse%2C%5C%22github-creds%5C%22%3A%5C%22%5C%22%7D%22%2C%22overrideSource%22%3A%22GitHub%22%7D
 [ob-viber]: https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22com.viber.voip%22%2C%22url%22%3A%22https%3A//github.com/nvbangg/builder-for-morphe%22%2C%22author%22%3A%22nvbangg%22%2C%22name%22%3A%22Viber%22%2C%22preferredApkIndex%22%3A0%2C%22additionalSettings%22%3A%22%7B%5C%22includePrereleases%5C%22%3Afalse%2C%5C%22fallbackToOlderReleases%5C%22%3Atrue%2C%5C%22filterReleaseTitlesByRegEx%5C%22%3A%5C%22.%2A-rookie-enough%24%5C%22%2C%5C%22filterReleaseNotesByRegEx%5C%22%3A%5C%22Viber%5C%22%2C%5C%22verifyLatestTag%5C%22%3Afalse%2C%5C%22sortMethodChoice%5C%22%3A%5C%22date%5C%22%2C%5C%22useLatestAssetDateAsReleaseDate%5C%22%3Afalse%2C%5C%22releaseTitleAsVersion%5C%22%3Afalse%2C%5C%22trackOnly%5C%22%3Afalse%2C%5C%22versionExtractionRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22matchGroupToUse%5C%22%3A%5C%22%5C%22%2C%5C%22versionDetection%5C%22%3Afalse%2C%5C%22releaseDateAsVersion%5C%22%3Afalse%2C%5C%22useVersionCodeAsOSVersion%5C%22%3Afalse%2C%5C%22apkFilterRegEx%5C%22%3A%5C%22viber-%5C%22%2C%5C%22invertAPKFilter%5C%22%3Afalse%2C%5C%22autoApkFilterByArch%5C%22%3Atrue%2C%5C%22appName%5C%22%3A%5C%22Viber%5C%22%2C%5C%22appAuthor%5C%22%3A%5C%22%5C%22%2C%5C%22shizukuPretendToBeGooglePlay%5C%22%3Afalse%2C%5C%22allowInsecure%5C%22%3Afalse%2C%5C%22exemptFromBackgroundUpdates%5C%22%3Afalse%2C%5C%22skipUpdateNotifications%5C%22%3Afalse%2C%5C%22about%5C%22%3A%5C%22%5C%22%2C%5C%22refreshBeforeDownload%5C%22%3Afalse%2C%5C%22includeZips%5C%22%3Afalse%2C%5C%22zippedApkFilterRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22dontSortReleasesList%5C%22%3Afalse%2C%5C%22github-creds%5C%22%3A%5C%22%5C%22%7D%22%2C%22overrideSource%22%3A%22GitHub%22%7D

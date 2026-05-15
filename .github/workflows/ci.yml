@@ -17,21 +17,19 @@ jobs:
       build_rookie-enough: ${{ steps.compare.outputs.build_rookie-enough }}
       build_hoo-dles: ${{ steps.compare.outputs.build_hoo-dles }}
       build_ample-revanced: ${{ steps.compare.outputs.build_ample-revanced }}
-      build_binarymend: ${{ steps.compare.outputs.build_binarymend }}
     steps:
       - name: Compare upstream and local release dates
         id: compare
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          for APP in morphe piko rookie-enough hoo-dles ample-revanced binarymend; do
+          for APP in morphe piko rookie-enough hoo-dles ample-revanced; do
             case "${APP}" in
               morphe) UPSTREAM_REPO="MorpheApp/morphe-patches" ;;
               piko) UPSTREAM_REPO="crimera/piko" ;;
               rookie-enough) UPSTREAM_REPO="RookieEnough/De-ReVanced" ;;
               hoo-dles) UPSTREAM_REPO="hoo-dles/morphe-patches" ;;
               ample-revanced) UPSTREAM_REPO="AmpleReVanced/revanced-patches" ;;
-              binarymend) UPSTREAM_REPO="binarymend/morphe-patches" ;;
             esac
 
             UPSTREAM_DATE=$(gh api "repos/${UPSTREAM_REPO}/releases/latest" --jq '.published_at' 2>/dev/null || echo "null")
@@ -97,15 +95,5 @@ jobs:
     uses: ./.github/workflows/build.yml
     with:
       patch_source: 'ample-revanced'
-      build_mode: 'stable'
-    secrets: inherit
-
-  build-binarymend:
-    name: build (binarymend)
-    needs: check-versions
-    if: needs.check-versions.outputs.build_binarymend == 'true'
-    uses: ./.github/workflows/build.yml
-    with:
-      patch_source: 'binarymend'
       build_mode: 'stable'
     secrets: inherit
