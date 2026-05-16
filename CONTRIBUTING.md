@@ -76,7 +76,23 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/inc/app"
 > If a patch name contains a single quote, you must wrap the specific patch name in escaped double quotes.  
 > Example: `included-patches = "'Example patch' \"Hide 'Example button'\" 'Another example patch'"`
 
-2. 🔑 **Keystore**:
+2. ➕ **Adding a new patch source**:
+
+- Add your app entries to `config.toml` with the appropriate `patches-source` and `brand` fields (see the configuration table above for all available options).
+- Add a new job to `.github/workflows/ci.yml` so the CI picks up your brand automatically. Copy the block below and replace every occurrence of `<brand>` with your brand name in **lowercase** (must match the `brand` value set in `config.toml`):
+```yaml
+build-<brand>:
+  name: build (<brand>)
+  needs: check-versions
+  if: contains(fromJson(needs.check-versions.outputs.build_matrix), '<brand>')
+  uses: ./.github/workflows/build.yml
+  with:
+    patch_source: '<brand>'
+    build_mode: 'stable'
+  secrets: inherit
+```
+
+3. 🔑 **Keystore**:
 
 To sign APKs with a custom keystore, create a `.env` file in the project root:
 

@@ -12,29 +12,50 @@ jobs:
   check-versions:
     runs-on: ubuntu-latest
     outputs:
-      build_morphe: ${{ steps.compare.outputs.build_morphe }}
-      build_piko: ${{ steps.compare.outputs.build_piko }}
+      build_matrix: ${{ steps.compare.outputs.build_matrix }}
     steps:
+      - uses: actions/checkout@v6
+
       - name: Compare upstream and local release dates
         id: compare
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          for APP in morphe piko; do
-            case "${APP}" in
-              morphe) UPSTREAM_REPO="MorpheApp/morphe-patches" ;;
-              piko) UPSTREAM_REPO="crimera/piko" ;;
-            esac
+          python3 -c '
+          import tomllib
+
+          with open("config.toml", "rb") as f:
+              data = tomllib.load(f)
+
+          default_brand = str(data.get("brand", "morphe")).lower()
+          default_source = str(data.get("patches-source", "MorpheApp/morphe-patches"))
+
+          sources = set()
+          for value in data.values():
+              if isinstance(value, dict):
+                  brand = str(value.get("brand", default_brand)).lower()
+                  source = str(value.get("patches-source", default_source))
+                  sources.add(f"{brand}|{source}")
+
+          print(*sorted(sources), sep="\n")
+          ' > sources.txt
+
+          declare -A NEEDS_BUILD
+          BRANDS=()
+          while IFS="|" read -r BRAND UPSTREAM_REPO; do
+            [[ "${NEEDS_BUILD[$BRAND]}" == "1" ]] && continue
 
             UPSTREAM_DATE=$(gh api "repos/${UPSTREAM_REPO}/releases/latest" --jq '.published_at' 2>/dev/null || echo "null")
-            OUR_DATE=$(gh api "repos/${{ github.repository }}/releases" --jq "[.[] | select(.tag_name | endswith(\"-${APP}\"))] | first | .published_at // \"null\"" 2>/dev/null || echo "null")
-            BUILD=false
-            if [[ "${OUR_DATE}" == "null" || "${UPSTREAM_DATE}" > "${OUR_DATE}" ]]; then
-              BUILD=true
-            fi
+            OUR_DATE=$(gh api "repos/${{ github.repository }}/releases" --jq "[.[] | select(.tag_name | endswith(\"-${BRAND}\"))] | first | .published_at // \"null\"" 2>/dev/null || echo "null")
 
-            echo "build_${APP}=${BUILD}" >> "$GITHUB_OUTPUT"
-          done
+            if [[ "${OUR_DATE}" == "null" || "${UPSTREAM_DATE}" > "${OUR_DATE}" ]]; then
+              BRANDS+=("$BRAND")
+              NEEDS_BUILD[$BRAND]="1"
+            fi
+          done < sources.txt
+
+          MATRIX_JSON=$(jq -nc '$ARGS.positional' --args "${BRANDS[@]}")
+          echo "build_matrix=${MATRIX_JSON}" >> "$GITHUB_OUTPUT"
 
       - name: Clear older runs
         env:
@@ -45,7 +66,7 @@ jobs:
   build-morphe:
     name: build (Morphe)
     needs: check-versions
-    if: needs.check-versions.outputs.build_morphe == 'true'
+    if: contains(fromJson(needs.check-versions.outputs.build_matrix), 'morphe')
     uses: ./.github/workflows/build.yml
     with:
       patch_source: 'morphe'
@@ -55,7 +76,7 @@ jobs:
   build-piko:
     name: build (Piko)
     needs: check-versions
-    if: needs.check-versions.outputs.build_piko == 'true'
+    if: contains(fromJson(needs.check-versions.outputs.build_matrix), 'piko')
     uses: ./.github/workflows/build.yml
     with:
       patch_source: 'piko'
