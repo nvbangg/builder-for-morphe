@@ -158,7 +158,7 @@ jobs:
           [[ "${{ inputs.build_mode }}" == "dev" ]] && VER="${VER}-pre"
           VER="${VER}-${{ inputs.patch_source }}"
           if gh release view "$VER" >/dev/null 2>&1; then
-            VER="${VER/$(date +%y.%m.%d)/$(date +%Y.%m.%d-%H.%M)}"
+            VER="${VER/$(date +%y.%m.%d)/$(date +%y.%m.%d-%H.%M)}"
           fi
           echo "version=${VER}" >> "$GITHUB_OUTPUT"
 
