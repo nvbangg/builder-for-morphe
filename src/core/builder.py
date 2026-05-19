@@ -216,6 +216,6 @@ def run_build(data: dict[str, object], config: Config, net: NetworkManager, targ
         return False
 
     changelogs = "".join(cl.read_text(encoding="utf-8") for cl in sorted(TEMP_DIR.glob("*/changelog.md")))
-    Path("build.md").write_text("\n".join([*log_lines, "", "▶️ » Install [MicroG-RE](https://github.com/MorpheApp/MicroG-RE/releases) for YouTube and YT Music APKs\n", changelogs]), encoding="utf-8")
+    Path("build.md").write_text("\n".join([*log_lines, "", "▶️ » Install [MicroG-RE](https://github.com/MorpheApp/MicroG-RE/releases) to enable Google account sign-in for supported apps\n", changelogs]), encoding="utf-8")
     pr("Done")
     return True
