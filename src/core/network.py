@@ -65,7 +65,7 @@ class NetworkManager:
                     resp = self.session.get(url, timeout=(5, 300), stream=True, allow_redirects=True, headers=headers, verify=True)
                     resp.raise_for_status()
                 with tmp.open("wb") as fh:
-                    for chunk in resp.iter_content(chunk_size=131072):
+                    for chunk in resp.iter_content(chunk_size=1048576):
                         fh.write(chunk)
                 tmp.replace(dest)
             except req_exc.RequestException:
