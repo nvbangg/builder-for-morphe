@@ -37,13 +37,13 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
         with:
           fetch-depth: 1
           submodules: true
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.1.0
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b  # v8.1.0
         with:
           python-version: "3.13"
           enable-cache: true
@@ -66,19 +66,19 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
         with:
           fetch-depth: 0
           submodules: true
 
       - name: Install java
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654  # v5.2.0
         with:
           distribution: "temurin"
           java-version: "25"
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.1.0
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b  # v8.1.0
         with:
           python-version: "3.13"
           enable-cache: true
@@ -95,7 +95,7 @@ jobs:
           KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
 
       - name: Upload APKs as artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
         with:
           name: apks-${{ inputs.patch_source }}-${{ matrix.id }}${{ matrix.arch && format('-{0}', matrix.arch) || '' }}
           path: ./build/*.apk
@@ -103,7 +103,7 @@ jobs:
           retention-days: 1
 
       - name: Upload build log as artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
         with:
           name: log-${{ inputs.patch_source }}-${{ matrix.id }}${{ matrix.arch && format('-{0}', matrix.arch) || '' }}
           path: build.md
@@ -118,13 +118,13 @@ jobs:
       contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
         with:
           fetch-depth: 0
           submodules: true
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.1.0
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b  # v8.1.0
         with:
           python-version: "3.13"
           enable-cache: true
@@ -156,7 +156,7 @@ jobs:
 
       - name: Download all APKs
         if: steps.check_artifacts.outputs.has_artifacts == 'true'
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8.0.1
         with:
           pattern: apks-${{ inputs.patch_source }}-*
           path: all-apks
@@ -164,7 +164,7 @@ jobs:
 
       - name: Download all logs
         if: steps.check_artifacts.outputs.has_artifacts == 'true'
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8.0.1
         with:
           pattern: log-${{ inputs.patch_source }}-*
           path: logs
