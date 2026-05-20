@@ -1,0 +1,40 @@
+name: Deploy to GitHub Pages
+run-name: Deploy to GitHub Pages
+
+on:
+  push:
+    paths:
+      - 'index.html'
+      - 'README.md'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: Prepare
+        run: |
+          mkdir public
+          cp index.html public/
+          cp README.md public/
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: 'public'
+      - id: deployment
+        uses: actions/deploy-pages@v5

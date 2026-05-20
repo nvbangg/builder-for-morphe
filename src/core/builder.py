@@ -145,7 +145,7 @@ def _build_single(entry: AppEntry, arch: str, label: str, net: NetworkManager, p
         apk_output = _apply_patch(entry, arch, version, force, patcher, list_patches, stock_apk, stock_apkm)
         pr(f"Built {label}: '{apk_output}'")
         if os.getenv("GITHUB_ACTIONS") == "true":
-            return f"- 🟢 » {label}: [`{version}`](../../releases/download/{{TAG}}/{apk_output.name})"
+            return f"- 🟢 » {label}: [`⬇️{version}`](../../releases/download/{{TAG}}/{apk_output.name})"
         return f"- 🟢 » {label}: `{version}`"
     except (BuilderError, PatcherError, ValueError, Exception) as exc:
         epr(f"Building '{label}' failed! {exc}")

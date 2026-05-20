@@ -1,41 +1,114 @@
-parallel-jobs = 1
 
 [YouTube]
-uptodown-dlurl = "https://youtube.en.uptodown.com/android"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube"
-patcher-args = "-e 'Change header' -Ocustom=icons/YouTube/header -e 'Custom branding' -OcustomIcon=icons/YouTube/branding -OcustomName=Morphe"
+uptodown-dlurl = "https://youtube.en.uptodown.com/android"
 
-[Music]
-uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
+[YT-Music]
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube-music"
-patcher-args = "-e 'Change header' -Ocustom=icons/Music/header -e 'Custom branding' -OcustomIcon=icons/Music/branding -OcustomName='Morphe Music'"
+uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
 arch = "both"
 
-[Reddit]
-uptodown-dlurl = "https://reddit-official-app.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/redditinc/reddit"
-patcher-args = "-e 'Custom branding name for Reddit' -OappName='Morphe Reddit'"
+[Google-Photos]
+patches-source = "RookieEnough/De-ReVanced"
+brand = "rookie-enough"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/photos/"
+uptodown-dlurl = "https://google-photos.en.uptodown.com/android"
+version = "7.74.0.910345644"
 
-[X]
-uptodown-dlurl = "https://twitter.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter"
-patches-source = "crimera/piko"
-brand = "Piko"
-included-patches = "'Browse tweet object' 'Dynamic color'"
-version = "11.81.0-release.0"
-
-[Twitter]
-uptodown-dlurl = "https://twitter.en.uptodown.com/android"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter"
-patches-source = "crimera/piko"
-brand = "Piko"
-included-patches = "'Bring back twitter' 'Browse tweet object' 'Dynamic color'"
-version = "11.81.0-release.0"
+[Facebook]
+patches-source = "RookieEnough/De-ReVanced"
+brand = "rookie-enough"
+archive-dlurl = "https://archive.org/download/nvbangg-apks/com.facebook.katana/"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/facebook-2/facebook/"
+uptodown-durl = "https://facebook.en.uptodown.com/android"
+arch = "both"
 
 [Instagram]
-# uptodown-dlurl = "https://instagram.en.uptodown.com/android"
-# apkmirror-dlurl = "https://www.apkmirror.com/apk/instagram/instagram-instagram"
-archive-dlurl = "https://archive.org/download/uni-src/apks/com.instagram.android"
 patches-source = "crimera/piko"
-brand = "Piko"
+brand = "piko"
+archive-dlurl = "https://archive.org/download/uni-src/apks/com.instagram.android"
+# apkmirror-dlurl = "https://www.apkmirror.com/apk/instagram/instagram-instagram"
+# uptodown-dlurl = "https://instagram.en.uptodown.com/android"
 arch = "arm64-v8a"
+
+[X-Twitter]
+patches-source = "crimera/piko"
+brand = "piko"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter"
+uptodown-dlurl = "https://twitter.en.uptodown.com/android"
+version = "11.81.0-release.0"
+
+[Reddit]
+apkmirror-dlurl = "https://www.apkmirror.com/apk/redditinc/reddit"
+uptodown-dlurl = "https://reddit-official-app.en.uptodown.com/android"
+
+[TikTok]
+patches-source = "RookieEnough/De-ReVanced"
+brand = "rookie-enough"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/tiktok-pte-ltd/tik-tok-including-musical-ly/"
+uptodown-dlurl = "https://tiktok.en.uptodown.com/android"
+
+[Prime-Video]
+patches-source = "hoo-dles/morphe-patches"
+brand = "hoo-dles"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/amazon-mobile-llc/amazon-prime-video/"
+uptodown-dlurl = "https://amazon-video.en.uptodown.com/android"
+
+[Disney-Plus]
+patches-source = "RookieEnough/De-ReVanced"
+brand = "rookie-enough"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/disney/disney/"
+uptodown-dlurl = "https://disney-disneyplus.en.uptodown.com/android"
+version = "26.6.0+rc5-2026.04.21"
+
+[WPS-Office]
+patches-source = "hoo-dles/morphe-patches"
+brand = "hoo-dles"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/wps-software-pte-ltd/wps-office-pdf/"
+uptodown-dlurl = "https://wps-office.en.uptodown.com/android"
+
+[Duolingo]
+patches-source = "hoo-dles/morphe-patches"
+brand = "hoo-dles"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/duolingo/duolingo-duolingo/"
+uptodown-dlurl = "https://duolingo.en.uptodown.com/android"
+
+[Viber]
+patches-source = "RookieEnough/De-ReVanced"
+brand = "rookie-enough"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/viber-media-s-a-r-l/viber/"
+
+[KakaoTalk]
+patches-source = "AmpleReVanced/revanced-patches"
+brand = "ample-revanced"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/kakao-corp/kakaotalk/"
+uptodown-dlurl = "https://kakaotalk.en.uptodown.com/android"
+
+[Pandora]
+patches-source = "hoo-dles/morphe-patches"
+brand = "hoo-dles"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/pandora/pandora-music-podcasts/"
+
+[SoundCloud]
+patches-source = "hoo-dles/morphe-patches"
+brand = "hoo-dles"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/soundcloud/soundcloud-soundcloud/"
+uptodown-dlurl = "https://soundcloud.en.uptodown.com/android"
+
+[Twitch]
+patches-source = "RookieEnough/De-ReVanced"
+brand = "rookie-enough"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/twitch-interactive-inc/twitch/"
+uptodown-dlurl = "https://twitch.en.uptodown.com/android"
+
+[Cricbuzz]
+patches-source = "RookieEnough/De-ReVanced"
+brand = "rookie-enough"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/cricbuzz-com/cricbuzz-live-cricket-scores-news/"
+uptodown-dlurl = "https://cricbuzz-cricket-scores-and-news.en.uptodown.com/android"
+
+[Strava]
+patches-source = "RookieEnough/De-ReVanced"
+brand = "rookie-enough"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/strava-inc/strava-running-and-cycling-gps/"
+uptodown-dlurl = "https://strava.en.uptodown.com/android"

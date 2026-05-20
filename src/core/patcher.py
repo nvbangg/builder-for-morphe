@@ -113,7 +113,7 @@ class PatcherCLI:
         ks_args: list[str] = []
 
         if self.ks_path and (ks_pass := os.getenv("KEYSTORE_PASS", "")):
-            ks_args = [f"--keystore={self.ks_path}", f"--keystore-entry-password={ks_pass}", f"--keystore-password={ks_pass}", "--signer=krvstek", "--keystore-entry-alias=krvstek"]
+            ks_args = [f"--keystore={self.ks_path}", f"--keystore-entry-password={ks_pass}", f"--keystore-password={ks_pass}", "--signer=nvbangg", "--keystore-entry-alias=nvbangg"]
         elif Path("morphe.keystore").exists():
             ks_args = ["--keystore=morphe.keystore"]
 
