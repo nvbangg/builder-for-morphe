@@ -17,6 +17,9 @@ _RE_VERSION_TAGS = re.compile(r"\s*\(.*?\)")
 class PatcherError(Exception):
     pass
 
+class SignatureError(PatcherError):
+    """Raised when sig.txt has no entry for a package, or apksigner reports a hash mismatch."""
+
 def _arch_to_libs(arch: str) -> str:
     match arch:
         case "arm-v7a":
@@ -47,6 +50,10 @@ def _parse_versions_output(output: str) -> list[str]:
 def _redact_args(args: list[str | Path]) -> list[str]:
     return [_SECRET_PATTERNS.sub(r"\1***", str(a)) for a in args]
 
+def _search_output(output: str, pattern: str) -> str:
+    m = re.search(pattern, output, re.I | re.M)
+    return m.group(1).strip() if m else ""
+
 class PatcherCLI:
     def __init__(self, cli_jar: Path, patches_mpp: Path, apksigner: Path, ks_path: Path | None = None, sig_file: Path = Path("sig.txt")) -> None:
         self.cli_jar = cli_jar
@@ -58,6 +65,10 @@ class PatcherCLI:
             for line in sig_file.read_text(encoding="utf-8").splitlines():
                 if parts := line.split():
                     self._signatures[parts[-1]] = parts[0].lower()
+
+    def has_signature(self, pkg_name: str) -> bool:
+        expected = self._signatures.get(pkg_name)
+        return bool(expected and expected.strip())
 
     def list_patches(self, pkg_name: str) -> str:
         return _run_java("-jar", self.cli_jar, "list-patches", "--patches", self.patches_mpp, "-f", pkg_name, "-v", "-p", timeout=60)
@@ -78,11 +89,7 @@ class PatcherCLI:
         return get_highest_ver(versions)
 
     def resolve_auto_patches(self, list_patches_output: str) -> tuple[str, str]:
-        def find(pattern: str) -> str:
-            m = re.search(pattern, list_patches_output, re.I | re.M)
-            return m.group(1).strip() if m else ""
-
-        return find(r"^Name:\s*(.*(?:gmscore|microg).*)$"), find(r"^Name:\s*(.*disable play store updates.*)$")
+        return (_search_output(list_patches_output, r"^Name:\s*(.*(?:gmscore|microg).*)$"), _search_output(list_patches_output, r"^Name:\s*(.*disable play store updates.*)$"))
 
     def build_patch_args(self, included_patches: list[str], excluded_patches: list[str], exclusive: bool, extra_args: list[str], arch: str, auto_patches: list[str], force: bool = False) -> list[str]:
         active_auto = {p for p in auto_patches if p}

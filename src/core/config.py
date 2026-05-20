@@ -47,6 +47,7 @@ class AppEntry:
 def load_toml(path: Path) -> dict[str, object]:
     if path.suffix != ".toml":
         raise ValueError(f"Only .toml config files are supported, got: '{path}'")
+
     try:
         with path.open("rb") as fp:
             return tomllib.load(fp)

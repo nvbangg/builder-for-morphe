@@ -4,12 +4,12 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 from src.core.network import NetworkManager, ResourceNotFoundError
-from src.scrapers.base import AppMetadata, BaseScraper, DownloadResult
+from src.scrapers.base import AppMetadata, BaseScraper, DownloadResult, ScraperError
 
 _ARCH_SUFFIX = re.compile(r"(?:-(?:all|arm64-v8a|arm-v7a|x86_64|x86))?(?:\.apk\.apkm|\.apk|\.apkm)$")
 
 
-class GitHubReleasesError(Exception):
+class GitHubReleasesError(ScraperError):
     pass
 
 class GitHubScraper(BaseScraper):

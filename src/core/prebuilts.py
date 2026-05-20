@@ -26,6 +26,7 @@ def _ver_key(ver: str) -> tuple[int, ...]:
 def get_highest_ver(versions: list[str]) -> str:
     if not (clean := [v.strip() for v in versions if v.strip()]):
         raise ValueError("Empty version list")
+
     return max(clean, key=_ver_key)
 
 def fetch_prebuilts(cli_src: str, cli_ver: str, patches_src: str, patches_ver: str, net: NetworkManager) -> Prebuilts:
@@ -40,6 +41,7 @@ def fetch_prebuilts(cli_src: str, cli_ver: str, patches_src: str, patches_ver: s
     with ThreadPoolExecutor(max_workers=2) as pool:
         futures = [pool.submit(_fetch_single_asset, *spec, cl_dir=cl_dir, net=net) for spec in specs]
         results = [f.result() for f in futures]
+
     (cli_jar, cli_changelog), (patches_mpp, patches_changelog) = results
     combined = cli_changelog + patches_changelog
     if combined:
@@ -73,8 +75,10 @@ def _fetch_single_asset(src: str, tag: str, ver: str, fprefix: str, ext: str, cl
         matches = [a for a in release.get("assets", []) if a.get("name", "").endswith(f".{ext}")]
         if len(matches) > 1 and (non_dev := [a for a in matches if "-dev" not in a.get("name", "")]):
             matches = non_dev
+
         if not matches:
             raise PrebuiltsError(f"No asset (.{ext}) found for {src} @ {ver}")
+
         if len(matches) > 1:
             wpr("More than 1 asset was found for this release, falling back to the first one found")
 
@@ -92,6 +96,7 @@ def _fetch_single_asset(src: str, tag: str, ver: str, fprefix: str, ext: str, cl
 
     if is_patches and tag_name:
         changelog += f"[🔗 » Changelog](https://github.com/{src}/releases/tag/{tag_name})\n\n"
+
     return file, changelog
 
 def _find_cached(dir_path: Path, fprefix: str, name_ver: str, ext: str, exclude_dev: bool) -> Path | None:
@@ -99,9 +104,11 @@ def _find_cached(dir_path: Path, fprefix: str, name_ver: str, ext: str, exclude_
     candidates = [f for f in dir_path.glob(pattern) if f.is_file() and not f.name.startswith("tmp.")]
     if exclude_dev:
         candidates = [f for f in candidates if "-dev" not in f.name]
+
     return max(candidates, key=lambda f: _ver_key(f.name), default=None)
 
 def _tag_from_filename(file: Path) -> str:
     if m := re.search(r"-(\d[\w.]*)(?:-[^.]+)?\.\w+$", file.name):
         return f"v{m.group(1)}"
+
     return ""

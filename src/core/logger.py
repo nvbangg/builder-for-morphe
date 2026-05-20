@@ -1,15 +1,20 @@
 import os
 import sys
+import threading
 from typing import Never
 
 IS_GITHUB: bool = os.getenv("GITHUB_ACTIONS") == "true"
+_lock = threading.Lock()
 
 
 def _log(color: str, symbol: str, msg: str, gh_level: str | None = None) -> None:
     if IS_GITHUB and gh_level:
-        print(f"::{gh_level}::{msg}", file=sys.stderr)
+        line = f"::{gh_level}::{msg}"
     else:
-        print(f"\033[0;{color}m[{symbol}] {msg}\033[0m", file=sys.stderr)
+        line = f"\033[0;{color}m[{symbol}] {msg}\033[0m"
+
+    with _lock:
+        print(line, file=sys.stderr)
 
 def pr(msg: str) -> None:
     _log("32", "+", msg)

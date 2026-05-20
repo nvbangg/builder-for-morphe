@@ -4,15 +4,14 @@ import shutil
 import tempfile
 import zipfile
 from concurrent.futures import Future, ThreadPoolExecutor, as_completed
-from copy import replace
 from pathlib import Path
 
-from src.core.config import BUILD_DIR, TEMP_DIR, AppEntry, Config, parse_app_entries
-from src.core.logger import abort, epr, pr, wpr
-from src.core.network import NetworkManager
-from src.core.patcher import PatcherCLI, PatcherError
+from src.core.config import BUILD_DIR, TEMP_DIR, AppEntry, Config
+from src.core.logger import epr, pr, wpr
+from src.core.network import NetworkError, NetworkManager
+from src.core.patcher import PatcherCLI, PatcherError, SignatureError
 from src.core.prebuilts import APKSIGNER, Prebuilts, fetch_prebuilts, get_highest_ver
-from src.scrapers.base import AppMetadata, BaseScraper
+from src.scrapers.base import BaseScraper, DownloadResult, ScraperError
 
 
 class BuilderError(Exception):
@@ -22,7 +21,6 @@ def _make_scraper(source: str, net: NetworkManager) -> BaseScraper:
     from src.scrapers.apkmirror import APKMirrorScraper
     from src.scrapers.github import GitHubScraper
     from src.scrapers.uptodown import UptodownScraper
-
     match source:
         case "apkmirror":
             return APKMirrorScraper(net)
@@ -33,26 +31,21 @@ def _make_scraper(source: str, net: NetworkManager) -> BaseScraper:
         case _:
             raise ValueError(f"Unknown APK source: {source!r}")
 
-def _get_scraper(src: str, url: str, net: NetworkManager, cache: dict) -> tuple[BaseScraper, AppMetadata]:
-    if src not in cache:
-        scraper = _make_scraper(src, net)
-        cache[src] = (scraper, scraper.fetch_metadata(url))
-    return cache[src]
-
-def _find_pkg_name(entry: AppEntry, net: NetworkManager) -> tuple[str, str, dict]:
-    cache: dict = {}
+def _find_pkg_name(entry: AppEntry, scrapers: dict[str, BaseScraper]) -> tuple[str, str]:
     for src, url in entry.dl_urls.items():
         try:
-            _, metadata = _get_scraper(src, url, net, cache)
+            metadata = scrapers[src].cached_metadata(url)
             if not metadata.pkg_name:
-                raise ValueError("Empty package name")
+                raise BuilderError("Empty package name")
+
             pr(f"Package name of '{entry.table}' is '{metadata.pkg_name}'")
-            return metadata.pkg_name, src, cache
-        except Exception as exc:
+            return metadata.pkg_name, src
+        except (NetworkError, ScraperError, BuilderError) as exc:
             epr(f"Could not find '{entry.table}' in '{src}': {exc}")
+
     raise BuilderError(f"Package name not found for '{entry.table}'")
 
-def _resolve_version(entry: AppEntry, patcher: PatcherCLI, list_patches: str, pkg_name: str, dl_from: str, cache: dict) -> tuple[str, bool]:
+def _resolve_version(entry: AppEntry, patcher: PatcherCLI, list_patches: str, pkg_name: str, dl_from: str, scrapers: dict[str, BaseScraper]) -> tuple[str, bool]:
     match entry.version:
         case "auto":
             version = patcher.get_last_supported_version(list_patches, pkg_name, entry.included_patches)
@@ -65,7 +58,7 @@ def _resolve_version(entry: AppEntry, patcher: PatcherCLI, list_patches: str, pk
             force = True
 
     if not version:
-        _, metadata = cache[dl_from]
+        metadata = scrapers[dl_from].cached_metadata(entry.dl_urls[dl_from])
         pkgvers = metadata.versions
         try:
             version = get_highest_ver(pkgvers)
@@ -77,22 +70,22 @@ def _resolve_version(entry: AppEntry, patcher: PatcherCLI, list_patches: str, pk
     pr(f"Choosing version '{version}' for {entry.table}")
     return version, force
 
-def _download_apk(entry: AppEntry, version: str, arch: str, pkg_name: str, net: NetworkManager, cache: dict) -> tuple[Path, Path]:
+def _download_apk(entry: AppEntry, version: str, arch: str, pkg_name: str, scrapers: dict[str, BaseScraper]) -> DownloadResult:
     arch_f = arch.replace(" ", "")
     version_f = version.replace(" ", "").lstrip("v")
     stock_apk = TEMP_DIR / f"{pkg_name}-{version_f}-{arch_f}.apk"
+    if stock_apk.exists():
+        return DownloadResult(path=stock_apk, is_bundle=False)
+
     stock_apkm = stock_apk.with_name(f"{stock_apk.name}.apkm")
-    if stock_apk.exists() or stock_apkm.exists():
-        return stock_apk, stock_apkm
+    if stock_apkm.exists():
+        return DownloadResult(path=stock_apkm, is_bundle=True)
 
     for src, url in entry.dl_urls.items():
         pr(f"Downloading '{entry.table}' from '{src}'")
         try:
-            scraper, _ = _get_scraper(src, url, net, cache)
-            scraper.download(url, version, stock_apk, arch, entry.dpi)
-            if stock_apk.exists() or stock_apkm.exists():
-                return stock_apk, stock_apkm
-        except Exception as exc:
+            return scrapers[src].download(url, version, stock_apk, arch, entry.dpi)
+        except (NetworkError, ScraperError) as exc:
             epr(f"Failed to fetch '{entry.table}' from '{src}' (version='{version}', arch='{arch}'): {exc}")
 
     raise BuilderError(f"Stock APK not found for '{entry.table}'")
@@ -103,29 +96,33 @@ def _extract_base_apk(apkm: Path, pkg_name: str, dest_dir: Path) -> Path:
             if name in zf.namelist():
                 zf.extract(name, dest_dir)
                 return dest_dir / name
+
     raise BuilderError(f"Neither 'base.apk' nor '{pkg_name}.apk' found inside {apkm.name}")
 
-def _verify_sig(stock_apk: Path, stock_apkm: Path, pkg_name: str, patcher: PatcherCLI, table: str, skip_sigcheck: bool) -> None:
-    expected = patcher._signatures.get(pkg_name)
-    if not expected or not expected.strip():
-        raise BuilderError(f"No signature entry found in sig.txt for '{pkg_name}' ('{table}')")
+def _verify_sig(dl_result: DownloadResult, pkg_name: str, patcher: PatcherCLI, table: str, skip_sigcheck: bool) -> None:
+    if not patcher.has_signature(pkg_name):
+        raise SignatureError(f"No signature entry found in sig.txt for '{pkg_name}' ('{table}')")
 
     if skip_sigcheck:
         wpr(f"Skipping APK signature verification for '{table}'")
         return
 
-    try:
-        if stock_apkm.exists():
-            with tempfile.TemporaryDirectory(dir=TEMP_DIR) as tmp_dir:
-                valid = patcher.check_signature(_extract_base_apk(stock_apkm, pkg_name, Path(tmp_dir)), pkg_name)
-        else:
-            valid = patcher.check_signature(stock_apk, pkg_name)
-    except BuilderError as exc:
-        raise BuilderError(f"Sig check failed for '{table}': {exc}") from exc
-    if not valid:
-        raise BuilderError(f"APK signature mismatch for '{table}'")
+    if not dl_result.path.exists():
+        raise SignatureError(f"Downloaded file missing before sig check: {dl_result.path}")
 
-def _apply_patch(entry: AppEntry, arch: str, version: str, force: bool, patcher: PatcherCLI, list_patches: str, stock_apk: Path, stock_apkm: Path) -> Path:
+    try:
+        if dl_result.is_bundle:
+            with tempfile.TemporaryDirectory(dir=TEMP_DIR) as tmp_dir:
+                valid = patcher.check_signature(_extract_base_apk(dl_result.path, pkg_name, Path(tmp_dir)), pkg_name)
+        else:
+            valid = patcher.check_signature(dl_result.path, pkg_name)
+
+    except BuilderError as exc:
+        raise SignatureError(f"Sig check failed for '{table}': {exc}") from exc
+    if not valid:
+        raise SignatureError(f"APK signature mismatch for '{table}'")
+
+def _apply_patch(entry: AppEntry, arch: str, version: str, force: bool, patcher: PatcherCLI, list_patches: str, dl_result: DownloadResult) -> Path:
     app_name_l = entry.app_name.lower().replace(" ", "-")
     brand_f = entry.brand.lower().replace(" ", "-")
     arch_f = arch.replace(" ", "")
@@ -134,39 +131,34 @@ def _apply_patch(entry: AppEntry, arch: str, version: str, force: bool, patcher:
     final_args = patcher.build_patch_args(included_patches=entry.included_patches, excluded_patches=entry.excluded_patches, exclusive=entry.exclusive_patches, extra_args=entry.patcher_args, arch=arch, auto_patches=auto_patches, force=force)
     base_name = f"{app_name_l}-{brand_f}"
     patched_apk = TEMP_DIR / f"{base_name}-{version_f}-{arch_f}.apk"
-    stock_input = stock_apkm if stock_apkm.exists() else stock_apk
+    if not dl_result.path.exists():
+        raise BuilderError(f"Downloaded file missing before patching: {dl_result.path}")
 
     pr(f"Building '{entry.table}'")
-    patcher.patch(stock_input, patched_apk, final_args)
-
+    patcher.patch(dl_result.path, patched_apk, final_args)
     apk_output = BUILD_DIR / f"{base_name}-v{version_f}-{arch_f}.apk"
     shutil.move(patched_apk, apk_output)
     return apk_output
 
 def _build_single(entry: AppEntry, arch: str, label: str, net: NetworkManager, patcher: PatcherCLI) -> str | None:
     try:
-        pkg_name, dl_from, cache = _find_pkg_name(entry, net)
+        scrapers = {src: _make_scraper(src, net) for src in entry.dl_urls}
+        pkg_name, dl_from = _find_pkg_name(entry, scrapers)
         list_patches = patcher.list_patches(pkg_name)
-        version, force = _resolve_version(entry, patcher, list_patches, pkg_name, dl_from, cache)
-        stock_apk, stock_apkm = _download_apk(entry, version, arch, pkg_name, net, cache)
-        _verify_sig(stock_apk, stock_apkm, pkg_name, patcher, label, entry.skip_sigcheck)
-        apk_output = _apply_patch(entry, arch, version, force, patcher, list_patches, stock_apk, stock_apkm)
+        version, force = _resolve_version(entry, patcher, list_patches, pkg_name, dl_from, scrapers)
+        dl_result = _download_apk(entry, version, arch, pkg_name, scrapers)
+        _verify_sig(dl_result, pkg_name, patcher, label, entry.skip_sigcheck)
+        apk_output = _apply_patch(entry, arch, version, force, patcher, list_patches, dl_result)
         pr(f"Built {label}: '{apk_output}'")
         if os.getenv("GITHUB_ACTIONS") == "true":
             return f"- 🟢 » {label}: [`{version}`](../../releases/download/{{TAG}}/{apk_output.name})"
+
         return f"- 🟢 » {label}: `{version}`"
-    except (BuilderError, PatcherError, ValueError, Exception) as exc:
+    except (BuilderError, PatcherError, ScraperError, NetworkError) as exc:
         epr(f"Building '{label}' failed! {exc}")
         return None
 
-def run_build(data: dict[str, object], config: Config, net: NetworkManager, target_app: str | None = None, arch_override: str | None = None) -> bool:
-    entries = [e for e in parse_app_entries(data, config) if e.enabled and (not target_app or e.table == target_app)]
-    if target_app and not entries:
-        abort(f"App '{target_app}' not found in config")
-
-    if arch_override:
-        entries = [replace(e, arch=arch_override) for e in entries]
-
+def run_build(entries: list[AppEntry], config: Config, net: NetworkManager) -> bool:
     build_mode = os.getenv("BUILD_MODE", "")
     futures: list[Future[str | None]] = []
     ks_path: Path | None = None
@@ -175,7 +167,7 @@ def run_build(data: dict[str, object], config: Config, net: NetworkManager, targ
         with tempfile.NamedTemporaryFile(dir=TEMP_DIR, suffix=".keystore", delete=False) as tf:
             tf.write(base64.b64decode(ks_b64))
             ks_path = Path(tf.name)
-    
+
     patcher_cache: dict[tuple[str, str, str, str], PatcherCLI] = {}
     try:
         with ThreadPoolExecutor(max_workers=config.parallel_jobs) as pool:
@@ -186,7 +178,6 @@ def run_build(data: dict[str, object], config: Config, net: NetworkManager, targ
 
                 patches_ver = "dev" if build_mode == "dev" else entry.patches_version
                 prebuilts_key = (entry.cli_source, entry.cli_version, entry.patches_source, patches_ver)
-
                 try:
                     if prebuilts_key not in prebuilts_cache:
                         prebuilts_cache[prebuilts_key] = fetch_prebuilts(cli_src=entry.cli_source, cli_ver=entry.cli_version, patches_src=entry.patches_source, patches_ver=patches_ver, net=net)
@@ -200,7 +191,6 @@ def run_build(data: dict[str, object], config: Config, net: NetworkManager, targ
 
                 patcher = patcher_cache[prebuilts_key]
                 arches = ("arm64-v8a", "arm-v7a") if entry.arch == "both" else (entry.arch,)
-
                 for arch in arches:
                     label = entry.table if entry.arch == "all" else f"{entry.table} ({arch})"
                     futures.append(pool.submit(_build_single, entry, arch, label, net, patcher))

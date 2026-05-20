@@ -1,11 +1,16 @@
 import re
 from pathlib import Path
 
+from bs4 import BeautifulSoup
+
 from src.core.network import NetworkManager, ResourceNotFoundError
-from src.scrapers.base import AppMetadata, BaseScraper, DownloadResult, parse_html
+from src.scrapers.base import AppMetadata, BaseScraper, DownloadResult, ScraperError
 
 
-class APKMirrorError(Exception):
+def _parse_html(html: str) -> BeautifulSoup:
+    return BeautifulSoup(html, "html.parser")
+
+class APKMirrorError(ScraperError):
     pass
 
 class APKMirrorScraper(BaseScraper):
@@ -20,7 +25,7 @@ class APKMirrorScraper(BaseScraper):
         if not (m := re.search(r"play\.google\.com/store/apps/details\?id=([\w.]+)", self._resp_html)):
             raise APKMirrorError("Package name not found")
 
-        soup = parse_html(self.net.get(f"https://www.apkmirror.com/uploads/?appcategory={self._category}"))
+        soup = _parse_html(self.net.get(f"https://www.apkmirror.com/uploads/?appcategory={self._category}"))
         versions_raw = [v for val in soup.select("span.infoSlide-name + span.infoSlide-value") if (v := val.get_text(strip=True))]
         versions = [v for v in versions_raw if not re.search(r"beta|alpha", v, re.I)]
         return AppMetadata(pkg_name=m.group(1), versions=versions)
@@ -29,7 +34,7 @@ class APKMirrorScraper(BaseScraper):
         if arch == "arm-v7a":
             arch = "armeabi-v7a"
 
-        soup = parse_html(self._resp_html)
+        soup = _parse_html(self._resp_html)
         h1 = soup.select_one("h1.marginZero")
         apkmname = re.sub(r"[^a-z0-9-]", "", (h1.get_text(strip=True).lower() if h1 else "").replace(" ", "-"))
         ver_dashed = version.replace(".", "-").replace(" ", "-")
@@ -37,9 +42,9 @@ class APKMirrorScraper(BaseScraper):
             resp = self.net.get(f"{url.rstrip('/')}/{apkmname}-{ver_dashed}-release/")
         except ResourceNotFoundError:
             raise APKMirrorError("Version not found") from None
-        resp = self.net.get(f"{url.rstrip('/')}/{apkmname}-{ver_dashed}-release/")
+
         is_bundle = False
-        soup_release = parse_html(resp)
+        soup_release = _parse_html(resp)
         if soup_release.select_one("div.table-row.headerFont:last-child"):
             dl_url = self._pick_variant(soup_release, dpi, arch)
             if dl_url is None:
@@ -47,8 +52,8 @@ class APKMirrorScraper(BaseScraper):
             resp = self.net.get(dl_url[0])
             is_bundle = dl_url[1] == "BUNDLE"
 
-        soup_dl = parse_html(resp)
-        soup_final = parse_html(self.net.get(self._absolute(str(soup_dl.select_one("a.btn")["href"]))))
+        soup_dl = _parse_html(resp)
+        soup_final = _parse_html(self.net.get(self._absolute(str(soup_dl.select_one("a.btn")["href"]))))
         out_path = dest.with_name(f"{dest.name}{'.apkm' if is_bundle else ''}")
         self.net.download(self._absolute(str(soup_final.select_one("span > a[rel=nofollow]")["href"])), out_path)
         return DownloadResult(path=out_path, is_bundle=is_bundle)

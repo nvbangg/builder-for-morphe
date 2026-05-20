@@ -5,6 +5,7 @@ import signal
 import subprocess
 import sys
 import threading
+from copy import replace
 from pathlib import Path
 
 from src.core.builder import run_build
@@ -13,7 +14,9 @@ from src.core.config import (
     CONFIG_PATH,
     TEMP_DIR,
     VALID_ARCHES,
+    AppEntry,
     load_toml,
+    parse_app_entries,
     parse_config,
 )
 from src.core.gh_utils import combine_logs, get_matrix
@@ -21,11 +24,9 @@ from src.core.logger import abort, epr, pr
 from src.core.network import NetworkError, NetworkManager
 from src.core.patcher import PatcherError
 from src.core.prebuilts import PrebuiltsError
-from src.scrapers.apkmirror import APKMirrorError
-from src.scrapers.github import GitHubReleasesError
-from src.scrapers.uptodown import UptodownError
+from src.scrapers.base import ScraperError
 
-_KNOWN_ERRORS = (NetworkError, PrebuiltsError, PatcherError, APKMirrorError, GitHubReleasesError, UptodownError)
+_KNOWN_ERRORS = (NetworkError, PrebuiltsError, PatcherError, ScraperError)
 _shutting_down = threading.Event()
 
 def _load_dotenv(path: Path = Path(".env")) -> None:
@@ -36,6 +37,7 @@ def _load_dotenv(path: Path = Path(".env")) -> None:
         line = line.strip()
         if not line or line.startswith("#") or "=" not in line:
             continue
+
         key, _, value = line.partition("=")
         if (key := key.strip()) and key not in os.environ:
             os.environ[key] = value.strip().strip('"\'')
@@ -43,9 +45,11 @@ def _load_dotenv(path: Path = Path(".env")) -> None:
 def _require_java(min_version: int = 21) -> None:
     if not shutil.which("java"):
         abort(f"Java not found. Please install Java {min_version} or higher")
+
     result = subprocess.run(["java", "-version"], capture_output=True, text=True)
     if not (match := re.search(r'version "(\d+)', result.stderr)):
         abort("Could not determine Java version")
+
     if (version := int(match.group(1))) < min_version:
         abort(f"Java {version} found, but Java {min_version}+ is required")
 
@@ -60,16 +64,27 @@ def _build(target_app: str | None = None, arch_override: str | None = None) -> i
 
     main_cfg = parse_config(data)
     pr(f"Loaded config '{CONFIG_PATH}'")
+    entries: list[AppEntry] = [
+        e for e in parse_app_entries(data, main_cfg)
+        if e.enabled and (not target_app or e.table == target_app)
+    ]
+    if target_app and not entries:
+        abort(f"App '{target_app}' not found in config")
+
+    if arch_override:
+        entries = [replace(e, arch=arch_override) for e in entries]
 
     TEMP_DIR.mkdir(parents=True, exist_ok=True)
     BUILD_DIR.mkdir(parents=True, exist_ok=True)
 
     for cl in TEMP_DIR.glob("*/changelog.md"):
         cl.write_text("", encoding="utf-8")
+
     Path("build.md").write_text("", encoding="utf-8")
 
     with NetworkManager() as net:
-        success = run_build(data, main_cfg, net, target_app=target_app, arch_override=arch_override)
+        success = run_build(entries, main_cfg, net)
+
     return 0 if success else 1
 
 def _clear() -> int:
@@ -79,6 +94,7 @@ def _clear() -> int:
             pr(f"Removed '{directory}'")
         else:
             pr(f"'{directory}' already clean")
+
     if (build_md := Path("build.md")).exists():
         build_md.unlink()
         pr("Removed 'build.md'")
@@ -87,6 +103,7 @@ def _clear() -> int:
 def _sigint_handler(sig: int, frame: object) -> None:
     if _shutting_down.is_set():
         return
+
     _shutting_down.set()
     epr("Interrupted by user")
     for tmp in TEMP_DIR.rglob("tmp*"):

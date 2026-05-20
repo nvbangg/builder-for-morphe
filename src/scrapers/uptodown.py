@@ -1,11 +1,16 @@
 import json
 from pathlib import Path
 
+from bs4 import BeautifulSoup
+
 from src.core.network import NetworkManager
-from src.scrapers.base import AppMetadata, BaseScraper, DownloadResult, parse_html
+from src.scrapers.base import AppMetadata, BaseScraper, DownloadResult, ScraperError
 
 
-class UptodownError(Exception):
+def _parse_html(html: str) -> BeautifulSoup:
+    return BeautifulSoup(html, "html.parser")
+
+class UptodownError(ScraperError):
     pass
 
 class UptodownScraper(BaseScraper):
@@ -17,11 +22,11 @@ class UptodownScraper(BaseScraper):
     def fetch_metadata(self, url: str) -> AppMetadata:
         self._resp_html = self.net.get(f"{url}/versions")
         self._resp_pkg_html = self.net.get(f"{url}/download")
-        soup_pkg = parse_html(self._resp_pkg_html)
+        soup_pkg = _parse_html(self._resp_pkg_html)
         if not (td := soup_pkg.select_one("tr.full:nth-child(1) > td:nth-child(3)")):
             raise UptodownError("Package name not found")
 
-        soup_ver = parse_html(self._resp_html)
+        soup_ver = _parse_html(self._resp_html)
         return AppMetadata(pkg_name=td.get_text(strip=True), versions=[el.get_text(strip=True) for el in soup_ver.select(".version") if el.get_text(strip=True)])
 
     def download(self, url: str, version: str, dest: Path, arch: str, dpi: str) -> DownloadResult:
@@ -29,15 +34,15 @@ class UptodownScraper(BaseScraper):
             arch = "armeabi-v7a"
 
         apparch = ["arm64-v8a, armeabi-v7a, x86_64", "arm64-v8a, armeabi-v7a, x86, x86_64", "arm64-v8a, armeabi-v7a"] + ([arch] if arch != "all" else [])
-        soup = parse_html(self._resp_html)
+        soup = _parse_html(self._resp_html)
         data_code = str(soup.select_one("#detail-app-name")["data-code"])
         version_url_data = self._find_version_url(url, data_code, version)
         ver_url = f"{version_url_data['url']}/{version_url_data['extraURL']}/{version_url_data['versionID']}"
         is_bundle = version_url_data.get("kindFile") == "xapk"
-        soup_ver = parse_html(self.net.get(ver_url))
+        soup_ver = _parse_html(self.net.get(ver_url))
         if (btn_variants := soup_ver.select_one(".button.variants")) and (data_version := btn_variants.get("data-version")):
             resp, is_bundle = self._pick_variant_file(url, data_code, str(data_version), apparch)
-            soup_ver = parse_html(resp)
+            soup_ver = _parse_html(resp)
 
         out_path = dest.with_name(f"{dest.name}{'.apkm' if is_bundle else ''}")
         self.net.download(f"https://dw.uptodown.com/dwn/{soup_ver.select_one('#detail-download-button')['data-url']}", out_path)
@@ -57,7 +62,7 @@ class UptodownScraper(BaseScraper):
     def _pick_variant_file(self, url: str, data_code: str, data_version: str, apparch: list[str]) -> tuple[str, bool]:
         base_url = url.rsplit("/", 1)[0]
         files_html = json.loads(self.net.get(f"{base_url}/app/{data_code}/version/{data_version}/files")).get("content", "")
-        content = parse_html(files_html).select_one(".content")
+        content = _parse_html(files_html).select_one(".content")
         node_arch = ""
         for child in content.children:
             if not getattr(child, "name", None):

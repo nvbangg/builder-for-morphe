@@ -41,11 +41,14 @@ class NetworkManager:
             with self._get_domain_lock(url):
                 time.sleep(0.5)
                 resp = self.session.get(url, timeout=(5, 10), allow_redirects=True, headers=headers, verify=True)
+
             if resp.status_code == 404:
                 raise ResourceNotFoundError(f"Not found (404): {url}")
+
             if resp.status_code >= 400:
                 epr(f"HTTP {resp.status_code} for {url}")
                 resp.raise_for_status()
+
             return resp.text
         except req_exc.RequestException:
             raise NetworkError(f"Request failed: {url}") from None
@@ -69,6 +72,7 @@ class NetworkManager:
                     time.sleep(0.5)
                     resp = self.session.get(url, timeout=(5, 300), stream=True, allow_redirects=True, headers=headers, verify=True)
                     resp.raise_for_status()
+
                 with tmp.open("wb") as fh:
                     for chunk in resp.iter_content(chunk_size=1048576):
                         fh.write(chunk)

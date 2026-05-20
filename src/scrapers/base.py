@@ -2,13 +2,11 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from pathlib import Path
 
-from bs4 import BeautifulSoup
-
 from src.core.network import NetworkManager
 
 
-def parse_html(html: str) -> BeautifulSoup:
-    return BeautifulSoup(html, "html.parser")
+class ScraperError(Exception):
+    """Raised for scraper-layer failures: DOM parsing, regex mismatches, missing assets"""
 
 @dataclass(slots=True, frozen=True)
 class AppMetadata:
@@ -23,6 +21,12 @@ class DownloadResult:
 class BaseScraper(ABC):
     def __init__(self, net: NetworkManager) -> None:
         self.net = net
+        self._cache: dict[str, AppMetadata] = {}
+
+    def cached_metadata(self, url: str) -> AppMetadata:
+        if url not in self._cache:
+            self._cache[url] = self.fetch_metadata(url)
+        return self._cache[url]
 
     @abstractmethod
     def fetch_metadata(self, url: str) -> AppMetadata:

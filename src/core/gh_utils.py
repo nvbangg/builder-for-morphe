@@ -21,6 +21,7 @@ def get_matrix(source: str) -> None:
     for entry in parse_app_entries(data, main_cfg):
         if not entry.enabled or entry.brand.lower() != source_lower:
             continue
+
         if entry.arch == "both":
             include.extend([{"id": entry.table, "arch": "arm64-v8a"}, {"id": entry.table, "arch": "arm-v7a"}])
         else:
@@ -46,13 +47,16 @@ def combine_logs(logs_dir: Path | str) -> None:
             line = raw.strip()
             if not line:
                 continue
+
             if line.startswith("- 🟢"):
                 green_lines.append(f"{line}  ")
             elif not microg_line and line.startswith("▶️") and "MicroG" in line:
                 microg_line = line
+
             if _RE_CLI_START.match(line):
                 capturing = True
                 current = []
+
             if capturing:
                 current.append(f"{line}  ")
                 if _RE_CHANGELOG_END.match(line):
@@ -64,7 +68,9 @@ def combine_logs(logs_dir: Path | str) -> None:
 
     if green_lines:
         print("\n".join(green_lines), end="\n\n")
+
     if microg_line:
         print(microg_line, end="\n\n")
+
     if unique := list(dict.fromkeys(collected)):
         print("\n\n".join(unique))
