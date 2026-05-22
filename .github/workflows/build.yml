@@ -2,14 +2,6 @@ name: Build APKs
 on:
   workflow_dispatch:
     inputs:
-      build_mode:
-        description: 'Select build mode'
-        required: true
-        default: 'stable'
-        type: choice
-        options:
-          - stable
-          - dev
       patch_source:
         description: 'Select patch source'
         required: true
@@ -20,9 +12,6 @@ on:
           - piko
   workflow_call:
     inputs:
-      build_mode:
-        default: 'stable'
-        type: string
       patch_source:
         default: 'morphe'
         type: string
@@ -89,7 +78,6 @@ jobs:
       - name: Build APKs
         run: uv run main.py ${{ matrix.id }} ${{ matrix.arch }}
         env:
-          BUILD_MODE: ${{ inputs.build_mode }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
           KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
@@ -149,9 +137,7 @@ jobs:
         if: steps.check_artifacts.outputs.has_artifacts == 'true'
         id: version
         run: |
-          VER="$(date +%y.%m.%d)"
-          [[ "${{ inputs.build_mode }}" == "dev" ]] && VER="${VER}-pre"
-          VER="${VER}-${{ inputs.patch_source }}"
+          VER="$(date +%y.%m.%d)-${{ inputs.patch_source }}"
           echo "version=${VER}" >> "$GITHUB_OUTPUT"
 
       - name: Download all APKs
@@ -186,16 +172,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.version.outputs.version }}
           BODY: ${{ steps.get_output.outputs.BUILD_LOG }}
-          IS_PRERELEASE: ${{ inputs.build_mode == 'dev' }}
         run: |
-          PRERELEASE_FLAG=""
-          if [ "$IS_PRERELEASE" == "true" ]; then
-            PRERELEASE_FLAG="--prerelease"
-          fi
-          
           if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release edit "$TAG" --title "$TAG" --notes "$BODY" $PRERELEASE_FLAG
+            gh release edit "$TAG" --title "$TAG" --notes "$BODY"
             gh release upload "$TAG" all-apks/*.apk --clobber
           else
-            gh release create "$TAG" all-apks/*.apk --title "$TAG" --notes "$BODY" $PRERELEASE_FLAG
+            gh release create "$TAG" all-apks/*.apk --title "$TAG" --notes "$BODY"
           fi

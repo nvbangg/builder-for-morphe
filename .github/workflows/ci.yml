@@ -70,7 +70,6 @@ jobs:
     uses: ./.github/workflows/build.yml
     with:
       patch_source: 'morphe'
-      build_mode: 'stable'
     secrets: inherit
 
   build-piko:
@@ -80,5 +79,4 @@ jobs:
     uses: ./.github/workflows/build.yml
     with:
       patch_source: 'piko'
-      build_mode: 'stable'
     secrets: inherit

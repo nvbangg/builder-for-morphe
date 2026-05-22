@@ -163,7 +163,6 @@ def _build_single(entry: AppEntry, arch: str, label: str, net: NetworkManager, p
         return None
 
 def run_build(entries: list[AppEntry], config: Config, net: NetworkManager) -> bool:
-    build_mode = os.getenv("BUILD_MODE", "")
     futures: list[Future[str | None]] = []
     ks_path: Path | None = None
     prebuilts_cache: dict[tuple[str, str, str, str], Prebuilts] = {}
@@ -180,7 +179,7 @@ def run_build(entries: list[AppEntry], config: Config, net: NetworkManager) -> b
                     epr(f"No 'dlurl' option was set for '{entry.table}'")
                     continue
 
-                patches_ver = "dev" if build_mode == "dev" else entry.patches_version
+                patches_ver = entry.patches_version
                 prebuilts_key = (entry.cli_source, entry.cli_version, entry.patches_source, patches_ver)
                 try:
                     if prebuilts_key not in prebuilts_cache:

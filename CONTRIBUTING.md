@@ -110,7 +110,6 @@ build-<brand>:
   uses: ./.github/workflows/build.yml
   with:
     patch_source: '<brand>'
-    build_mode: 'stable'
   secrets: inherit
 ```
 
