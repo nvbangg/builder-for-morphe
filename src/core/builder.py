@@ -67,7 +67,7 @@ def _resolve_version(entry: AppEntry, patcher: PatcherCLI, list_patches: str, pk
         if not version:
             raise BuilderError(f"Could not determine version for '{entry.table}'")
 
-    pr(f"Choosing version '{version}' for {entry.table}")
+    pr(f"Choosing version '{version}' for '{entry.table}'")
     return version, force
 
 def _download_apk(entry: AppEntry, version: str, arch: str, pkg_name: str, scrapers: dict[str, BaseScraper]) -> DownloadResult:
@@ -99,12 +99,16 @@ def _extract_base_apk(apkm: Path, pkg_name: str, dest_dir: Path) -> Path:
 
     raise BuilderError(f"Neither 'base.apk' nor '{pkg_name}.apk' found inside {apkm.name}")
 
-def _verify_sig(dl_result: DownloadResult, pkg_name: str, patcher: PatcherCLI, table: str, skip_sigcheck: bool) -> None:
-    if not patcher.has_signature(pkg_name):
-        raise SignatureError(f"No signature entry found in sig.txt for '{pkg_name}' ('{table}')")
-
+def _verify_sig(dl_result: DownloadResult, pkg_name: str, patcher: PatcherCLI, table: str, skip_sigcheck: bool, strict_sigcheck: bool) -> None:
     if skip_sigcheck:
         wpr(f"Skipping APK signature verification for '{table}'")
+        return
+
+    if not patcher.has_signature(pkg_name):
+        msg = f"No signature entry found in sig.txt for '{pkg_name}'"
+        if strict_sigcheck:
+            raise SignatureError(msg)
+        wpr(f"{msg}, skipping it")
         return
 
     if not dl_result.path.exists():
@@ -140,14 +144,14 @@ def _apply_patch(entry: AppEntry, arch: str, version: str, force: bool, patcher:
     shutil.move(patched_apk, apk_output)
     return apk_output
 
-def _build_single(entry: AppEntry, arch: str, label: str, net: NetworkManager, patcher: PatcherCLI) -> str | None:
+def _build_single(entry: AppEntry, arch: str, label: str, net: NetworkManager, patcher: PatcherCLI, strict_sigcheck: bool) -> str | None:
     try:
         scrapers = {src: _make_scraper(src, net) for src in entry.dl_urls}
         pkg_name, dl_from = _find_pkg_name(entry, scrapers)
         list_patches = patcher.list_patches(pkg_name)
         version, force = _resolve_version(entry, patcher, list_patches, pkg_name, dl_from, scrapers)
         dl_result = _download_apk(entry, version, arch, pkg_name, scrapers)
-        _verify_sig(dl_result, pkg_name, patcher, label, entry.skip_sigcheck)
+        _verify_sig(dl_result, pkg_name, patcher, label, entry.skip_sigcheck, strict_sigcheck)
         apk_output = _apply_patch(entry, arch, version, force, patcher, list_patches, dl_result)
         pr(f"Built {label}: '{apk_output}'")
         if os.getenv("GITHUB_ACTIONS") == "true":
@@ -193,7 +197,7 @@ def run_build(entries: list[AppEntry], config: Config, net: NetworkManager) -> b
                 arches = ("arm64-v8a", "arm-v7a") if entry.arch == "both" else (entry.arch,)
                 for arch in arches:
                     label = entry.table if entry.arch == "all" else f"{entry.table} ({arch})"
-                    futures.append(pool.submit(_build_single, entry, arch, label, net, patcher))
+                    futures.append(pool.submit(_build_single, entry, arch, label, net, patcher, config.strict_sigcheck))
     finally:
         if ks_path:
             ks_path.unlink(missing_ok=True)

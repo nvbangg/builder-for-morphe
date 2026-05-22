@@ -19,6 +19,7 @@ class Config:
     patches_source: str
     cli_source: str
     brand: str
+    strict_sigcheck: bool
 
 @dataclass(slots=True, frozen=True)
 class AppEntry:
@@ -62,6 +63,7 @@ def parse_config(data: dict[str, object]) -> Config:
         cli_version=str(data.get("cli-version", "latest")),
         patches_source=str(data.get("patches-source", "MorpheApp/morphe-patches")),
         cli_source=str(data.get("cli-source", "MorpheApp/morphe-cli")),
+        strict_sigcheck=_parse_bool(data.get("strict-sigcheck", True), "strict-sigcheck"),
     )
 
 def parse_app_entries(data: dict[str, object], main: Config) -> list[AppEntry]:

@@ -52,41 +52,53 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/inc/app"
 
 1. 📱 **Available options**:
 
-| 🔑 Key | 📝 Description | 🔤 Default |
-|:------:|:--------------:|:----------:|
-| `parallel-jobs` | Number of concurrent builds | `CPU count` |
-| `brand` | Used in output filenames | `Morphe` |
-| `patches-version` | Patches version to fetch | `latest` |
-| `cli-version` | CLI version to fetch | `latest` |
-| `patches-source` | GitHub repo for patches (`owner/repo`) | `MorpheApp/morphe-patches` |
-| `cli-source` | GitHub repo for CLI (`owner/repo`) | `MorpheApp/morphe-cli` |
-| `app-name` | Display name used in output filename | `table name` |
-| `arch` | Target architecture (`all`, `both`, `arm64-v8a`, `arm-v7a`, `x86_64`, `x86`) | `all` |
-| `version` | Target version (`auto`, `latest`, or a specific version string) | `auto` |
-| `apkmirror-dlurl` | APKMirror page URL | `-` |
-| `uptodown-dlurl` | Uptodown page URL | `-` |
-| `github-dlurl` | GitHub Releases page URL | `-` |
-| `included-patches` | Patches to include - names must be single-quoted | `-` |
-| `excluded-patches` | Patches to exclude - names must be single-quoted | `-` |
-| `exclusive-patches` | Only apply `included-patches`, exclude everything else | `false` |
-| `patcher-args` | Extra arguments passed directly to Morphe CLI | `-` |
-| `skip-sigcheck` | Skip APK signature verification (see note below) | `false` |
-| `enabled` | Set to `false` to skip this entry | `true` |
+| 🔑 Key | 📝 Description | 🔤 Default | 📌 Scope |
+|:------:|:--------------:|:----------:|:--------:|
+| `parallel-jobs` | Number of concurrent builds | `CPU count` | Global |
+| `brand` | Used in output filenames | `Morphe` | Global / Per-app |
+| `patches-version` | Patches version to fetch | `latest` | Global / Per-app |
+| `cli-version` | CLI version to fetch | `latest` | Global / Per-app |
+| `patches-source` | GitHub repo for patches (`owner/repo`) | `MorpheApp/morphe-patches` | Global / Per-app |
+| `cli-source` | GitHub repo for CLI (`owner/repo`) | `MorpheApp/morphe-cli` | Global / Per-app |
+| `strict-sigcheck` | Fail the build if an app is missing from `sig.txt` (see note below) | `true` | **Global only** |
+| `app-name` | Display name used in output filename | `table name` | Per-app |
+| `arch` | Target architecture (`all`, `both`, `arm64-v8a`, `arm-v7a`, `x86_64`, `x86`) | `all` | Per-app |
+| `version` | Target version (`auto`, `latest`, or a specific version string) | `auto` | Per-app |
+| `apkmirror-dlurl` | APKMirror page URL | `-` | Per-app |
+| `uptodown-dlurl` | Uptodown page URL | `-` | Per-app |
+| `github-dlurl` | GitHub Releases page URL | `-` | Per-app |
+| `included-patches` | Patches to include - names must be single-quoted | `-` | Per-app |
+| `excluded-patches` | Patches to exclude - names must be single-quoted | `-` | Per-app |
+| `exclusive-patches` | Only apply `included-patches`, exclude everything else | `false` | Per-app |
+| `patcher-args` | Extra arguments passed directly to Morphe CLI | `-` | Per-app |
+| `skip-sigcheck` | Completely bypasses signature checks for this app (see note below) | `false` | **Per-app only** |
+| `enabled` | Set to `false` to skip this entry | `true` | Per-app |
 
 > [!NOTE]
 > If a patch name contains a single quote, you must wrap the specific patch name in escaped double quotes.  
 > Example: `included-patches = "'Example patch' \"Hide 'Example button'\" 'Another example patch'"`
 
-> [!WARNING]
-> **`skip-sigcheck = true` does NOT bypass the `sig.txt` requirement.**
-> The build will still fail if the app's signature is missing. You must provide the original SHA-256 certificate fingerprint in `sig.txt` using one of two methods:
-> 
+2. 🔏 **Signature verification flags**:
+
+The build system includes two independent flags for controlling APK signature verification.
+
+* `strict-sigcheck` **(Global root level only | Default: `true`)**  
+Controls the strict requirement for `sig.txt`:
+> - When set to `false`, the build will not fail if an app is missing from `sig.txt` (useful for forks and local testing). If a signature entry does exist, it is still verified normally.
+
+* `skip-sigcheck` **(Per-app [AppName] level only | Default: `false`)**  
+Acts as a total bypass of signature verification for one specific app.
+> - When set to `true`, the build completely ignores `sig.txt` and native APK certificate checks for that app. Use this only for pre-modified APKs (e.g. with PairIP removed) where the original certificate is gone.
+
+
+**How to add a signature entry to `sig.txt`** (only needed when `skip-sigcheck` is `false`):
+
 > * **Method 1 (Quick):** Copy the original SHA-256 fingerprint directly from a trusted source like **APKMirror** (listed on every APK download page).
 > * **Method 2 (Manual):** Use the provided toolchain on the original, unmodified APK: `java -jar apksigner.jar verify --print-certs <app.apk>`
 > 
 > Format for `sig.txt`: `<sha256-fingerprint>  <package.name>`
 
-2. ➕ **Adding a new patch source**:
+3. ➕ **Adding a new patch source**:
 
 - Add your app entries to `config.toml` with the appropriate `patches-source` and `brand` fields (see the configuration table above for all available options).
 - Add a new job to `.github/workflows/ci.yml` so the CI picks up your brand automatically. Copy the block below and replace every occurrence of `<brand>` with your brand name in **lowercase** (must match the `brand` value set in `config.toml`):
@@ -102,7 +114,7 @@ build-<brand>:
   secrets: inherit
 ```
 
-3. 🔑 **Keystore**:
+4. 🔑 **Keystore**:
 
 To sign APKs with a custom keystore, create a `.env` file in the project root:
 
