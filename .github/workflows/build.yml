@@ -22,8 +22,11 @@ permissions:
 jobs:
   prepare:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
+      version: ${{ steps.version.outputs.version }}
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
@@ -40,6 +43,20 @@ jobs:
       - name: Install dependencies
         run: uv sync --frozen
 
+      - name: Prepare version and draft release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        id: version
+        run: |
+          VER="$(date +%y.%m.%d)-${{ inputs.patch_source }}"
+          echo "version=${VER}" >> "$GITHUB_OUTPUT"
+
+          if gh release view "$VER" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release edit "$VER" --draft --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create "$VER" --draft --title "$VER" --notes "" --repo "$GITHUB_REPOSITORY"
+          fi
+
       - name: Set matrix based on patch source
         id: set-matrix
         run: |
@@ -49,6 +66,8 @@ jobs:
   run:
     needs: prepare
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
@@ -82,24 +101,33 @@ jobs:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
           KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
 
-      - name: Upload APKs as artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
-        with:
-          name: apks-${{ inputs.patch_source }}-${{ matrix.id }}${{ matrix.arch && format('-{0}', matrix.arch) || '' }}
-          path: ./build/*.apk
-          if-no-files-found: warn
-          retention-days: 1
+      - name: Upload APKs to draft release
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ needs.prepare.outputs.version }}
+        run: |
+          shopt -s nullglob
+          apks=(./build/*.apk)
+          if [[ ${#apks[@]} -eq 0 ]]; then
+            echo "No APKs to upload, skipping"
+            exit 0
+          fi
+          gh release upload "$TAG" "${apks[@]}" --clobber --repo "$GITHUB_REPOSITORY"
 
-      - name: Upload build log as artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
-        with:
-          name: log-${{ inputs.patch_source }}-${{ matrix.id }}${{ matrix.arch && format('-{0}', matrix.arch) || '' }}
-          path: build.md
-          if-no-files-found: warn
-          retention-days: 1
+      - name: Upload build log to draft release
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ needs.prepare.outputs.version }}
+          LABEL: ${{ matrix.id }}${{ matrix.arch && format('-{0}', matrix.arch) || '' }}
+        run: |
+          [[ -f build.md ]] || exit 0
+          cp build.md "build-${LABEL}.md"
+          gh release upload "$TAG" "build-${LABEL}.md" --clobber --repo "$GITHUB_REPOSITORY"
 
   release:
-    needs: run
+    needs: [prepare, run]
     if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     permissions:
@@ -120,62 +148,37 @@ jobs:
       - name: Install dependencies
         run: uv sync --frozen
 
-      - name: Check if any artifacts exist
-        id: check_artifacts
-        continue-on-error: true
-        run: |
-          if gh api "repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts" --jq '.artifacts[] | select(.name | startswith("apks-${{ inputs.patch_source }}-")) | .name' | grep -q .; then
-            echo "has_artifacts=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "has_artifacts=false" >> "$GITHUB_OUTPUT"
-            exit 1
-          fi
+      - name: Check if any APKs were uploaded
+        id: check
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Prepare version
-        if: steps.check_artifacts.outputs.has_artifacts == 'true'
-        id: version
+          TAG: ${{ needs.prepare.outputs.version }}
         run: |
-          VER="$(date +%y.%m.%d)-${{ inputs.patch_source }}"
-          echo "version=${VER}" >> "$GITHUB_OUTPUT"
+          has=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '[.assets[].name | select(endswith(".apk"))] | length > 0')
+          echo "has_apks=${has}" >> "$GITHUB_OUTPUT"
 
-      - name: Download all APKs
-        if: steps.check_artifacts.outputs.has_artifacts == 'true'
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8.0.1
-        with:
-          pattern: apks-${{ inputs.patch_source }}-*
-          path: all-apks
-          merge-multiple: true
-
-      - name: Download all logs
-        if: steps.check_artifacts.outputs.has_artifacts == 'true'
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8.0.1
-        with:
-          pattern: log-${{ inputs.patch_source }}-*
-          path: logs
-
-      - name: Combine logs
-        if: steps.check_artifacts.outputs.has_artifacts == 'true'
-        id: get_output
-        env:
-          TAG: ${{ steps.version.outputs.version }}
-        run: |
-          DELIM="$(openssl rand -hex 8)"
-          echo "BUILD_LOG<<${DELIM}" >> "$GITHUB_OUTPUT"
-          uv run main.py combine-logs logs | sed "s/{TAG}/$TAG/g" >> "$GITHUB_OUTPUT"
-          echo "${DELIM}" >> "$GITHUB_OUTPUT"
-
-      - name: Upload release
-        if: steps.check_artifacts.outputs.has_artifacts == 'true'
+      - name: Download logs from draft release
+        if: steps.check.outputs.has_apks == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAG: ${{ steps.version.outputs.version }}
-          BODY: ${{ steps.get_output.outputs.BUILD_LOG }}
+          TAG: ${{ needs.prepare.outputs.version }}
         run: |
-          if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release edit "$TAG" --title "$TAG" --notes "$BODY"
-            gh release upload "$TAG" all-apks/*.apk --clobber
-          else
-            gh release create "$TAG" all-apks/*.apk --title "$TAG" --notes "$BODY"
-          fi
+          mkdir -p logs
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "build-*.md" --dir logs
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[] | select(.name | startswith("build-")) | .apiUrl' | xargs -I{} gh api --method DELETE "{}"
+
+      - name: Combine logs and finalize release
+        if: steps.check.outputs.has_apks == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ needs.prepare.outputs.version }}
+        run: |
+          uv run main.py combine-logs logs | sed "s/{TAG}/$TAG/g" > final.md
+          gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --draft=false --title "$TAG" --notes-file final.md
+
+      - name: Delete empty draft if no APKs
+        if: steps.check.outputs.has_apks != 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ needs.prepare.outputs.version }}
+        run: gh release delete "$TAG" --repo "$GITHUB_REPOSITORY" --yes || true

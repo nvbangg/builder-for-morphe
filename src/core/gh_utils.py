@@ -33,7 +33,7 @@ def get_matrix(source: str) -> None:
     print(json.dumps({"include": include}, ensure_ascii=False))
 
 def combine_logs(logs_dir: Path | str) -> None:
-    logs = sorted(Path(logs_dir).rglob("build.md"))
+    logs = sorted(Path(logs_dir).rglob("build*.md"))
     if not logs:
         return
 
