@@ -40,9 +40,6 @@ class APKMirrorScraper(BaseScraper):
         return AppMetadata(pkg_name=m.group(1), versions=versions)
 
     def download(self, url: str, version: str, dest: Path, arch: str, dpi: str) -> DownloadResult:
-        if arch == "arm-v7a":
-            arch = "armeabi-v7a"
-
         soup = _parse_html(self._resp_html)
         h1 = soup.select_one("h1.marginZero")
         apkmname = re.sub(r"[^a-z0-9-]", "", (h1.get_text(strip=True).lower() if h1 else "").replace(" ", "-"))

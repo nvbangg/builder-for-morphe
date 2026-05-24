@@ -40,9 +40,6 @@ class UptodownScraper(BaseScraper):
         if not self._resp_html:
             self._resp_html = self.net.get(f"{url}/versions")
 
-        if arch == "arm-v7a":
-            arch = "armeabi-v7a"
-
         apparch = {"arm64-v8a, armeabi-v7a, x86_64", "arm64-v8a, armeabi-v7a, x86, x86_64", "arm64-v8a, armeabi-v7a"}
         if arch != "all":
             apparch.add(arch)

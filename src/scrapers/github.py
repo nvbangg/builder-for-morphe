@@ -5,7 +5,7 @@ from pathlib import Path
 from src.core.network import NetworkManager, ResourceNotFoundError
 from src.scrapers.base import AppMetadata, BaseScraper, DownloadResult, ScraperError
 
-_ARCH_SUFFIX = re.compile(r"(?:-(all|arm64-v8a|arm-v7a|x86_64|x86))?(?:\.apk\.apkm|\.apk|\.apkm)$", re.I)
+_ARCH_SUFFIX = re.compile(r"(?:-(all|arm64-v8a|armeabi-v7a|x86_64|x86))?(?:\.apk\.apkm|\.apk|\.apkm)$", re.I)
 
 
 class GitHubReleasesError(ScraperError):

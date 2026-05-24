@@ -18,7 +18,7 @@ def get_matrix(source: str) -> None:
 
         if entry.arch == "both":
             include.append({"id": entry.table, "arch": "arm64-v8a"})
-            include.append({"id": entry.table, "arch": "arm-v7a"})
+            include.append({"id": entry.table, "arch": "armeabi-v7a"})
         else:
             include.append({"id": entry.table})
 

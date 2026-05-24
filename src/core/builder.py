@@ -160,7 +160,7 @@ def _submit_entries(entries: list[AppEntry], pool: ThreadPoolExecutor, net: Netw
                 continue
 
         _, patcher = build_cache[key]
-        arches = ("arm64-v8a", "arm-v7a") if entry.arch == "both" else (entry.arch,)
+        arches = ("arm64-v8a", "armeabi-v7a") if entry.arch == "both" else (entry.arch,)
         for arch in arches:
             label = entry.table if entry.arch == "all" else f"{entry.table} ({arch})"
             futures.append(pool.submit(_build_single, entry, arch, label, net, patcher, strict_sigcheck))

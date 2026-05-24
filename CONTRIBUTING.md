@@ -62,7 +62,7 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/inc/app"
 | `cli-source` | GitHub repo for CLI (`owner/repo`) | `MorpheApp/morphe-cli` | Global / Per-app |
 | `strict-sigcheck` | Fail the build if an app is missing from `sig.txt` (see note below) | `true` | **Global only** |
 | `app-name` | Display name used in output filename | `table name` | Per-app |
-| `arch` | Target architecture (`all`, `both`, `arm64-v8a`, `arm-v7a`, `x86_64`, `x86`) | `all` | Per-app |
+| `arch` | Target architecture (`all`, `both`, `arm64-v8a`, `armeabi-v7a`, `x86_64`, `x86`) | `all` | Per-app |
 | `version` | Target version (`auto`, `latest`, or a specific version string) | `auto` | Per-app |
 | `apkmirror-dlurl` | APKMirror page URL | `-` | Per-app |
 | `uptodown-dlurl` | Uptodown page URL | `-` | Per-app |

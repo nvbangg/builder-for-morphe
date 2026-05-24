@@ -18,9 +18,7 @@ class SignatureError(PatcherError):
 
 def _arch_to_libs(arch: str) -> str:
     match arch:
-        case "arm-v7a":
-            return "armeabi-v7a"
-        case "arm64-v8a" | "x86" | "x86_64":
+        case "armeabi-v7a" | "arm64-v8a" | "x86" | "x86_64":
             return arch
         case _:
             return "arm64-v8a,armeabi-v7a"
