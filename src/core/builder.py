@@ -13,6 +13,8 @@ from src.core.patcher import PatcherCLI, PatcherError, SignatureError
 from src.core.prebuilts import APKSIGNER, Prebuilts, fetch_prebuilts, get_highest_ver
 from src.scrapers.base import BaseScraper, DownloadResult, ScraperError
 
+_failed_signatures: set[str] = set()
+
 
 class BuilderError(Exception):
     pass
@@ -126,6 +128,10 @@ def _apply_patch(entry: AppEntry, arch: str, version: str, force: bool, patcher:
     return apk_output
 
 def _build_single(entry: AppEntry, arch: str, label: str, net: NetworkManager, patcher: PatcherCLI, strict_sigcheck: bool) -> str | None:
+    if entry.table in _failed_signatures:
+        epr(f"Skipped '{label}' due to previous signature mismatch")
+        return None
+
     try:
         scrapers = {src: _make_scraper(src, net) for src in entry.dl_urls}
         pkg_name, dl_from = _find_pkg_name(entry, scrapers)
@@ -138,7 +144,10 @@ def _build_single(entry: AppEntry, arch: str, label: str, net: NetworkManager, p
         if os.getenv("GITHUB_ACTIONS") == "true":
             return f"- 🟢 » {label}: [`{version}`](../../releases/download/{{TAG}}/{apk_output.name})"
         return f"- 🟢 » {label}: `{version}`"
-    except (BuilderError, PatcherError, ScraperError, NetworkError) as exc:
+    except (BuilderError, PatcherError, ScraperError, NetworkError, SignatureError) as exc:
+        if isinstance(exc, SignatureError):
+            _failed_signatures.add(entry.table)
+
         epr(f"Building '{label}' failed! {exc}")
         return None
 
