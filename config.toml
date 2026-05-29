@@ -35,9 +35,9 @@ arch = "arm64-v8a"
 [X-Twitter]
 patches-source = "crimera/piko"
 brand = "piko"
-apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter"
-uptodown-dlurl = "https://twitter.en.uptodown.com/android"
-version = "11.81.0-release.0"
+github-dlurl = "https://github.com/krvstek/uni-storage/releases/tag/x-twitter"
+# apkmirror-dlurl = "https://www.apkmirror.com/apk/x-corp/twitter"
+# uptodown-dlurl = "https://twitter.en.uptodown.com/android"
 
 [Reddit]
 apkmirror-dlurl = "https://www.apkmirror.com/apk/redditinc/reddit"

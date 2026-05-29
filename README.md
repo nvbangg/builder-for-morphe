@@ -196,7 +196,7 @@ For full configuration reference, setup and contributing guide, see [CONTRIBUTIN
 For maximum security, we recommend building and customizing your own apps by:
 
 - Star and fork [this repo](https://github.com/nvbangg/builder-for-morphe) 👀
-- Customize [`config.toml`](config.toml) (see [`CONTRIBUTING.md`](CONTRIBUTING.md) for more details)
+- Customize [`config.toml`](config.toml) (see [`CONTRIBUTING.md`](CONTRIBUTING.md#%EF%B8%8F-configuration) for more details)
 - Run the [CI workflow](../../actions/workflows/ci.yml)
 - Download your APKs from [Releases](../../releases)
 
@@ -217,7 +217,7 @@ This repository is based on the [krvstek/uni-apks](https://github.com/krvstek/un
 - UI and configuration improvements for easier downloads and viewing patch details
 - Automatic upstream sync support
 - GitHub Pages deployment support (source code in the [gh-pages](https://github.com/nvbangg/builder-for-morphe/tree/gh-pages) branch)
-- Other changes contributed upstream: [#42](https://github.com/krvstek/uni-apks/pull/42), [#43](https://github.com/krvstek/uni-apks/pull/43), [#46](https://github.com/krvstek/uni-apks/pull/46), [#47](https://github.com/krvstek/uni-apks/pull/47), [#48](https://github.com/krvstek/uni-apks/pull/48), [co-authored commits](https://github.com/search?q=repo%3Akrvstek%2Funi-apks+Co-authored-by%3A+nvbangg&type=commits)
+- Other changes contributed upstream: [PRs](https://github.com/krvstek/uni-apks/commits/main/?author=nvbangg), [co-authored commits](https://github.com/search?q=repo%3Akrvstek%2Funi-apks+Co-authored-by%3A+nvbangg&type=commits)
 
 ---
 
