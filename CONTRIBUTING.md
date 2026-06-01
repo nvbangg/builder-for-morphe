@@ -52,8 +52,8 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/inc/app"
 | `brand` | Used in output filenames | `Morphe` | Global / Per-app |
 | `patches-version` | Patches version to fetch (`latest`, `dev`, or a specific version string) | `latest` | Global / Per-app |
 | `cli-version` | CLI version to fetch (`latest`, `dev`, or a specific version string) | `latest` | Global / Per-app |
-| `patches-source` | GitHub repo for patches (`owner/repo`) | `MorpheApp/morphe-patches` | Global / Per-app |
-| `cli-source` | GitHub repo for CLI (`owner/repo`) | `MorpheApp/morphe-cli` | Global / Per-app |
+| `patches-source` | GitHub or GitLab repo for patches (`owner/repo` or `gitlab:owner/repo`) | `MorpheApp/morphe-patches` | Global / Per-app |
+| `cli-source` | GitHub or GitLab repo for CLI (`owner/repo` or `gitlab:owner/repo`) | `MorpheApp/morphe-cli` | Global / Per-app |
 | `strict-sigcheck` | Fail the build if an app is missing from `sig.txt` (see note below) | `true` | **Global only** |
 | `app-name` | Display name used in output filename | `table name` | Per-app |
 | `arch` | Target architecture (`all`, `both`, `arm64-v8a`, `armeabi-v7a`, `x86_64`, `x86`) | `all` | Per-app |

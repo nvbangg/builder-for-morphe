@@ -30,8 +30,8 @@ def get_highest_ver(versions: list[str]) -> str:
     return max(clean, key=_ver_key)
 
 def fetch_prebuilts(cli_src: str, cli_ver: str, patches_src: str, patches_ver: str, net: NetworkManager) -> Prebuilts:
-    patches_org = patches_src.split("/")[0]
-    cli_org = cli_src.split("/")[0]
+    patches_org = patches_src.removeprefix("gitlab:").split("/")[0]
+    cli_org = cli_src.removeprefix("gitlab:").split("/")[0]
     cl_dir = TEMP_DIR / patches_org.lower()
     cli_dir = TEMP_DIR / cli_org.lower()
     cl_dir.mkdir(parents=True, exist_ok=True)
@@ -47,8 +47,9 @@ def fetch_prebuilts(cli_src: str, cli_ver: str, patches_src: str, patches_ver: s
 
     return Prebuilts(cli_jar=cli_jar, patches_mpp=patches_mpp)
 
-def _get_target_asset(release: dict, ext: str, src: str, ver: str) -> dict:
-    matches = [a for a in release.get("assets", []) if a.get("name", "").endswith(f".{ext}")]
+def _get_target_asset(release: dict, ext: str, src: str, ver: str, gitlab: bool) -> dict:
+    assets = release.get("assets", {}).get("links", []) if gitlab else release.get("assets", [])
+    matches = [a for a in assets if a.get("name", "").endswith(f".{ext}")]
     non_dev = [a for a in matches if "-dev" not in a.get("name", "")]
     target = non_dev if (len(matches) > 1 and non_dev) else matches
     if not target:
@@ -60,35 +61,57 @@ def _get_target_asset(release: dict, ext: str, src: str, ver: str) -> dict:
     return target[0]
 
 def _fetch_single_asset(src: str, tag: str, ver: str, fprefix: str, ext: str, cl_dir: Path, net: NetworkManager) -> tuple[Path, str]:
-    base_url = f"https://api.github.com/repos/{src}/releases"
+    gitlab = src.startswith("gitlab:")
+    clean_src = src.removeprefix("gitlab:")
+    if gitlab:
+        project = clean_src.replace("/", "%2F")
+        base_url = f"https://gitlab.com/api/v4/projects/{project}/releases"
+    else:
+        base_url = f"https://api.github.com/repos/{clean_src}/releases"
+
     release = None
     if ver == "dev":
-        releases = json.loads(net.gh_get(base_url))
+        releases = json.loads(net.get(base_url) if gitlab else net.gh_get(base_url))
         ver = get_highest_ver([r["tag_name"] for r in releases if r.get("tag_name")])
     elif ver == "latest":
-        release = json.loads(net.gh_get(f"{base_url}/latest"))
+        latest_url = f"{base_url}/permalink/latest" if gitlab else f"{base_url}/latest"
+        release = json.loads(net.get(latest_url) if gitlab else net.gh_get(latest_url))
         ver = release.get("tag_name", "")
 
     if file := _find_cached(cl_dir, fprefix, ver, ext, exclude_dev=False):
         tag_name = _tag_from_filename(file)
-        changelog = f"[🔗 » Changelog](https://github.com/{src}/releases/tag/{tag_name})\n\n" if tag == "Patches" and tag_name else ""
+        if tag == "Patches" and tag_name:
+            if gitlab:
+                changelog = f"[🔗 » Changelog](https://gitlab.com/{clean_src}/-/releases/{tag_name})\n\n"
+            else:
+                changelog = f"[🔗 » Changelog](https://github.com/{clean_src}/releases/tag/{tag_name})\n\n"
+        else:
+            changelog = ""
         return file, changelog
 
     if release is None:
-        release = json.loads(net.gh_get(f"{base_url}/tags/{ver}"))
+        release_url = f"{base_url}/{ver}" if gitlab else f"{base_url}/tags/{ver}"
+        release = json.loads(net.get(release_url) if gitlab else net.gh_get(release_url))
 
-    asset = _get_target_asset(release, ext, src, ver)
+    asset = _get_target_asset(release, ext, src, ver, gitlab)
     file = cl_dir / asset["name"]
     for old_file in cl_dir.glob(f"*{fprefix}-*.{ext}"):
         if old_file.is_file() and not old_file.name.startswith("tmp."):
             old_file.unlink(missing_ok=True)
 
-    pr(f"Getting '{asset['name']}' from '{asset['url']}'")
-    net.gh_download(asset["url"], file)
+    asset_url = (asset.get("direct_asset_url") or asset["url"]) if gitlab else asset["url"]
+    pr(f"Getting '{asset['name']}' from '{asset_url}'")
+    if gitlab:
+        net.download(asset_url, file)
+    else:
+        net.gh_download(asset_url, file)
     tag_name = release.get("tag_name", "")
-    changelog = f"> ⚙️ » {tag}: `{src.split('/')[0]}/{asset['name']}`  \n"
+    changelog = f"> ⚙️ » {tag}: `{clean_src.split('/')[0]}/{asset['name']}`  \n"
     if tag == "Patches" and tag_name:
-        changelog += f"[🔗 » Changelog](https://github.com/{src}/releases/tag/{tag_name})\n\n"
+        if gitlab:
+            changelog += f"[🔗 » Changelog](https://gitlab.com/{clean_src}/-/releases/{tag_name})\n\n"
+        else:
+            changelog += f"[🔗 » Changelog](https://github.com/{clean_src}/releases/tag/{tag_name})\n\n"
 
     return file, changelog
 
