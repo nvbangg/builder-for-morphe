@@ -33,14 +33,16 @@ def _make_scraper(source: str, net: NetworkManager) -> BaseScraper:
         case _:
             raise ValueError(f"Unknown APK source: {source!r}")
 
-def _find_pkg_name(entry: AppEntry, scrapers: dict[str, BaseScraper]) -> tuple[str, str]:
+def _find_pkg_name(entry: AppEntry, scrapers: dict[str, BaseScraper]) -> tuple[str, str, set[str]]:
+    failed: set[str] = set()
     for src, url in entry.dl_urls.items():
         try:
             metadata = scrapers[src].cached_metadata(url)
             pr(f"Package name of '{entry.table}' is '{metadata.pkg_name}'")
-            return metadata.pkg_name, src
+            return metadata.pkg_name, src, failed
         except (NetworkError, ScraperError) as exc:
             epr(f"Could not find '{entry.table}' in '{src}': {exc}")
+            failed.add(src)
 
     raise BuilderError("Package name not found")
 
@@ -59,7 +61,7 @@ def _resolve_version(entry: AppEntry, patcher: PatcherCLI, list_patches: str, pk
     pr(f"Choosing version '{version}' for '{entry.table}'")
     return version, is_custom
 
-def _download_apk(entry: AppEntry, version: str, arch: str, pkg_name: str, scrapers: dict[str, BaseScraper]) -> DownloadResult:
+def _download_apk(entry: AppEntry, version: str, arch: str, pkg_name: str, scrapers: dict[str, BaseScraper], dl_from: str, failed_sources: set[str]) -> DownloadResult:
     arch_f = arch.replace(" ", "")
     version_f = version.replace(" ", "").lstrip("v")
     base_name = f"{pkg_name}-v{version_f}-{arch_f}.apk"
@@ -71,7 +73,11 @@ def _download_apk(entry: AppEntry, version: str, arch: str, pkg_name: str, scrap
     if stock_apkm.exists():
         return DownloadResult(path=stock_apkm, is_bundle=True)
 
-    for src, url in entry.dl_urls.items():
+    ordered_sources = [dl_from] + [src for src in entry.dl_urls if src != dl_from]
+    for src in ordered_sources:
+        if src in failed_sources:
+            continue
+        url = entry.dl_urls[src]
         pr(f"Downloading '{entry.table}' from '{src}'")
         try:
             return scrapers[src].download(url, version, stock_apk, arch, entry.dpi)
@@ -133,10 +139,10 @@ def _build_single(entry: AppEntry, arch: str, label: str, net: NetworkManager, p
 
     try:
         scrapers = {src: _make_scraper(src, net) for src in entry.dl_urls}
-        pkg_name, dl_from = _find_pkg_name(entry, scrapers)
+        pkg_name, dl_from, failed_sources = _find_pkg_name(entry, scrapers)
         list_patches = patcher.list_patches(pkg_name)
         version, force = _resolve_version(entry, patcher, list_patches, pkg_name, dl_from, scrapers)
-        dl_result = _download_apk(entry, version, arch, pkg_name, scrapers)
+        dl_result = _download_apk(entry, version, arch, pkg_name, scrapers, dl_from, failed_sources)
         _verify_sig(dl_result, pkg_name, patcher, label, entry.skip_sigcheck, strict_sigcheck)
         apk_output = _apply_patch(entry, arch, version, force, patcher, list_patches, dl_result)
         pr(f"Built {label}: '{apk_output}'")
