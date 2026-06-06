@@ -51,14 +51,12 @@ patches-source = "github:RookieEnough/De-Vanced"
 brand = "de-vanced"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/amazon-mobile-llc/amazon-music-discover-songs/"
 uptodown-dlurl = "https://amazon-mp3.en.uptodown.com/android"
-version = "26.14.2"
 
 [Disney-Plus]
 patches-source = "github:RookieEnough/De-Vanced"
 brand = "de-vanced"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/disney/disney/"
 uptodown-dlurl = "https://disney-disneyplus.en.uptodown.com/android"
-version = "26.6.0+rc5-2026.04.21"
 
 [Facebook]
 patches-source = "github:RookieEnough/De-Vanced"
@@ -79,7 +77,6 @@ patches-source = "github:RookieEnough/De-Vanced"
 brand = "de-vanced"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/photos/"
 uptodown-dlurl = "https://google-photos.en.uptodown.com/android"
-version = "7.74.0.910345644"
 
 [Google-Recorder]
 patches-source = "github:RookieEnough/De-Vanced"
@@ -87,21 +84,18 @@ brand = "de-vanced"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/google-recorder/"
 uptodown-dlurl = "https://opnemer.en.uptodown.com/android"
 arch = "arm64-v8a"
-version = "4.2.20260521.920830288"
 
 [Peacock-TV]
 patches-source = "github:RookieEnough/De-Vanced"
 brand = "de-vanced"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/peacock-tv-llc/peacock-tv/"
 uptodown-dlurl = "https://peacock-tv.en.uptodown.com/android"
-version = "7.5.21"
 
 [Photomath]
 patches-source = "github:RookieEnough/De-Vanced"
 brand = "de-vanced"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-llc/photomath/"
 uptodown-dlurl = "https://photomath.en.uptodown.com/android"
-version = "8.47.1"
 
 [Proton-Mail]
 patches-source = "github:RookieEnough/De-Vanced"
@@ -195,7 +189,6 @@ patches-source = "github:hoo-dles/morphe-patches"
 brand = "hoo-dles"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/merriam-webster-inc/dictionary-merriam-webster/"
 uptodown-dlurl = "https://merriam-webster.en.uptodown.com/android"
-version = "5.5.3"
 
 [MyFitnessPal]
 patches-source = "github:hoo-dles/morphe-patches"
@@ -221,7 +214,6 @@ brand = "hoo-dles"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/amazon-mobile-llc/amazon-prime-video/"
 uptodown-dlurl = "https://amazon-video.en.uptodown.com/android"
 arch = "arm64-v8a"
-version = "3.0.452"
 
 [Smart-Launcher-6]
 patches-source = "github:hoo-dles/morphe-patches"

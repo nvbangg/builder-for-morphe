@@ -31,12 +31,15 @@ class APKMirrorScraper(BaseScraper):
 
         soup = _parse_html(self.net.get(f"{APK_MIRROR_BASE}/uploads/?appcategory={self._category}"))
         versions: list[str] = []
-        for val in soup.select("span.infoSlide-name + span.infoSlide-value"):
-            v = val.get_text(strip=True)
-            if v:
-                versions.append(v)
+        for row in soup.select("span.infoSlide-name"):
+            if row.get_text(strip=True).rstrip(":") == "Version":
+                val = row.find_next_sibling("span", class_="infoSlide-value")
+                if val:
+                    v = val.get_text(strip=True)
+                    if v:
+                        versions.append(v)
 
-        versions = [v for v in versions if not re.search(r"beta|alpha", v, re.I)]
+        versions = [v for v in versions if "." in v and not re.search(r"beta|alpha", v, re.I)]
         return AppMetadata(pkg_name=m.group(1), versions=versions)
 
     def download(self, url: str, version: str, dest: Path, arch: str, dpi: str) -> DownloadResult:
