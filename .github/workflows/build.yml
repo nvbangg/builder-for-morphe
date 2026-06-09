@@ -20,9 +20,6 @@ on:
       patch_source:
         default: 'morphe'
         type: string
-      is_auto:
-        default: false
-        type: boolean
 
 permissions:
   contents: read
@@ -67,7 +64,6 @@ jobs:
       - name: Set matrix based on patch source
         id: set-matrix
         env:
-          IS_AUTO: ${{ inputs.is_auto }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: echo "matrix=$(uv run main.py get-matrix '${{ inputs.patch_source }}')" >> "$GITHUB_OUTPUT"
 

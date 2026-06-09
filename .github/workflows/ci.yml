@@ -59,5 +59,4 @@ jobs:
     uses: ./.github/workflows/build.yml
     with:
       patch_source: ${{ matrix.patch_source }}
-      is_auto: ${{ github.event_name == 'schedule' || inputs.force_build == false }}
     secrets: inherit

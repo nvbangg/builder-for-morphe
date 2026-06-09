@@ -85,12 +85,9 @@ def parse_app_entries(data: dict[str, object], main: Config) -> list[AppEntry]:
                 raise ValueError(f"Patch names inside {name} for '{table_name}' must be quoted")
 
         raw_keywords = t.get("changelog-keywords")
-        if isinstance(raw_keywords, list):
-            keywords = [str(k).strip().lower() for k in raw_keywords]
-        elif isinstance(raw_keywords, str):
-            keywords = [raw_keywords.strip().lower()]
-        else:
-            keywords = [table_name.lower().replace("-", " ")]
+        if raw_keywords is not None and not isinstance(raw_keywords, list):
+            raise ValueError(f"'changelog-keywords' must be a list for '{table_name}'")
+        keywords = [str(k).lower() for k in raw_keywords if str(k).strip()] if raw_keywords else []
 
         entries.append(AppEntry(
             table=table_name,
