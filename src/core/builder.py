@@ -146,7 +146,7 @@ def _build_single(entry: AppEntry, arch: str, label: str, net: NetworkManager, p
         _verify_sig(dl_result, pkg_name, patcher, label, entry.skip_sigcheck, strict_sigcheck)
         apk_output = _apply_patch(entry, arch, version, force, patcher, list_patches, dl_result)
         pr(f"Built {label}: '{apk_output}'")
-        ver_str = f"[`{version}`](../../releases/download/{{TAG}}/{apk_output.name})" if IS_GITHUB else f"`{version}`"
+        ver_str = f"[`{version}`](https://github.com/{os.getenv('GITHUB_REPOSITORY')}/releases/download/{{TAG}}/{apk_output.name})" if IS_GITHUB else f"`{version}`"
         return f"- 🟢 » {label}: {ver_str}"
     except (BuilderError, PatcherError, ScraperError, NetworkError, SignatureError) as exc:
         if isinstance(exc, SignatureError):

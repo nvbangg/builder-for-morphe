@@ -1,6 +1,6 @@
 ## [ngbangg/builder-for-morphe](https://github.com/ngbangg/builder-for-morphe)
 
-🌐 [Builder for Morphe Website](https://ngbangg.github.io/builder-for-morphe)
+<a href="https://ngbangg.github.io/builder-for-morphe"><img src="https://img.shields.io/badge/Website-blue?style=social&logo=googlechrome" alt="Website"></a>　<a href="https://t.me/builder_for_morphe"><img src="https://img.shields.io/badge/Telegram_Channel-blue?style=social&logo=telegram" alt="Telegram"></a>
 
 <div align="center">
 <a href="#apps-list"><img src="https://readme-typing-svg.demolab.com/?font=Google+Sans&size=25&duration=3000&pause=2000&color=&center=true&vCenter=true&random=false&width=550&lines=%F0%9F%93%A6+Pre-built+APKs+from+various+patch+sources"></a>
