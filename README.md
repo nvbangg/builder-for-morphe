@@ -15,9 +15,7 @@ Here you can download and use applications selected for this repository, which a
 </div>
 
 > [!NOTE]
-> 🔍 This project is fully open-source and transparent.  
-> 🔏 Uses trusted APK sources with signature verification for security.  
-> 🤖 APKs are patched automatically via GitHub Actions.
+> 📢 Join the [Telegram Channel](https://t.me/builder_for_morphe)
 
 ## <a id="apps-list"></a> 📋 List of apps in this repository
 
@@ -181,8 +179,10 @@ For full configuration reference, setup and contributing guide, see [CONTRIBUTIN
 This repository is based on the [krvstek/uni-apks](https://github.com/krvstek/uni-apks) template (GPL-3.0), with the following transparent changes (see [changes](https://github.com/ngbangg/builder-for-morphe/commits/main/?author=nvbangg)):
 
 - Support for more apps
-- No manual configuration required for each `brand` in `ci.yml`
 - Automatic upstream sync support
+- Designed for easily building your own APKs by just customizing `config.toml`
+  - No manual configuration required for each `brand` in `ci.yml`
+  - Skip changelog filtering on manual builds
 - GitHub Pages deployment support
 - Other changes contributed upstream: [Pull Requests](https://github.com/krvstek/uni-apks/commits/main/?author=nvbangg), [co-authored commits](https://github.com/search?q=repo%3Akrvstek%2Funi-apks+Co-authored-by%3A+nvbangg&type=commits)
 
