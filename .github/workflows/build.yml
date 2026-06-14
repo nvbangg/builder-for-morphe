@@ -9,11 +9,11 @@ on:
         type: choice
         options:
           - morphe
-          - morphe-dev
           - piko
           - hoo-dles
           - de-vanced
           - paresh
+          - anddea
           - ample
   workflow_call:
     inputs:
