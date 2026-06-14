@@ -18,13 +18,14 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
+          token: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
           fetch-depth: 0
           fetch-tags: false
 
       - name: Check upstream
         id: check
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
         run: |
           UPSTREAM_URL=$(gh api repos/${{ github.repository }} -q '.parent.html_url // "https://github.com/krvstek/uni-apks"')
           git remote add upstream "$UPSTREAM_URL"
@@ -44,14 +45,17 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          if ! git merge upstream/main --no-ff --no-commit; then
-            echo "::warning title=Sync Upstream Failed::Unresolved conflicts detected or Insufficient permissions"
-            exit 0
+          if ! git merge upstream/main; then
+            CONFLICT_FILES=$(git diff --name-only --diff-filter=U)
+            if echo "$CONFLICT_FILES" | grep -Ev '^config\.toml$' > /dev/null; then
+              echo "::warning title=Sync Upstream Failed::Unresolved conflicts detected or Insufficient permissions"
+              git merge --abort 2>/dev/null || true
+              exit 0
+            fi
+
+            git checkout --ours -- config.toml
+            git add config.toml
+            git commit -m "Merge remote-tracking branch 'upstream/main'"
           fi
-
-          python3 docs/update-index.py
-          git add docs/index.html
-
-          git commit -m "Merge remote-tracking branch 'upstream/main'"
           git push
           echo "::notice title=Sync upstream::New commits were found and synced."
