@@ -1,36 +1,33 @@
 strict-sigcheck = false
 
-[YouTube]
+[YouTube-Stable]
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube"
 uptodown-dlurl = "https://youtube.en.uptodown.com/android"
 
-[YT-Music]
+[YT-Music-Stable]
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube-music"
 uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
 arch = "both"
 
-[Reddit]
+[Reddit-Stable]
 apkmirror-dlurl = "https://www.apkmirror.com/apk/redditinc/reddit"
 uptodown-dlurl = "https://reddit-official-app.en.uptodown.com/android"
 
 [YouTube-Experimental]
-brand = "morphe-dev"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube"
 uptodown-dlurl = "https://youtube.en.uptodown.com/android"
-version = "21.21.80"
+version = "21.24.360"
 
 [YT-Music-Experimental]
-brand = "morphe-dev"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube-music"
 uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
 arch = "both"
-version = "9.21.51"
+version = "9.22.53"
 
 [Reddit-Experimental]
-brand = "morphe-dev"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/redditinc/reddit"
 uptodown-dlurl = "https://reddit-official-app.en.uptodown.com/android"
-version = "2026.21.0"
+version = "2026.23.0"
 
 [X-Twitter]
 patches-source = "github:crimera/piko"
@@ -470,15 +467,26 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/ubiquiti-labs-llc/vn-video-edit
 uptodown-dlurl = "https://vn-video-editor.en.uptodown.com/android"
 changelog-keywords = ["VN"]
 
+[YouTube-Anddea]
+patches-source = "github:anddea/revanced-patches"
+patches-version = "dev"
+brand = "anddea"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube"
+uptodown-dlurl = "https://youtube.en.uptodown.com/android"
+excluded-patches = "'Visual preferences icons for YouTube'"
+
+[YT-Music-Anddea]
+patches-source = "github:anddea/revanced-patches"
+patches-version = "dev"
+brand = "anddea"
+apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube-music"
+uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
+arch = "both"
+excluded-patches = "'Visual preferences icons for YouTube Music'"
+
 [KakaoTalk]
 patches-source = "github:AmpleReVanced/revanced-patches"
 brand = "ample"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/kakao-corp/kakaotalk/"
 uptodown-dlurl = "https://kakaotalk.en.uptodown.com/android"
 changelog-keywords = ["KakaoTalk"]
-
-[dcinside]
-patches-source = "github:AmpleReVanced/revanced-patches"
-brand = "ample"
-uptodown-dlurl = "https://dcinside.en.uptodown.com/android"
-changelog-keywords = ["dcinside"]
