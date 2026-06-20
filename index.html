@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>morphBuilder — patched APK releases</title>
+<meta name="description" content="Ad-free, de-Googled APK builds of YouTube, YT Music, Google Photos and Instagram. Pulled straight from the latest GitHub Actions release.">
+<meta name="theme-color" content="#f7f7f7">
+<script>
+  (function(){
+    var saved = localStorage.getItem('morphbuilder-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+</script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%232b3dda%22/><path d=%22M30 70 L30 35 L50 60 L70 35 L70 70%22 stroke=%22%23ffd900%22 stroke-width=%228%22 fill=%22none%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+<style>
+  @font-face {
+    font-family: 'JetBrains Mono';
+    src: local('JetBrains Mono');
+  }
+
+  :root{
+    /* --- user's brand tokens --- */
+    --color-primary: #2b3dda;
+    --color-primary-dark: #2506ad;
+    --color-primary-darker: #1a047e;
+    --color-secondary: #ff7b00;
+    --color-accent: #ffd900;
+    --color-accent-purple: #420177;
+    --color-accent-red: rgb(148, 8, 8);
+
+    --bg-light: #f7f7f7;
+    --bg-white: #ffffff;
+    --bg-light-blue: #e5ecfb;
+    --bg-card: rgb(252, 252, 252);
+
+    --text-dark-primary: #002057;
+    --text-dark: #000000;
+    --text-dark-secondary: #020133;
+    --text-gray: rgb(27, 27, 27);
+    --text-light: #dbe7f6;
+
+    --social-icon-cyan: #00d9ff;
+    --social-icon-dark: #09011b;
+    --social-icon-blue: #0685da;
+    --social-icon-github: #0e0e0e;
+    --social-icon-twitter: #00aced;
+    --social-icon-linkedin: #007bb6;
+    --social-icon-dev: #070707;
+    --social-icon-instagram: #ee00da;
+
+    --scrollbar-track: rgb(235, 202, 245);
+    --scrollbar-thumb: #420177;
+
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --orange: #f68c09;
+    --green: rgb(34, 109, 0);
+    --blue-navy: rgb(0, 1, 43);
+
+    --dark-bg-primary: #08111f;
+    --dark-bg-secondary: #111a2e;
+    --dark-bg-tertiary: #0b1323;
+    --dark-bg-card: #0d1526;
+
+    --dark-text-primary: #f4f7fb;
+    --dark-text-secondary: #dbe7f6;
+    --dark-text-tertiary: #b4c0d4;
+
+    --dark-accent: #7aa2ff;
+    --dark-accent-green: #8ad27b;
+
+    --dark-scrollbar-track: #0f172a;
+    --dark-scrollbar-thumb: #7aa2ff;
+
+    --gradient-purple: linear-gradient(to bottom, #57059e, #4a00e0);
+    --gradient-dark: linear-gradient(to bottom, #420177, #00002c);
+
+    --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+    /* --- per-app brand colors (unchanged across themes) --- */
+    --yt: #ff3b3b;
+    --ytm: var(--secondary-app, #ff7b00);
+    --gph: var(--color-accent);
+    --ig: var(--social-icon-instagram);
+
+    /* --- semantic layer: LIGHT (default) --- */
+    --bg: var(--bg-light);
+    --bg-raised: var(--bg-white);
+    --bg-card-s: var(--bg-card);
+    --line: #d8e0ef;
+    --line-soft: #e6ebf5;
+    --text: var(--text-dark-primary);
+    --text-dim: var(--text-dark-secondary);
+    --text-faint: #6b7694;
+    --accent: var(--color-primary);
+    --accent-dim: #2b3dda1f;
+    --accent-text-on: #ffffff;
+    --glow-1: #2b3dda14;
+    --glow-2: #ff7b0010;
+  }
+
+  [data-theme="dark"]{
+    --bg: var(--dark-bg-primary);
+    --bg-raised: var(--dark-bg-secondary);
+    --bg-card-s: var(--dark-bg-card);
+    --line: #1e2a42;
+    --line-soft: #16213a;
+    --text: var(--dark-text-primary);
+    --text-dim: var(--dark-text-secondary);
+    --text-faint: var(--dark-text-tertiary);
+    --accent: var(--dark-accent);
+    --accent-dim: #7aa2ff22;
+    --accent-text-on: #0a1020;
+    --glow-1: #7aa2ff12;
+    --glow-2: #8ad27b0d;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse 900px 500px at 15% -10%, var(--glow-1), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 10%, var(--glow-2), transparent 60%);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    transition: background-color .25s ease, color .25s ease;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+
+  ::selection{ background: var(--accent-dim); color: var(--accent); }
+
+  :focus-visible{
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar{ width: 10px; }
+  ::-webkit-scrollbar-track{ background: var(--scrollbar-track); }
+  ::-webkit-scrollbar-thumb{ background: var(--scrollbar-thumb); border-radius: 6px; }
+  [data-theme="dark"] ::-webkit-scrollbar-track{ background: var(--dark-scrollbar-track); }
+  [data-theme="dark"] ::-webkit-scrollbar-thumb{ background: var(--dark-scrollbar-thumb); }
+
+  .wrap{
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- header ---------- */
+
+  header{
+    border-bottom: 1px solid var(--line-soft);
+    padding: 18px 0;
+  }
+  .header-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 16px;
+  }
+  .header-right{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--text-dim);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .brand .dot{
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-dim);
+    flex-shrink:0;
+  }
+  .brand b{ color: var(--text); font-weight: 600; }
+  .gh-link{
+    display:flex;
+    align-items:center;
+    gap: 7px;
+    font-size: 13px;
+    color: var(--text-dim);
+    border: 1px solid var(--line);
+    padding: 6px 12px;
+    border-radius: 7px;
+    transition: border-color .15s, color .15s;
+  }
+  .gh-link:hover{ border-color: var(--text-faint); color: var(--text); }
+  .gh-link svg{ width:15px; height:15px; }
+
+  .theme-toggle{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width: 33px; height: 33px;
+    border: 1px solid var(--line);
+    background: var(--bg-raised);
+    color: var(--text-dim);
+    border-radius: 7px;
+    cursor: pointer;
+    transition: border-color .15s, color .15s, background .15s;
+    flex-shrink: 0;
+  }
+  .theme-toggle:hover{ border-color: var(--text-faint); color: var(--text); }
+  .theme-toggle svg{ width: 16px; height: 16px; }
+  .theme-toggle .icon-sun{ display: none; }
+  .theme-toggle .icon-moon{ display: block; }
+  [data-theme="dark"] .theme-toggle .icon-sun{ display: block; }
+  [data-theme="dark"] .theme-toggle .icon-moon{ display: none; }
+
+  @media (max-width: 420px){
+    .brand .full-label{ display:none; }
+    .brand .short-label{ display:inline; }
+  }
+  .brand .short-label{ display:none; }
+
+  /* ---------- hero ---------- */
+
+  .hero{
+    padding: 72px 0 56px;
+  }
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: .02em;
+    color: var(--accent);
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    margin-bottom: 22px;
+  }
+  .eyebrow::before{
+    content:'';
+    width: 5px; height: 5px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%, 100%{ opacity: 1; }
+    50%{ opacity: .35; }
+  }
+  h1{
+    font-size: clamp(34px, 5.2vw, 52px);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+    max-width: 14ch;
+  }
+  h1 .accent{ color: var(--accent); }
+  .hero p{
+    margin-top: 20px;
+    font-size: 16.5px;
+    color: var(--text-dim);
+    max-width: 54ch;
+    line-height: 1.65;
+  }
+  .hero p code{
+    font-family: var(--mono);
+    font-size: .92em;
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--text);
+  }
+
+  .hero-meta{
+    margin-top: 32px;
+    display:flex;
+    flex-wrap: wrap;
+    gap: 10px 28px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--text-faint);
+  }
+  .hero-meta span b{ color: var(--text-dim); font-weight: 500; }
+
+  /* ---------- app list ---------- */
+
+  .list{
+    border-top: 1px solid var(--line-soft);
+  }
+  .app{
+    border-bottom: 1px solid var(--line-soft);
+    padding: 30px 0;
+    display:flex;
+    align-items:center;
+    gap: 20px;
+    transition: background .15s;
+  }
+  .app .icon{ flex-shrink:0; }
+  .app .app-info{ flex: 1 1 auto; min-width: 0; }
+  .app .dl-btn{ flex-shrink:0; }
+  .app:hover{ background: var(--bg-card-s); margin: 0 -16px; padding: 30px 16px; border-radius: 12px; }
+  .app:hover + .app{ border-top: none; }
+
+  .icon{
+    width: 52px; height: 52px;
+    border-radius: 13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    border: 1px solid var(--line);
+  }
+  .icon svg{ width: 26px; height: 26px; }
+  .icon.yt{ background: linear-gradient(155deg, #ff3b3b22, #ff3b3b08); }
+  .icon.ytm{ background: linear-gradient(155deg, #ff7b0022, #ff7b0008); }
+  .icon.gph{ background: linear-gradient(155deg, #ffd90033, #ffd90008); }
+  .icon.ig{ background: linear-gradient(155deg, #ee00da22, #ee00da08); }
+
+  .app-info{ min-width: 0; }
+  .app-name{
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    display:flex;
+    align-items:baseline;
+    gap: 9px;
+    flex-wrap: wrap;
+    color: var(--text);
+  }
+  .app-name .patch{
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-faint);
+    border: 1px solid var(--line);
+    padding: 1px 7px;
+    border-radius: 100px;
+  }
+  .app-desc{
+    margin-top: 5px;
+    font-size: 13.5px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+  .app-version{
+    margin-top: 9px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-faint);
+    display:flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .app-version .v-num{ color: var(--text-dim); }
+  .app-version .skel{
+    display:inline-block;
+    width: 70px; height: 12px;
+    background: var(--line-soft);
+    border-radius: 3px;
+    animation: shimmer 1.4s ease-in-out infinite;
+  }
+  @keyframes shimmer{
+    0%, 100%{ opacity: .5; }
+    50%{ opacity: 1; }
+  }
+
+  .dl-btn{
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    background: var(--accent);
+    color: var(--accent-text-on);
+    font-size: 13.5px;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 8px;
+    white-space: nowrap;
+    transition: transform .15s, background .15s, box-shadow .15s;
+    border: none;
+    cursor: pointer;
+    font-family: var(--sans);
+    box-shadow: 0 1px 2px var(--shadow-color);
+  }
+  .dl-btn:hover{ background: var(--color-primary-dark); transform: translateY(-1px); }
+  [data-theme="dark"] .dl-btn:hover{ background: #93b3ff; }
+  .dl-btn svg{ width: 15px; height: 15px; flex-shrink:0; }
+  .dl-btn .size{
+    font-family: var(--mono);
+    font-size: 11px;
+    opacity: .75;
+    font-weight: 500;
+  }
+  .dl-btn.disabled{
+    opacity: .5;
+    pointer-events: none;
+  }
+
+  @media (max-width: 600px){
+    .app{
+      flex-wrap: wrap;
+    }
+    .icon{ width: 44px; height: 44px; }
+    .icon svg{ width: 22px; height: 22px; }
+    .app .app-info{ flex-basis: calc(100% - 64px); }
+    .app .dl-btn{ flex-basis: 100%; justify-content:center; padding: 11px 16px; }
+    .app:hover{ margin: 0 -16px; padding: 24px 16px; }
+  }
+
+  /* ---------- microg companion row (subtle) ---------- */
+
+  .extra-row{
+    margin-top: 18px;
+    padding: 13px 16px;
+    border: 1px dashed var(--line);
+    border-radius: 10px;
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    font-size: 12.5px;
+    color: var(--text-faint);
+    background: transparent;
+  }
+  .extra-icon{
+    width: 16px; height: 16px;
+    flex-shrink: 0;
+    color: var(--text-faint);
+  }
+  .extra-text{
+    flex: 1 1 auto;
+    min-width: 0;
+    line-height: 1.5;
+  }
+  .extra-text b{
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+  .extra-version{
+    font-family: var(--mono);
+    color: var(--text-faint);
+  }
+  .extra-link{
+    display:flex;
+    align-items:center;
+    gap: 6px;
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-faint);
+    border: 1px solid var(--line);
+    padding: 6px 11px;
+    border-radius: 100px;
+    white-space: nowrap;
+    transition: border-color .15s, color .15s;
+  }
+  .extra-link:hover{
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .extra-link svg{ width: 12px; height: 12px; }
+
+  @media (max-width: 600px){
+    .extra-row{
+      flex-wrap: wrap;
+    }
+    .extra-link{ flex-basis: 100%; justify-content: center; }
+  }
+
+  /* ---------- how-to ---------- */
+
+  .howto{
+    margin-top: 64px;
+    padding: 28px 0 0;
+  }
+  .howto h2{
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text-faint);
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .steps{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .step{
+    background: var(--bg-card-s);
+    border: 1px solid var(--line-soft);
+    border-radius: 12px;
+    padding: 18px 18px 20px;
+  }
+  .step .n{
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .step p{
+    font-size: 13.5px;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+  .step a{ color: var(--accent); border-bottom: 1px solid currentColor; }
+
+  @media (max-width: 700px){
+    .steps{ grid-template-columns: 1fr; }
+  }
+
+  /* ---------- note ---------- */
+
+  .note{
+    margin-top: 40px;
+    border: 1px solid var(--line-soft);
+    border-radius: 12px;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: var(--text-faint);
+    line-height: 1.6;
+    display:flex;
+    gap: 12px;
+  }
+  .note svg{ width: 16px; height: 16px; flex-shrink:0; margin-top: 2px; color: var(--text-faint); }
+  .note b{ color: var(--text-dim); }
+
+  /* ---------- footer ---------- */
+
+  footer{
+    margin-top: 72px;
+    border-top: 1px solid var(--line-soft);
+    padding: 26px 0 48px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--text-faint);
+  }
+  footer a{ color: var(--text-dim); transition: color .15s; }
+  footer a:hover{ color: var(--accent); }
+  .foot-links{ display:flex; gap: 20px; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap header-row">
+    <div class="brand">
+      <span class="dot"></span>
+      <span><b>morphBuilder</b> <span class="full-label">· release mirror</span><span class="short-label">· releases</span></span>
+    </div>
+    <div class="header-right">
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2.5 12h2M19.5 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
+      </button>
+      <a class="gh-link" href="https://github.com/mahfujarr/morphBuilder" target="_blank" rel="noopener">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+        <span>GitHub</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow">BUILT VIA GITHUB ACTIONS</div>
+    <h1>Patched APKs,<br>straight off the <span class="accent">build pipeline</span>.</h1>
+    <p>De-Googled, ad-free builds of YouTube, YT Music, Google Photos and Instagram — compiled automatically from <code>morphBuilder</code> and published as GitHub releases. No accounts, no trackers baked in, just the <code>.apk</code>.</p>
+    <div class="hero-meta">
+      <span>Arch <b>arm64-v8a</b></span>
+      <span>Source <b>GPL-3.0</b></span>
+      <span id="last-build">Last build <b id="last-build-date">checking…</b></span>
+    </div>
+  </section>
+
+  <section class="list" id="app-list">
+
+    <!-- YouTube -->
+    <div class="app" data-repo="mahfujarr/morphBuilder" data-tag="26.06.20-morphe" data-asset-match="youtube-stable">
+      <div class="icon yt">
+        <svg viewBox="0 0 24 24" fill="#ff3b3b"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.5V8.5L15.8 12l-6.2 3.5Z"/></svg>
+      </div>
+      <div class="app-info">
+        <div class="app-name">YouTube <span class="patch">morphe patch</span></div>
+        <div class="app-desc">No ads, background play, SponsorBlock built in.</div>
+        <div class="app-version">
+          <span class="v-num">v0.0.0</span>
+          <span class="f-size skel"></span>
+        </div>
+      </div>
+      <a class="dl-btn" href="https://github.com/mahfujarr/morphBuilder/releases/download/26.06.20-morphe/youtube-stable-morphe-v20.51.39-arm64-v8a.apk">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg>
+        <span>Download</span>
+      </a>
+    </div>
+
+    <!-- YT Music -->
+    <div class="app" data-repo="mahfujarr/morphBuilder" data-tag="26.06.20-morphe" data-asset-match="yt-music-stable">
+      <div class="icon ytm">
+        <svg viewBox="0 0 24 24" fill="#ff7a3d"><path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24Zm0 19a7 7 0 1 1 0-14 7 7 0 0 1 0 14Zm0-12.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM10 15.5v-7l6 3.5-6 3.5Z"/></svg>
+      </div>
+      <div class="app-info">
+        <div class="app-name">YT Music <span class="patch">morphe patch</span></div>
+        <div class="app-desc">Background audio, no ads, sleep timer restored.</div>
+        <div class="app-version">
+          <span class="v-num">v0.0.0</span>
+          <span class="f-size skel"></span>
+        </div>
+      </div>
+      <a class="dl-btn" href="https://github.com/mahfujarr/morphBuilder/releases/download/26.06.20-morphe/yt-music-stable-morphe-v8.51.51-arm64-v8a.apk">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg>
+        <span>Download</span>
+      </a>
+    </div>
+
+    <!-- Google Photos -->
+    <div class="app" data-repo="mahfujarr/morphBuilder" data-tag="26.06.20-de-vanced" data-asset-match="google-photos-de-vanced">
+      <div class="icon gph">
+        <svg viewBox="0 0 24 24" fill="#ffcc33"><path d="M12 0c-.3 6.1-5.2 11-11.3 11.3 6.1.3 11 5.2 11.3 11.3.3-6.1 5.2-11 11.3-11.3C17.2 11 12.3 6.1 12 0Z"/></svg>
+      </div>
+      <div class="app-info">
+        <div class="app-name">Google Photos <span class="patch">de-vanced patch</span></div>
+        <div class="app-desc">Unlimited backup tier unlocked, ads stripped.</div>
+        <div class="app-version">
+          <span class="v-num">v0.0.0</span>
+          <span class="f-size skel"></span>
+        </div>
+      </div>
+      <a class="dl-btn" href="https://github.com/mahfujarr/morphBuilder/releases/download/26.06.20-de-vanced/google-photos-de-vanced-v7.81.0.932521513-arm64-v8a.apk">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg>
+        <span>Download</span>
+      </a>
+    </div>
+
+    <!-- Instagram -->
+    <div class="app" data-repo="mahfujarr/morphBuilder" data-tag="26.06.20-piko" data-asset-match="instagram-piko">
+      <div class="icon ig">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#d62f8e" stroke-width="2"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.4" cy="6.6" r="1.1" fill="#d62f8e" stroke="none"/></svg>
+      </div>
+      <div class="app-info">
+        <div class="app-name">Instagram <span class="patch">piko patch</span></div>
+        <div class="app-desc">Ad-free feed, download stories &amp; reels, no tracking.</div>
+        <div class="app-version">
+          <span class="v-num">v0.0.0</span>
+          <span class="f-size skel"></span>
+        </div>
+      </div>
+      <a class="dl-btn" href="https://github.com/mahfujarr/morphBuilder/releases/download/26.06.20-piko/instagram-piko-v430.0.0.53.80-arm64-v8a.apk">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg>
+        <span>Download</span>
+      </a>
+    </div>
+
+  </section>
+
+  <div class="extra-row" id="microg-row" data-repo="MorpheApp/MicroG-RE" data-asset-match=".apk">
+    <svg class="extra-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg>
+    <span class="extra-text">Need Google sign-in to work? Patched apps need <b>MicroG-RE</b> alongside them<span class="extra-version" id="microg-version"></span>.</span>
+    <a class="extra-link" id="microg-link" href="https://github.com/MorpheApp/MicroG-RE/releases/latest" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg>
+      <span>Get MicroG-RE</span>
+    </a>
+  </div>
+
+  <section class="howto">
+    <h2>Install in three steps</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="n">01</div>
+        <p>Download the <code>.apk</code> above, then allow "install unknown apps" for your browser when prompted.</p>
+      </div>
+      <div class="step">
+        <div class="n">02</div>
+        <p>Uninstall the official Play Store version first — patched apps use a different signature and won't update over it.</p>
+      </div>
+      <div class="step">
+        <div class="n">03</div>
+        <p>Need a Google sign-in? Grab MicroG-RE above, alongside the apps.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="note">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01" stroke-linecap="round"/></svg>
+    <div><b>Unaffiliated builds.</b> These APKs are produced by public, auditable GitHub Actions from <a href="https://github.com/mahfujarr/morphBuilder" target="_blank" rel="noopener" style="color:var(--text-dim); border-bottom:1px solid var(--line)">morphBuilder</a>, not by Google, Meta or Instagram. For personal and educational use — build it yourself from source if you'd rather not trust a binary.</div>
+  </div>
+
+  <footer>
+    <span>© 2026 Mahfujar Rahman</span>
+    <div class="foot-links">
+      <a href="https://mahfujarr.me" target="_blank" rel="noopener">mahfujarr.me</a>
+      <a href="https://github.com/mahfujarr/morphBuilder/releases" target="_blank" rel="noopener">All releases</a>
+      <a href="https://t.me/builder_for_morphe" target="_blank" rel="noopener">Telegram</a>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+(function(){
+  const root = document.documentElement;
+  const toggle = document.getElementById('theme-toggle');
+  const metaTheme = document.querySelector('meta[name="theme-color"]');
+
+  function applyMetaColor(theme){
+    metaTheme.setAttribute('content', theme === 'dark' ? '#08111f' : '#f7f7f7');
+  }
+  applyMetaColor(root.getAttribute('data-theme'));
+
+  toggle.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('morphbuilder-theme', next);
+    applyMetaColor(next);
+  });
+})();
+
+(function(){
+  const apps = document.querySelectorAll('.app');
+  let latestTimestamp = null;
+
+  setTimeout(() => {
+    const el = document.getElementById('last-build-date');
+    if(el && el.textContent === 'checking…') el.textContent = 'see GitHub';
+  }, 6000);
+
+  function formatBytes(bytes){
+    if(!bytes) return '';
+    const mb = bytes / (1024*1024);
+    return mb.toFixed(1) + ' MB';
+  }
+
+  function formatDate(iso){
+    const d = new Date(iso);
+    const now = new Date();
+    const diffH = (now - d) / 36e5;
+    if(diffH < 24) return 'today';
+    if(diffH < 48) return 'yesterday';
+    return d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+  }
+
+  apps.forEach(async (app) => {
+    const repo = app.dataset.repo;
+    const tag = app.dataset.tag;
+    const match = app.dataset.assetMatch;
+    const sizeEl = app.querySelector('.f-size');
+    const versionEl = app.querySelector('.v-num');
+    const dlBtn = app.querySelector('.dl-btn');
+
+    try {
+      const res = await fetch(`https://api.github.com/repos/${repo}/releases/tags/${tag}`);
+      if(!res.ok) throw new Error('rate limited or not found');
+      const data = await res.json();
+
+      const asset = (data.assets || []).find(a => a.name.includes(match));
+      if(asset){
+        sizeEl.textContent = formatBytes(asset.size);
+        sizeEl.classList.remove('skel');
+        dlBtn.href = asset.browser_download_url;
+
+        const vMatch = asset.name.match(/v?([\d.]+)-arm64/);
+        if(vMatch) versionEl.textContent = 'v' + vMatch[1];
+      } else {
+        sizeEl.remove();
+      }
+
+      if(data.published_at){
+        const t = new Date(data.published_at);
+        if(!latestTimestamp || t > latestTimestamp){
+          latestTimestamp = t;
+          document.getElementById('last-build-date').textContent = formatDate(data.published_at);
+        }
+      }
+    } catch(e){
+      sizeEl?.remove();
+      if(!latestTimestamp){
+        document.getElementById('last-build-date').textContent = 'see GitHub';
+      }
+    }
+  });
+
+  // MicroG-RE companion (subtle row) — fetch latest release independently
+  (async () => {
+    const row = document.getElementById('microg-row');
+    if(!row) return;
+    const repo = row.dataset.repo;
+    const versionEl = document.getElementById('microg-version');
+    const linkEl = document.getElementById('microg-link');
+
+    try {
+      const res = await fetch(`https://api.github.com/repos/${repo}/releases/latest`);
+      if(!res.ok) throw new Error('rate limited or not found');
+      const data = await res.json();
+
+      const asset = (data.assets || []).find(a => a.name.toLowerCase().endsWith('.apk'));
+      if(asset){
+        linkEl.href = asset.browser_download_url;
+      }
+      if(data.tag_name){
+        versionEl.textContent = ` (${data.tag_name.replace(/^v/, 'v')})`;
+      }
+    } catch(e){
+      // silently keep the fallback /releases/latest link — no UI noise for a secondary element
+    }
+  })();
+})();
+</script>
+
+</body>
+</html>
