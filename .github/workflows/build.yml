@@ -1,7 +1,5 @@
 name: Build APKs
 on:
-  schedule:
-    - cron: "0 18 * * 4" # Runs every Friday at 12:00 AM Bangladesh Time (6:00 PM Thursday UTC)
   workflow_dispatch:
     inputs:
       patch_source:
