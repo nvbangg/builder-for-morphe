@@ -45,43 +45,53 @@ def get_matrix(source: str) -> None:
     main_cfg = parse_config(data)
     source_lower = source.lower()
     filter_changelog = os.getenv("FILTER_CHANGELOG", "false").lower() == "true"
-    patches_source = ""
-    has_changelog_keywords = False
-    for entry in parse_app_entries(data, main_cfg):
-        if entry.enabled and entry.brand.lower() == source_lower:
-            patches_source = next(iter(entry.patches), "")
-            if entry.changelog_keywords:
-                has_changelog_keywords = True
-                break
-
-    changelog_text = ""
-    if filter_changelog and has_changelog_keywords and patches_source:
-        with NetworkManager() as net:
-            repo = os.getenv("GITHUB_REPOSITORY")
-            if repo:
-                our_releases_by_brand = _fetch_our_releases(repo, net)
-                our_date = our_releases_by_brand.get(source_lower, "")
-                if our_date:
-                    try:
-                        changelog_text, _ = _fetch_latest_release(patches_source, net)
-                    except Exception as exc:
-                        epr(f"Failed to fetch changelog for '{patches_source}': {exc}")
+    
+    # --- CHANGE: If source is "all", process all enabled brands dynamically ---
+    if source_lower == "all":
+        brands = {entry.brand.lower() for entry in parse_app_entries(data, main_cfg) if entry.enabled}
+    else:
+        brands = {source_lower}
+    # --------------------------------------------------------------------------
 
     include: list[dict[str, str]] = []
-    for entry in parse_app_entries(data, main_cfg):
-        if not entry.enabled or entry.brand.lower() != source_lower:
-            continue
+    
+    for current_brand in brands:
+        patches_source = ""
+        has_changelog_keywords = False
+        for entry in parse_app_entries(data, main_cfg):
+            if entry.enabled and entry.brand.lower() == current_brand:
+                patches_source = next(iter(entry.patches), "")
+                if entry.changelog_keywords:
+                    has_changelog_keywords = True
+                    break
 
-        if filter_changelog and entry.changelog_keywords and changelog_text and not any(kw in changelog_text.lower() for kw in entry.changelog_keywords):
-            continue
+        changelog_text = ""
+        if filter_changelog and has_changelog_keywords and patches_source:
+            with NetworkManager() as net:
+                repo = os.getenv("GITHUB_REPOSITORY")
+                if repo:
+                    our_releases_by_brand = _fetch_our_releases(repo, net)
+                    our_date = our_releases_by_brand.get(current_brand, "")
+                    if our_date:
+                        try:
+                            changelog_text, _ = _fetch_latest_release(patches_source, net)
+                        except Exception as exc:
+                            epr(f"Failed to fetch changelog for '{patches_source}': {exc}")
 
-        if entry.arch == "both":
-            include.extend([{"id": entry.table, "arch": "arm64-v8a"}, {"id": entry.table, "arch": "armeabi-v7a"}])
-        else:
-            include.append({"id": entry.table})
+        for entry in parse_app_entries(data, main_cfg):
+            if not entry.enabled or entry.brand.lower() != current_brand:
+                continue
+
+            if filter_changelog and entry.changelog_keywords and changelog_text and not any(kw in changelog_text.lower() for kw in entry.changelog_keywords):
+                continue
+
+            if entry.arch == "both":
+                include.extend([{"id": entry.table, "arch": "arm64-v8a"}, {"id": entry.table, "arch": "armeabi-v7a"}])
+            else:
+                include.append({"id": entry.table})
 
     if not include:
-        abort(f"No apps found for patch source '{source}'")
+        abort(f"No apps found for patch source selection: '{source}'")
 
     print(json.dumps({"include": include}, ensure_ascii=False))
 
