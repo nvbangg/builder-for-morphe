@@ -3,6 +3,7 @@ strict-sigcheck = false
 [YouTube-Stable]
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube"
 uptodown-dlurl = "https://youtube.en.uptodown.com/android"
+arch = "arm64-v8a"
 
 [YouTube-Stable.patches]
 "github:MorpheApp/morphe-patches" = []
@@ -10,7 +11,7 @@ uptodown-dlurl = "https://youtube.en.uptodown.com/android"
 [YT-Music-Stable]
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube-music"
 uptodown-dlurl = "https://youtube-music.en.uptodown.com/android"
-arch = "both"
+arch = "arm64-v8a"
 
 [YT-Music-Stable.patches]
 "github:MorpheApp/morphe-patches" = []
@@ -30,6 +31,7 @@ arch = "arm64-v8a"
 brand = "de-vanced"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/photos/"
 uptodown-dlurl = "https://google-photos.en.uptodown.com/android"
+arch = "arm64-v8a"
 
 [Google-Photos.patches]
 "github:RookieEnough/De-Vanced" = []
