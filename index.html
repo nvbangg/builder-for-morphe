@@ -24,7 +24,7 @@
     }
 
     :root {
-      /* --- user's brand tokens --- */
+      /* --- User's Brand Tokens --- */
       --color-primary: #2b3dda;
       --color-primary-dark: #2506ad;
       --color-primary-darker: #1a047e;
@@ -44,22 +44,12 @@
       --text-gray: rgb(27, 27, 27);
       --text-light: #dbe7f6;
 
-      --social-icon-cyan: #00d9ff;
-      --social-icon-dark: #09011b;
-      --social-icon-blue: #0685da;
-      --social-icon-github: #0e0e0e;
-      --social-icon-twitter: #00aced;
-      --social-icon-linkedin: #007bb6;
-      --social-icon-dev: #070707;
-      --social-icon-instagram: #ee00da;
-
       --scrollbar-track: rgb(235, 202, 245);
       --scrollbar-thumb: #420177;
 
-      --shadow-color: rgba(0, 0, 0, 0.3);
+      --shadow-color: rgba(0, 0, 0, 0.12);
       --orange: #f68c09;
       --green: rgb(34, 109, 0);
-      --blue-navy: rgb(0, 1, 43);
 
       --dark-bg-primary: #08111f;
       --dark-bg-secondary: #111a2e;
@@ -76,19 +66,10 @@
       --dark-scrollbar-track: #0f172a;
       --dark-scrollbar-thumb: #7aa2ff;
 
-      --gradient-purple: linear-gradient(to bottom, #57059e, #4a00e0);
-      --gradient-dark: linear-gradient(to bottom, #420177, #00002c);
-
       --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
       --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
-      /* --- per-app brand colors (unchanged across themes) --- */
-      --yt: #ff3b3b;
-      --ytm: var(--secondary-app, #ff7b00);
-      --gph: var(--color-accent);
-      --ig: var(--social-icon-instagram);
-
-      /* --- semantic layer: LIGHT (default) --- */
+      /* --- Semantic Styling Assignment Layer --- */
       --bg: var(--bg-light);
       --bg-raised: var(--bg-white);
       --bg-card-s: var(--bg-card);
@@ -187,7 +168,6 @@
     }
 
     /* ---------- header ---------- */
-
     header {
       border-bottom: 1px solid var(--line-soft);
       padding: 18px 0;
@@ -310,7 +290,6 @@
     }
 
     /* ---------- hero ---------- */
-
     .hero {
       padding: 72px 0 56px;
     }
@@ -393,7 +372,6 @@
     }
 
     /* ---------- app list ---------- */
-
     .list {
       border-top: 1px solid var(--line-soft);
     }
@@ -404,7 +382,7 @@
       display: flex;
       align-items: center;
       gap: 20px;
-      transition: background .15s;
+      transition: background .15s, padding .15s, margin .15s;
     }
 
     .app .icon {
@@ -463,10 +441,6 @@
       background: linear-gradient(155deg, #ee00da22, #ee00da08);
     }
 
-    .app-info {
-      min-width: 0;
-    }
-
     .app-name {
       font-size: 17px;
       font-weight: 600;
@@ -495,18 +469,23 @@
       line-height: 1.5;
     }
 
+    /* Fixed version layout gap rule */
     .app-version {
       margin-top: 9px;
       font-family: var(--mono);
       font-size: 12px;
       color: var(--text-faint);
       display: flex;
-      gap: 14px;
       flex-wrap: wrap;
+      gap: 6px 16px;
     }
 
     .app-version .v-num {
       color: var(--text-dim);
+    }
+
+    .app-version .f-built {
+      color: var(--text-faint);
     }
 
     .app-version .skel {
@@ -555,24 +534,13 @@
 
     [data-theme="dark"] .dl-btn:hover {
       background: #93b3ff;
+      color: #08111f;
     }
 
     .dl-btn svg {
       width: 15px;
       height: 15px;
       flex-shrink: 0;
-    }
-
-    .dl-btn .size {
-      font-family: var(--mono);
-      font-size: 11px;
-      opacity: .75;
-      font-weight: 500;
-    }
-
-    .dl-btn.disabled {
-      opacity: .5;
-      pointer-events: none;
     }
 
     @media (max-width: 600px) {
@@ -606,8 +574,7 @@
       }
     }
 
-    /* ---------- microg companion row (subtle) ---------- */
-
+    /* ---------- microg companion row ---------- */
     .extra-row {
       margin-top: 18px;
       padding: 13px 16px;
@@ -681,7 +648,6 @@
     }
 
     /* ---------- how-to ---------- */
-
     .howto {
       margin-top: 64px;
       padding: 28px 0 0;
@@ -733,8 +699,7 @@
       }
     }
 
-    /* ---------- note ---------- */
-
+    /* ---------- note & footer ---------- */
     .note {
       margin-top: 40px;
       border: 1px solid var(--line-soft);
@@ -758,8 +723,6 @@
     .note b {
       color: var(--text-dim);
     }
-
-    /* ---------- footer ---------- */
 
     footer {
       margin-top: 72px;
@@ -842,14 +805,13 @@
       <div class="hero-meta">
         <span>Arch <b>arm64-v8a</b></span>
         <span>Source <b>GPL-3.0</b></span>
-        <span id="last-build">Last build <b id="last-build-date">checking…</b></span>
+        <span id="last-build">Last build time: <b id="last-build-date"></b></span>
       </div>
     </section>
 
     <section class="list" id="app-list">
 
-      <!-- YouTube -->
-      <div class="app" data-repo="mahfujarr/patchpile" data-tag="26.06.20-morphe" data-asset-match="youtube-stable">
+      <div class="app" data-repo="mahfujarr/patchpile" data-patch-source="morphe" data-asset-match="youtube-stable">
         <div class="icon yt">
           <svg viewBox="0 0 24 24" fill="#ff3b3b">
             <path
@@ -860,12 +822,12 @@
           <div class="app-name">YouTube <span class="patch">morphe patch</span></div>
           <div class="app-desc">No ads, background play, SponsorBlock built in.</div>
           <div class="app-version">
-            <span class="v-num">v0.0.0</span>
+            <span class="v-num"></span>
             <span class="f-size skel"></span>
+            <span class="f-built skel"></span>
           </div>
         </div>
-        <a class="dl-btn"
-          href="https://github.com/mahfujarr/patchpile/releases/download/26.06.20-morphe/youtube-stable-morphe-v20.51.39-arm64-v8a.apk">
+        <a class="dl-btn" href="https://github.com/mahfujarr/patchpile/releases" target="_blank">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
             stroke-linejoin="round">
             <path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14" />
@@ -874,8 +836,7 @@
         </a>
       </div>
 
-      <!-- YT Music -->
-      <div class="app" data-repo="mahfujarr/patchpile" data-tag="26.06.20-morphe" data-asset-match="yt-music-stable">
+      <div class="app" data-repo="mahfujarr/patchpile" data-patch-source="morphe" data-asset-match="yt-music-stable">
         <div class="icon ytm">
           <svg viewBox="0 0 24 24" fill="#ff7a3d">
             <path
@@ -886,12 +847,12 @@
           <div class="app-name">YT Music <span class="patch">morphe patch</span></div>
           <div class="app-desc">Background audio, no ads, sleep timer restored.</div>
           <div class="app-version">
-            <span class="v-num">v0.0.0</span>
+            <span class="v-num"></span>
             <span class="f-size skel"></span>
+            <span class="f-built skel"></span>
           </div>
         </div>
-        <a class="dl-btn"
-          href="https://github.com/mahfujarr/patchpile/releases/download/26.06.20-morphe/yt-music-stable-morphe-v8.51.51-arm64-v8a.apk">
+        <a class="dl-btn" href="https://github.com/mahfujarr/patchpile/releases" target="_blank">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
             stroke-linejoin="round">
             <path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14" />
@@ -900,8 +861,7 @@
         </a>
       </div>
 
-      <!-- Google Photos -->
-      <div class="app" data-repo="mahfujarr/patchpile" data-tag="26.06.20-de-vanced"
+      <div class="app" data-repo="mahfujarr/patchpile" data-patch-source="de-vanced"
         data-asset-match="google-photos-de-vanced">
         <div class="icon gph">
           <svg viewBox="0 0 24 24" fill="#ffcc33">
@@ -913,12 +873,12 @@
           <div class="app-name">Google Photos <span class="patch">de-vanced patch</span></div>
           <div class="app-desc">Unlimited backup tier unlocked, ads stripped.</div>
           <div class="app-version">
-            <span class="v-num">v0.0.0</span>
+            <span class="v-num"></span>
             <span class="f-size skel"></span>
+            <span class="f-built skel"></span>
           </div>
         </div>
-        <a class="dl-btn"
-          href="https://github.com/mahfujarr/patchpile/releases/download/26.06.20-de-vanced/google-photos-de-vanced-v7.81.0.932521513-arm64-v8a.apk">
+        <a class="dl-btn" href="https://github.com/mahfujarr/patchpile/releases" target="_blank">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
             stroke-linejoin="round">
             <path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14" />
@@ -927,8 +887,7 @@
         </a>
       </div>
 
-      <!-- Instagram -->
-      <div class="app" data-repo="mahfujarr/patchpile" data-tag="26.06.20-piko" data-asset-match="instagram-piko">
+      <div class="app" data-repo="mahfujarr/patchpile" data-patch-source="piko" data-asset-match="instagram-piko">
         <div class="icon ig">
           <svg viewBox="0 0 24 24" fill="none" stroke="#d62f8e" stroke-width="2">
             <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" />
@@ -940,12 +899,12 @@
           <div class="app-name">Instagram <span class="patch">piko patch</span></div>
           <div class="app-desc">Ad-free feed, download stories &amp; reels, no tracking.</div>
           <div class="app-version">
-            <span class="v-num">v0.0.0</span>
+            <span class="v-num"></span>
             <span class="f-size skel"></span>
+            <span class="f-built skel"></span>
           </div>
         </div>
-        <a class="dl-btn"
-          href="https://github.com/mahfujarr/patchpile/releases/download/26.06.20-piko/instagram-piko-v430.0.0.53.80-arm64-v8a.apk">
+        <a class="dl-btn" href="https://github.com/mahfujarr/patchpile/releases" target="_blank">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
             stroke-linejoin="round">
             <path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14" />
@@ -988,7 +947,7 @@
         </div>
         <div class="step">
           <div class="n">03</div>
-          <p>Need Google sign-in? Grab the MicroG-RE above, alongside the apps.</p>
+          <p>Need a Google sign-in? Grab MicroG-RE above, alongside the app.</p>
         </div>
       </div>
     </section>
@@ -1006,17 +965,24 @@
     </div>
 
     <footer>
-      <span>© 2026 Mahfujar Rahman</span>
-      <div class="foot-links">
+      <span>©
+        <script>document.write(new Date().getFullYear());</script> Mahfujar Rahman
+      </span>
+      <div class="foot-links" style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+        <span style="font-size: 13px; color: var(--text-faint);">
+          Views: <b id="visit-count"
+            style="font-family: var(--mono); color: var(--text-dim); font-weight: 600;">counting..</b>
+        </span>
         <a href="https://mahfujarr.me" target="_blank" rel="noopener">mahfujarr.me</a>
         <a href="https://github.com/mahfujarr/patchpile/releases" target="_blank" rel="noopener">All releases</a>
-        <a href="https://t.me/mahfujarr" target="_blank" rel="noopener">Telegram</a>
+        <a href="https://t.me/patchpile" target="_blank" rel="noopener">Telegram</a>
       </div>
     </footer>
 
   </main>
 
   <script>
+    // --- Theme Handling Control ---
     (function () {
       const root = document.documentElement;
       const toggle = document.getElementById('theme-toggle');
@@ -1035,9 +1001,9 @@
       });
     })();
 
+    // --- Release Management and APIs ---
     (function () {
       const apps = document.querySelectorAll('.app');
-      let latestTimestamp = null;
 
       setTimeout(() => {
         const el = document.getElementById('last-build-date');
@@ -1046,60 +1012,94 @@
 
       function formatBytes(bytes) {
         if (!bytes) return '';
-        const mb = bytes / (1024 * 1024);
-        return mb.toFixed(1) + ' MB';
+        return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
       }
 
-      function formatDate(iso) {
+      function formatBuiltAt(iso) {
         const d = new Date(iso);
-        const now = new Date();
-        const diffH = (now - d) / 36e5;
-        if (diffH < 24) return 'today';
-        if (diffH < 48) return 'yesterday';
-        return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        if (isNaN(d.getTime())) return 'recent';
+        const datePart = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        const timePart = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+        return `${datePart}, ${timePart}`;
       }
 
-      apps.forEach(async (app) => {
-        const repo = app.dataset.repo;
-        const tag = app.dataset.tag;
-        const match = app.dataset.assetMatch;
-        const sizeEl = app.querySelector('.f-size');
-        const versionEl = app.querySelector('.v-num');
-        const dlBtn = app.querySelector('.dl-btn');
+      async function getReleasesList(repo) {
+        const res = await fetch(`https://api.github.com/repos/${repo}/releases?per_page=30`);
+        if (!res.ok) throw new Error('rate limited or context missing');
+        return res.json();
+      }
 
+      // --- Independent Global Actions Timeline Execution ---
+      (async () => {
         try {
-          const res = await fetch(`https://api.github.com/repos/${repo}/releases/tags/${tag}`);
-          if (!res.ok) throw new Error('rate limited or not found');
-          const data = await res.json();
-
-          const asset = (data.assets || []).find(a => a.name.includes(match));
-          if (asset) {
-            sizeEl.textContent = formatBytes(asset.size);
-            sizeEl.classList.remove('skel');
-            dlBtn.href = asset.browser_download_url;
-
-            const vMatch = asset.name.match(/v?([\d.]+)-arm64/);
-            if (vMatch) versionEl.textContent = 'v' + vMatch[1];
-          } else {
-            sizeEl.remove();
-          }
-
-          if (data.published_at) {
-            const t = new Date(data.published_at);
-            if (!latestTimestamp || t > latestTimestamp) {
-              latestTimestamp = t;
-              document.getElementById('last-build-date').textContent = formatDate(data.published_at);
+          const res = await fetch(`https://api.github.com/repos/mahfujarr/patchpile/actions/workflows/build.yml/runs?per_page=1`);
+          if (res.ok) {
+            const data = await res.json();
+            if (data.workflow_runs && data.workflow_runs[0]) {
+              document.getElementById('last-build-date').textContent = formatBuiltAt(data.workflow_runs[0].updated_at);
             }
           }
-        } catch (e) {
-          sizeEl?.remove();
-          if (!latestTimestamp) {
-            document.getElementById('last-build-date').textContent = 'see GitHub';
-          }
-        }
-      });
+        } catch (e) { }
+      })();
 
-      // MicroG-RE companion (subtle row) — fetch latest release independently
+      // --- Application Release Mapping Engine ---
+      (async () => {
+        const repoGroups = {};
+        apps.forEach(app => {
+          const repo = app.dataset.repo;
+          (repoGroups[repo] = repoGroups[repo] || []).push(app);
+        });
+
+        for (const [repo, group] of Object.entries(repoGroups)) {
+          let releases;
+          try {
+            releases = await getReleasesList(repo);
+          } catch (e) {
+            group.forEach(app => {
+              app.querySelector('.f-size')?.remove();
+              app.querySelector('.f-built')?.remove();
+            });
+            continue;
+          }
+
+          group.forEach(app => {
+            const patchSource = app.dataset.patchSource;
+            const match = app.dataset.assetMatch;
+            const sizeEl = app.querySelector('.f-size');
+            const builtEl = app.querySelector('.f-built');
+            const versionEl = app.querySelector('.v-num');
+            const dlBtn = app.querySelector('.dl-btn');
+
+            const data = releases.find(r => r.tag_name && r.tag_name.endsWith(`-${patchSource}`)) || null;
+            if (!data) {
+              sizeEl?.remove();
+              builtEl?.remove();
+              return;
+            }
+
+            const asset = (data.assets || []).find(a => a.name.includes(match));
+            if (asset) {
+              sizeEl.textContent = formatBytes(asset.size);
+              sizeEl.classList.remove('skel');
+              dlBtn.href = asset.browser_download_url;
+
+              const vMatch = asset.name.match(/v?([\d.]+)-arm64/);
+              if (vMatch) versionEl.textContent = 'v' + vMatch[1];
+
+              const builtSource = asset.updated_at || data.published_at;
+              if (builtEl && builtSource) {
+                builtEl.textContent = 'Build time: ' + formatBuiltAt(builtSource);
+                builtEl.classList.remove('skel');
+              }
+            } else {
+              sizeEl?.remove();
+              builtEl?.remove();
+            }
+          });
+        }
+      })();
+
+      // --- MicroG Pipeline Setup ---
       (async () => {
         const row = document.getElementById('microg-row');
         if (!row) return;
@@ -1109,20 +1109,42 @@
 
         try {
           const res = await fetch(`https://api.github.com/repos/${repo}/releases/latest`);
-          if (!res.ok) throw new Error('rate limited or not found');
+          if (!res.ok) throw new Error('restricted');
           const data = await res.json();
 
           const asset = (data.assets || []).find(a => a.name.toLowerCase().endsWith('.apk'));
-          if (asset) {
+          if (asset && linkEl) {
             linkEl.href = asset.browser_download_url;
           }
-          if (data.tag_name) {
+          if (data.tag_name && versionEl) {
             versionEl.textContent = ` (${data.tag_name.replace(/^v/, 'v')})`;
           }
-        } catch (e) {
-          // silently keep the fallback /releases/latest link — no UI noise for a secondary element
-        }
+        } catch (e) { }
       })();
+    })();
+
+    // --- Pure Text Visitor Counter Engine ---
+    (async () => {
+      const counterEl = document.getElementById('visit-count');
+      if (!counterEl) return;
+
+      const hasVisited = sessionStorage.getItem('patchpile-hit');
+      const endpoint = hasVisited ? 'get' : 'hit';
+
+      try {
+        const res = await fetch(`https://countapi.mileshilliard.com/api/v1/${endpoint}/patchpile_live`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data && typeof data.value !== 'undefined') {
+            counterEl.textContent = data.value.toLocaleString();
+            sessionStorage.setItem('patchpile-hit', 'true');
+            return;
+          }
+        }
+        counterEl.textContent = 'active';
+      } catch (e) {
+        counterEl.textContent = 'online';
+      }
     })();
   </script>
 
