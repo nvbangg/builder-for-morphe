@@ -33,6 +33,7 @@ brand = "de-vanced"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/photos/"
 uptodown-dlurl = "https://google-photos.en.uptodown.com/android"
 arch = "arm64-v8a"
+patcher-args = "-e 'Enable DCIM folders backup control'"
 
 [Google-Photos.patches]
 "github:RookieEnough/De-Vanced" = []
