@@ -970,7 +970,7 @@
       </span>
       <div class="foot-links" style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
         <span style="font-size: 13px; color: var(--text-faint);">
-          Views: <b id="visit-count"
+          Total visitors: <b id="visit-count"
             style="font-family: var(--mono); color: var(--text-dim); font-weight: 600;">counting..</b>
         </span>
         <a href="https://mahfujarr.me" target="_blank" rel="noopener">mahfujarr.me</a>
@@ -1128,7 +1128,8 @@
       const counterEl = document.getElementById('visit-count');
       if (!counterEl) return;
 
-      const hasVisited = sessionStorage.getItem('patchpile-hit');
+      // const hasVisited = sessionStorage.getItem('patchpile-hit');
+      const hasVisited = localStorage.getItem('patchpile-hit');
       const endpoint = hasVisited ? 'get' : 'hit';
 
       try {
@@ -1137,7 +1138,8 @@
           const data = await res.json();
           if (data && typeof data.value !== 'undefined') {
             counterEl.textContent = data.value.toLocaleString();
-            sessionStorage.setItem('patchpile-hit', 'true');
+            // sessionStorage.setItem('patchpile-hit', 'true');
+            localStorage.setItem('patchpile-hit', 'true');
             return;
           }
         }
