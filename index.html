@@ -804,8 +804,8 @@
       </p>
       <div class="hero-meta">
         <span>Arch <b>arm64-v8a</b></span>
-        <span>Source <b>GPL-3.0</b></span>
-        <span id="last-build">Last build time: <b id="last-build-date"></b></span>
+        <span>Channel <b>Stable</b></span>
+        <span id="last-sync">Last synced: <b id="last-sync-date"></b></span>
       </div>
     </section>
 
@@ -970,10 +970,9 @@
       </span>
       <div class="foot-links" style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
         <span style="font-size: 13px; color: var(--text-faint);">
-          Total visitors: <b id="visit-count"
-            style="font-family: var(--mono); color: var(--text-dim); font-weight: 600;">counting..</b>
+          Total visited <b id="visit-count"
+            style="font-family: var(--mono); color: var(--text-dim); font-weight: 600;"></b>
         </span>
-        <a href="https://mahfujarr.me" target="_blank" rel="noopener">mahfujarr.me</a>
         <a href="https://github.com/mahfujarr/patchpile/releases" target="_blank" rel="noopener">All releases</a>
         <a href="https://t.me/patchpile" target="_blank" rel="noopener">Telegram</a>
       </div>
@@ -1006,7 +1005,7 @@
       const apps = document.querySelectorAll('.app');
 
       setTimeout(() => {
-        const el = document.getElementById('last-build-date');
+        const el = document.getElementById('last-sync-date');
         if (el && el.textContent === 'checking…') el.textContent = 'see GitHub';
       }, 6000);
 
@@ -1032,11 +1031,11 @@
       // --- Independent Global Actions Timeline Execution ---
       (async () => {
         try {
-          const res = await fetch(`https://api.github.com/repos/mahfujarr/patchpile/actions/workflows/build.yml/runs?per_page=1`);
+          const res = await fetch(`https://api.github.com/repos/mahfujarr/patchpile/actions/workflows/ci.yml/runs?per_page=1`);
           if (res.ok) {
             const data = await res.json();
             if (data.workflow_runs && data.workflow_runs[0]) {
-              document.getElementById('last-build-date').textContent = formatBuiltAt(data.workflow_runs[0].updated_at);
+              document.getElementById('last-sync-date').textContent = formatBuiltAt(data.workflow_runs[0].updated_at);
             }
           }
         } catch (e) { }
@@ -1128,8 +1127,8 @@
       const counterEl = document.getElementById('visit-count');
       if (!counterEl) return;
 
-      // const hasVisited = sessionStorage.getItem('patchpile-hit');
-      const hasVisited = localStorage.getItem('patchpile-hit');
+      const hasVisited = sessionStorage.getItem('patchpile-hit');
+      // const hasVisited = localStorage.getItem('patchpile-hit');
       const endpoint = hasVisited ? 'get' : 'hit';
 
       try {
@@ -1137,9 +1136,9 @@
         if (res.ok) {
           const data = await res.json();
           if (data && typeof data.value !== 'undefined') {
-            counterEl.textContent = data.value.toLocaleString();
-            // sessionStorage.setItem('patchpile-hit', 'true');
-            localStorage.setItem('patchpile-hit', 'true');
+            counterEl.textContent = data.value.toLocaleString() + " times";
+            sessionStorage.setItem('patchpile-hit', 'true');
+            // localStorage.setItem('patchpile-hit', 'true');
             return;
           }
         }
