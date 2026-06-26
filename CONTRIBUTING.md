@@ -4,6 +4,33 @@
 Here you will find a step-by-step technical guide on how to set up your environment, run the patching script, customize the build configuration, and contribute to the project's development.
 </div>
 
+## 🔄 Sync Upstream
+
+The [Sync upstream workflow](../../actions/workflows/sync.yml) keeps your fork up to date with the upstream repository to pull in bug fixes and new features while preserving your own configuration. It merges new commits automatically or opens a Pull Request if there are unresolvable conflicts.
+
+**[Optional]** You can customize the sync behavior by adding the following variables and secrets to your repository:
+
+| Name | Type | Description | Default |
+|:---:|:---:|:---:|:---:|
+| `IGNORE_SYNC_FILES` | [Variable](../../settings/variables/actions) | Space-separated list of file paths to preserve during sync. Example: `None` to sync everything; `config.toml sig.txt .github/workflows` to not sync workflow changes. | `config.toml sig.txt` |
+| `UPSTREAM_URL` | [Variable](../../settings/variables/actions) | Overrides the upstream repository URL. | *Auto-detects fork parent* |
+| `PAT_TOKEN` | [Secret](../../settings/secrets/actions) | Enables automatic syncing of changes in `.github/workflows/`. | *None* |
+
+<details>
+<summary>How to create and add the <code>PAT_TOKEN</code></summary>
+
+By default, GitHub does not allow syncing changes in workflows, and you will have to `Sync fork` manually. If you still want to automatically sync these changes, you need to follow these steps:
+
+1. Go to [**Fine-grained personal access tokens**](https://github.com/settings/personal-access-tokens) and click `Generate new token`.
+2. Set **Token name** to `PAT_TOKEN`, set an appropriate **Expiration**, and under **Repository access**, select **Only select repositories** and choose your fork.
+3. Grant these **Permissions**: `Contents` (Read and write), `Pull requests` (Read and write), `Workflows` (Read and write).
+4. Click `Generate token` and copy the token value immediately.
+5. In your fork, go to **Settings** → **Secrets and variables** → **Actions** → [**Secrets**](../../settings/secrets/actions) tab.
+6. Click `New repository secret`, name it `PAT_TOKEN`, paste the token, and click `Add secret`.
+</details>
+
+---
+
 ## 💻 Build Locally
 
 1. 📋 **Requirements**:
