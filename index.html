@@ -1,0 +1,220 @@
+<!-- Copyright (c) 2026 Builder for Morphe (github.com/builder-for-morphe)-->
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Builder for Morphe Website</title>
+  <meta name="description" content="📦 Pre-built APKs from various patch sources." />
+  <link rel="canonical" href="https://builder-for-morphe.github.io/" />
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%233b82f6' /%3E%3Cstop offset='100%25' stop-color='%2310b981' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='16' fill='url(%23grad)' /%3E%3Cpath fill='%23ffffff' transform='translate(6, 6) scale(1.25)' d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z'/%3E%3C/svg%3E" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.8.1/github-markdown.min.css" />
+
+  <style>
+    body {
+      margin: 0;
+      background-color: #ffffff;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #0d1117;
+      }
+    }
+
+    .markdown-body {
+      box-sizing: border-box;
+      min-width: 200px;
+      max-width: 985px;
+      margin: 0 auto;
+      padding: 45px;
+      padding-left: 100px;
+    }
+
+    @media (max-width: 767px) {
+      .markdown-body {
+        padding: 30px;
+        padding-left: 35px;
+      }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Builder for Morphe",
+    "operatingSystem": "Android",
+    "applicationCategory": "UtilitiesApplication",
+    "description": "Pre-built APKs from various patch sources.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZG14HMBLBY"></script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-ZG14HMBLBY');</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+
+<body>
+  <div id="content" class="markdown-body">Loading content...</div>
+
+  <script>
+    marked.use({
+      renderer: {
+        heading({ tokens, depth, text }) {
+          const slug = text.replace(/<[^>]+>/g, "").toLowerCase().replace(/[^\p{L}\p{M}\p{N}\p{Pc}\- ]/gu, "").replace(/ /g, "-");
+          return `<h${depth} id="${slug}"><a class="anchor" aria-hidden="true" href="#${slug}"><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a2.002 2.002 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a2.002 2.002 0 0 0 0 2.83Z"></path></svg></a>${this.parser.parseInline(tokens)}</h${depth}>`;
+        }
+      }
+    });
+
+    fetch("README.md")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to load README.md");
+        }
+        return response.text();
+      })
+      .then((markdownText) => {
+        const alertConfig = {
+          note: {
+            title: "Note",
+            iconClass: "octicon octicon-info mr-2",
+            svgPath: "M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"
+          },
+          tip: {
+            title: "Tip",
+            iconClass: "octicon octicon-light-bulb mr-2",
+            svgPath: "M8 1.5c-2.363 0-4 1.637-4 4 0 1.516.89 2.597 1.832 3.475.244.227.48.446.69.664.135.143.25.29.35.45.197.318.33.67.427 1.056H9.72c.096-.386.23-.738.427-1.056.1-.16.215-.307.35-.45.21-.218.446-.437.69-.664C12.11 8.097 13 7.016 13 5.5c0-2.363-1.637-4-4-4zM8 0c2.95 0 5.5 2.05 5.5 5.5 0 1.848-.902 3.12-1.922 4.072-.158.147-.318.283-.478.411-.323.26-.64.52-.912.83-.45.512-.688 1.144-.688 1.87v.817H6.5v-.817c0-.726-.238-1.358-.688-1.87-.272-.31-.59-.57-.912-.83-.16-.128-.32-.264-.478-.41C3.402 8.62 2.5 7.348 2.5 5.5 2.5 2.05 5.05 0 8 0zm0 13a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1z"
+          },
+          important: {
+            title: "Important",
+            iconClass: "octicon octicon-report mr-2",
+            svgPath: "M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.75.75 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0Zm0 5a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+          },
+          warning: {
+            title: "Warning",
+            iconClass: "octicon octicon-alert mr-2",
+            svgPath: "M6.457 1.047c.659-1.234 2.43-1.234 3.089 0l5.082 9.512c.677 1.267-.237 2.796-1.666 2.796H3.041c-1.429 0-2.343-1.529-1.666-2.796zM8 3.25a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0V4a.75.75 0 0 1 .75-.75Zm0 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"
+          },
+          caution: {
+            title: "Caution",
+            iconClass: "octicon octicon-stop mr-2",
+            svgPath: "M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"
+          }
+        };
+        const searchHtml = '<div class="markdown-alert markdown-alert-important" style="margin-bottom: 16px;">' +
+          `<p class="markdown-alert-title"><svg class="${alertConfig.important.iconClass}" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="${alertConfig.important.svgPath}"></path></svg>${alertConfig.important.title}</p>` +
+          '<p>▶️ » Install <a id="microg-link" href="https://github.com/MorpheApp/MicroG-RE/releases" target="_blank">MicroG-RE</a> to enable Google account sign-in for supported apps</p>' +
+          '</div>' +
+          '<input type="text" id="search-input" style="width: 100%; max-width: 350px; margin-bottom: 10px;" placeholder="🔍 Search apps" />';
+
+        let processedText = markdownText
+          .replace("<!-- search-bar -->", searchHtml)
+          .replace(/\u3000/g, "&#x3000;")
+          .replace(/\u2002/g, "&#x2002;")
+          .replace(/\u2003/g, "&#x2003;")
+          .replace(/^> \[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\][ \t]*\r?\n((?:>.*(?:\r?\n|$))+)/gim, (match, type, p1) => {
+            const config = alertConfig[type.toLowerCase()];
+            let cleanText = p1.replace(/^>\s?/gm, "");
+            let htmlContent = marked.parse(cleanText);
+            return `<div class="markdown-alert markdown-alert-${type.toLowerCase()}">\n<p class="markdown-alert-title"><svg class="${config.iconClass}" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="${config.svgPath}"></path></svg>${config.title}</p>\n${htmlContent}</div>\n`;
+          });
+
+        const contentEl = document.getElementById("content");
+        contentEl.innerHTML = marked.parse(processedText);
+
+        const base = "https://github.com/builder-for-morphe/builder-for-morphe.github.io/blob/main/";
+        for (const a of contentEl.querySelectorAll('a[href]')) {
+          const href = a.getAttribute('href');
+          if (!href.startsWith('#') && !/^[a-z0-9+.-]+:/i.test(href)) {
+            a.href = new URL(href, base).href;
+          }
+        }
+
+        // Setup search bar
+        const searchInput = document.getElementById("search-input");
+        if (searchInput) {
+          const detailsElems = contentEl.querySelectorAll("details");
+          detailsElems.forEach(details => details.dataset.defaultOpen = details.open);
+
+          searchInput.addEventListener("input", event => {
+            const query = event.target.value.toLowerCase().trim();
+            detailsElems.forEach(details => {
+              const rows = details.querySelectorAll("tbody tr");
+              if (!rows.length) return;
+
+              let hasMatch = false;
+              rows.forEach(row => {
+                const match = !query || row.textContent.toLowerCase().includes(query);
+                row.style.display = match ? "" : "none";
+                if (match) hasMatch = true;
+              });
+
+              details.style.display = hasMatch ? "" : "none";
+              details.open = query ? true : details.dataset.defaultOpen === "true";
+            });
+          });
+
+          searchInput.addEventListener("keydown", event => {
+            if (event.key === "Enter") {
+              searchInput.blur();
+            }
+          });
+        }
+
+        fetch("https://api.github.com/repos/MorpheApp/MicroG-RE/releases/latest")
+          .then(res => res.json())
+          .then(release => {
+            const asset = (release.assets || []).find(x => x.name.endsWith('.apk'));
+            if (asset) {
+              const microgLink = document.getElementById("microg-link");
+              if (microgLink) microgLink.href = asset.browser_download_url;
+            }
+          })
+          .catch(error => console.warn("Error fetching MicroG release:", error));
+
+        fetch("https://api.github.com/repos/builder-for-morphe/builder-for-morphe.github.io/releases?per_page=100")
+          .then(res => res.json())
+          .then(releases => {
+            for (const a of contentEl.querySelectorAll('a[href*="#tag="]')) {
+              const url = new URL(a.href);
+              const params = new URLSearchParams(url.hash.substring(1));
+              const tagMatch = params.get('tag');
+              const assetMatch = params.get('asset');
+
+              if (!tagMatch || !assetMatch) continue;
+              const tagMatchStr = tagMatch.toLowerCase();
+              const assetMatchStr = assetMatch.toLowerCase();
+
+              for (const r of releases) {
+                if (r.tag_name && r.tag_name.toLowerCase().endsWith(tagMatchStr)) {
+                  const asset = (r.assets || []).find(x => x.name.toLowerCase().includes(assetMatchStr) && x.name.endsWith('.apk') && !x.name.toLowerCase().includes('armeabi-v7a'));
+                  if (asset) {
+                    a.href = asset.browser_download_url;
+                    break;
+                  }
+                }
+              }
+            }
+          })
+          .catch(error => console.warn("Error fetching releases:", error));
+      })
+      .catch((error) => {
+        document.getElementById("content").innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+      });
+  </script>
+</body>
+
+</html>
