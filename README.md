@@ -20,10 +20,10 @@ You can use [this repository](https://github.com/nvbangg/builder-for-morphe) to 
 
 ## 🤖 Build Your Own APKs
 
-- 🍴 `Fork` [this repo](https://github.com/nvbangg/builder-for-morphe) (don't forget to ⭐ `Star` and 👀 `Watch` it)
-- ⚙️ **[Optional]** Customize the apps you want in [`config.toml`](config.toml)
-- 🚀 Run the [CI workflow](../../actions/workflows/ci.yml) (make sure workflows are enabled first)
-- ⬇️ Download your APKs from [Releases](../../releases)
+1. 🍴 `Fork` [this repo](https://github.com/nvbangg/builder-for-morphe) (don't forget to ⭐ `Star` and 👀 `Watch` it)
+    - ⚙️ **[Optional]** Customize the apps you want in [`config.toml`](config.toml)
+2. 🚀 Run the [CI workflow](../../actions/workflows/ci.yml) (make sure workflows are enabled first)
+3. ⬇️ Download your APKs from [Releases](../../releases)
 
 ## 📚 Documentation & Contributing
 
